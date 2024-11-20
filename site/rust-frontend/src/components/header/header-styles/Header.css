@@ -1,3 +1,4 @@
+/* First Header */
 .header {
     background: transparent;
     max-height: 120px;
@@ -14,40 +15,50 @@
     transition: transform 0.5s ease, opacity 0.5s ease, background 0.5s ease;
   }
   
-.header--scrolled {
+  /* Second Header */
+  .second-header {
     position: fixed;
-    top: 0; 
-    background: #df1313; 
-    transform: translateY(0);
-    opacity: 1; 
-}
+    top: -120px; /* Initially above the screen */
+    left: 0;
+    right: 0;
+    background-color: #df1313;
+    z-index: 999;
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out; /* Smooth transition for both opacity and top */
+  }
   
+  .second-header--visible {
+    opacity: 1; /* Fade in */
+    top: 0; /* Move into view from the top */
+  }
   
-.header-container {
+  /* Container styling */
+  .header-container {
     display: flex;
     align-items: center;
     width: 80%;
     margin: 0 auto;
-}
+  }
   
-.header-menu {
+  .header-menu {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-}
+  }
   
-.menu__list {
+  .menu__list {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+  }
   
-.tabSection {
+  .tabSection {
     display: flex;
     gap: 40px;
-}
+  }
   
-.header-btn {
+  /* Button styling */
+  .header-btn {
     font-family: "Open Sans";
     font-weight: 500;
     font-size: 1.2rem;
@@ -55,23 +66,29 @@
     color: #fff;
     position: relative;
     transition: 0.3s all ease;
+  }
+
+.second-header .header-btn:hover {
+  color: #000; /* Change color to black on hover */
+  transition: 0.3s all ease;
 }
   
-.header-btn:hover {
+  .header-btn:hover {
     color: #df1313;
     transition: 0.3s all ease;
-}
+  }
   
-.header.header--scrolled .header-btn:hover {
+  .header.header--scrolled .header-btn:hover {
     color: #000;
     transition: 0.3s all ease;
-}
+  }
   
-.header__logo {
+  /* Logo Styling */
+  .header__logo {
     width: 8%;
-}
+  }
   
-.header__logo img {
+  .header__logo img {
     width: 100%;
-}
+  }
   

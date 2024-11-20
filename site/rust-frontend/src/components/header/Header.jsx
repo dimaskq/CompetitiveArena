@@ -27,21 +27,41 @@ const Header = () => {
   }, [lastScrollY]);
 
   return (
-    <header className={`header ${isScrolled ? "header--scrolled" : ""}`} >
-      <div className="header-container">
-        <Link className="header__logo" to="/">
-          <img src={logo} alt="logo" />
-        </Link>
-        <nav className="header-menu">
-          <ul className="menu__list">
-            <TabsSection
-              active={activeTab}
-              onChange={(current) => setActiveTab(current)}
-            />
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <>
+      {/* Main header */}
+      <header className="header">
+        <div className="header-container">
+          <Link className="header__logo" to="/">
+            <img src={logo} alt="logo" />
+          </Link>
+          <nav className="header-menu">
+            <ul className="menu__list">
+              <TabsSection
+                active={activeTab}
+                onChange={(current) => setActiveTab(current)}
+              />
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      {/* Second header that appears after scroll */}
+      <header className={`second-header ${isScrolled ? "second-header--visible" : ""}`}>
+        <div className="header-container">
+          <Link className="header__logo" to="/">
+            <img src={logo} alt="logo" />
+          </Link>
+          <nav className="header-menu">
+            <ul className="menu__list">
+              <TabsSection
+                active={activeTab}
+                onChange={(current) => setActiveTab(current)}
+              />
+            </ul>
+          </nav>
+        </div>
+      </header>
+    </>
   );
 };
 
