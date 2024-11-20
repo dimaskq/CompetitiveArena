@@ -3,7 +3,7 @@ import React from 'react';
 
 function Button({ children, isActive = false, ...props }) {
   return (
-    <button
+    <button className='header-btn'
       {...props}
     >
       {children}
