@@ -12,7 +12,6 @@
     width: 100%;
     z-index: 1000;
     opacity: 1;
-    transition: transform 0.5s ease, opacity 0.5s ease, background 0.5s ease;
   }
   
   /* Second Header */
@@ -24,12 +23,13 @@
     background-color: #df1313;
     z-index: 999;
     opacity: 0; /* Initially invisible */
-    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out; /* Smooth transition for both opacity and top */
   }
   
   .second-header--visible {
     opacity: 1; /* Fade in */
     top: 0; /* Move into view from the top */
+    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out;
+
   }
   
   /* Container styling */
@@ -37,6 +37,7 @@
     display: flex;
     align-items: center;
     width: 80%;
+    max-width: 1280px;
     margin: 0 auto;
   }
   
@@ -92,3 +93,44 @@
     width: 100%;
   }
   
+.signInBtn {
+  font-family: Bokor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 50px;
+  position: relative;
+  z-index: 1;
+  background-image: linear-gradient(
+      to right,
+      hsl(2, 100%, 48%),
+      hsl(318, 87%, 50%)
+  );
+  color: #fff;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.signInBtn::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(
+      to bottom,
+      hsl(318, 87%, 50%),
+      hsl(2, 100%, 48%)
+  );
+  z-index: -1;
+  transition: opacity 0.5s linear;
+  opacity: 0;
+}
+
+.signInBtn:hover::before {
+  opacity: 1;
+}

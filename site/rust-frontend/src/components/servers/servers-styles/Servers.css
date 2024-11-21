@@ -1,0 +1,92 @@
+.serversPlans{
+    margin: 8% 0;
+}
+
+.serversPlans__container{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.serversPlans__block{
+    width: 25%;
+    background-color: #060316;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    /* align-items: center; */
+}
+.serversPlans__block_title{
+    font-family: "Open Sans";
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 40px 0 100px 0;
+    background-image: url("../../../../public/serversPlanBg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.serversPlans__block_price{
+    font-size: 2rem;
+    text-align: center;
+    margin: -100px 0 0 0;
+}
+.serversPlans__block_info{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.serversPlans__info_item{
+    color: grey;
+    text-align: center;
+    margin: 0 auto;
+    width: 80%;
+    font-size: 1.2rem;
+    border-bottom: 1px solid grey;
+    padding: 0 0 20px 0;
+}
+
+.serversPlans__btn_block{
+    display: flex;
+    justify-content: center;
+}
+
+.serversPlans__block_btn {
+    margin: 3% 0 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 70px;
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    border: 1px solid  #ff0000b0;
+}
+
+.serversPlans__block_btn::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(
+        to bottom,
+        hsl(318, 87%, 50%),
+        hsl(2, 100%, 48%)
+    );
+    z-index: -1;
+    opacity: 0;
+    border: none;
+}
+
+.serversPlans__block_btn:hover::before {
+    opacity: 1;
+}

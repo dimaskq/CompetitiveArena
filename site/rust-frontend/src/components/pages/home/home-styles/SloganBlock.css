@@ -2,7 +2,11 @@
     display: flex;
     justify-content: space-between;
 }
-
+.slogan__container_about{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
 .slogan__box{
     width: 40%;
     display: flex;
@@ -30,7 +34,7 @@
     position: relative;
     z-index: 1;
     background-image: linear-gradient(
-        to right,
+        to left top,
         hsl(2, 100%, 48%),
         hsl(318, 87%, 50%)
     );
@@ -38,7 +42,7 @@
     font-size: 1.5rem;
     border: none;
     cursor: pointer;
-    transition: all 1s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .slogan__box_btn::before {
@@ -49,7 +53,7 @@
     bottom: 0;
     left: 0;
     background-image: linear-gradient(
-        to bottom,
+        to right,
         hsl(318, 87%, 50%),
         hsl(2, 100%, 48%)
     );
@@ -66,4 +70,8 @@
 }
 .sloganBg{
     width: 50%;
+}
+
+.aboutBlockHome{
+    margin: 10% 0 10% 0;
 }

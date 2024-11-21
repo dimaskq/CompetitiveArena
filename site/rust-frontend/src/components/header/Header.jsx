@@ -42,6 +42,7 @@ const Header = () => {
               />
             </ul>
           </nav>
+          <a href="https://store.steampowered.com/login/?redir=&redir_ssl=1&snr=1_4_4__global-header" className="signInBtn">Sign In</a>
         </div>
       </header>
 
@@ -59,6 +60,7 @@ const Header = () => {
               />
             </ul>
           </nav>
+          <a href="https://store.steampowered.com/login/?redir=&redir_ssl=1&snr=1_4_4__global-header" className="signInBtn">Sign In</a>
         </div>
       </header>
     </>
