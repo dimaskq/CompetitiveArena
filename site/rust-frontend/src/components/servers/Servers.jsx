@@ -27,7 +27,7 @@ const SERVERPLANS = [
 function ServersPage() {
   return (
     <section className="serversPlans">
-      <div className="serversPlans__container">
+      <div className="serversPlans__container container">
         {SERVERPLANS.map((plan, index) => (
           <ServerPlan
             key={index}

@@ -28,9 +28,8 @@ const Header = () => {
 
   return (
     <>
-      {/* Main header */}
       <header className="header">
-        <div className="header-container">
+        <div className="header-container container">
           <Link className="header__logo" to="/">
             <img src={logo} alt="logo" />
           </Link>
@@ -42,25 +41,6 @@ const Header = () => {
               />
             </ul>
           </nav>
-          <a href="https://store.steampowered.com/login/?redir=&redir_ssl=1&snr=1_4_4__global-header" className="signInBtn">Sign In</a>
-        </div>
-      </header>
-
-      {/* Second header that appears after scroll */}
-      <header className={`second-header ${isScrolled ? "second-header--visible" : ""}`}>
-        <div className="header-container">
-          <Link className="header__logo" to="/">
-            <img src={logo} alt="logo" />
-          </Link>
-          <nav className="header-menu">
-            <ul className="menu__list">
-              <TabsSection
-                active={activeTab}
-                onChange={(current) => setActiveTab(current)}
-              />
-            </ul>
-          </nav>
-          <a href="https://store.steampowered.com/login/?redir=&redir_ssl=1&snr=1_4_4__global-header" className="signInBtn">Sign In</a>
         </div>
       </header>
     </>

@@ -12,14 +12,12 @@ function App() {
       <div className="App">
         <Header />
         <main className="main">
-          <div className="container">
             <Routes>
               <Route path="/" element={<Navigate to="/app" replace />} />
               <Route path="/app" element={<HomePage />} />
               <Route path="/app/contact" element={<ContactPage />} />
               <Route path="/app/servers" element={<ServersPage />} />
             </Routes>
-          </div>
         </main>
         <Footer />
       </div>

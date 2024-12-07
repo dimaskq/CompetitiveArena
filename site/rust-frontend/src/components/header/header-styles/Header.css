@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -14,26 +14,9 @@
     opacity: 1;
   }
   
-  /* Second Header */
-  .second-header {
-    position: fixed;
-    top: -120px; /* Initially above the screen */
-    left: 0;
-    right: 0;
-    background-color: #df1313;
-    z-index: 999;
-    opacity: 0; /* Initially invisible */
-  }
-  
-  .second-header--visible {
-    opacity: 1; /* Fade in */
-    top: 0; /* Move into view from the top */
-    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out;
-
-  }
-  
   /* Container styling */
   .header-container {
+    /* position: absolute; */
     display: flex;
     align-items: center;
     width: 80%;
@@ -68,19 +51,9 @@
     position: relative;
     transition: 0.3s all ease;
   }
-
-.second-header .header-btn:hover {
-  color: #000; /* Change color to black on hover */
-  transition: 0.3s all ease;
-}
   
   .header-btn:hover {
     color: #df1313;
-    transition: 0.3s all ease;
-  }
-  
-  .header.header--scrolled .header-btn:hover {
-    color: #000;
     transition: 0.3s all ease;
   }
   
@@ -92,45 +65,40 @@
   .header__logo img {
     width: 100%;
   }
-  
-.signInBtn {
-  font-family: Bokor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 150px;
-  height: 50px;
+
+/* Стилі для пунктів меню */
+.menu__list .button-container {
   position: relative;
-  z-index: 1;
-  background-image: linear-gradient(
-      to right,
-      hsl(2, 100%, 48%),
-      hsl(318, 87%, 50%)
-  );
+}
+
+.menu__list .button-container .nav-item {
+  font-family: "Open Sans";
+  font-weight: 500;
+  font-size: 1.2rem;
+  background: #00000000;
   color: #fff;
-  font-size: 1.5rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.5s ease-in-out;
+  position: relative;
+  transition: 0.3s all ease;
+  text-align: center;
 }
 
-.signInBtn::before {
-  position: absolute;
+.menu__list .button-container .nav-item:hover {
+  color: #df1313;
+  transition: 0.3s all ease;
+}
+
+.menu__list .button-container::after {
   content: "";
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: absolute;
+  bottom: -2px;
   left: 0;
-  background-image: linear-gradient(
-      to bottom,
-      hsl(318, 87%, 50%),
-      hsl(2, 100%, 48%)
-  );
-  z-index: -1;
-  transition: opacity 0.5s linear;
-  opacity: 0;
+  right: 0;
+  height: 2px;
+  background-color: #df1313;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-.signInBtn:hover::before {
-  opacity: 1;
+.menu__list .button-container:hover::after {
+  transform: scaleX(1);
 }

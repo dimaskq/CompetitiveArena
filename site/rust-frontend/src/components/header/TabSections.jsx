@@ -7,7 +7,7 @@ export default function TabsSection({ active, onChange }) {
     <section className="tabSection">
       <Link to="/app">
         <div className="button-container">
-          <Button isActive={active === "home"} onClick={() => onChange("home")}>
+          <Button isActive={active === "home"} onClick={() => onChange("home")} className="nav-item">
               Home
           </Button>
         </div> 
