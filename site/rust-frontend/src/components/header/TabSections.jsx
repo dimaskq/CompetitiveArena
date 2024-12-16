@@ -5,24 +5,31 @@ import "./header-styles/Header.css"
 export default function TabsSection({ active, onChange }) {
   return (
     <section className="tabSection">
-      <Link to="/app">
+      <Link to="/">
         <div className="button-container">
           <Button isActive={active === "home"} onClick={() => onChange("home")} className="nav-item">
               Home
           </Button>
         </div> 
       </Link>
-      <Link to="/app/contact">
+      <Link to="/contact">
         <div className="button-container">
           <Button isActive={active === "contact"} onClick={() => onChange("contact")}>
             About
           </Button>
         </div>
       </Link>
-      <Link to="/app/servers">
+      <Link to="/servers">
         <div className="button-container">
           <Button isActive={active === "servers"} onClick={() => onChange("servers")}>
             Servers
+          </Button>
+        </div>
+      </Link>
+      <Link to="/rules">
+        <div className="button-container">
+          <Button isActive={active === "rules"} onClick={() => onChange("rules")}>
+            Rules
           </Button>
         </div>
       </Link>

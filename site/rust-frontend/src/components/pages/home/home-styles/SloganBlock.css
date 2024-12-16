@@ -28,7 +28,6 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    /* flex-grow: 1; */
 }
 
 .slogan__box_title{
@@ -96,22 +95,21 @@
     animation: bounce 1.6s ease-in-out infinite;
 }
 
-/* Анимация прыжка */
 @keyframes bounce {
     0% {
-        transform: translateY(0) rotate(-45deg); /* Исходное положение */
+        transform: translateY(0) rotate(-45deg); 
     }
     40% {
-        transform: translateY(15px) rotate(-45deg); /* Падение вниз */
+        transform: translateY(15px) rotate(-45deg); 
     }
     60% {
-        transform: translateY(10px) rotate(-45deg); /* Небольшой отскок */
+        transform: translateY(10px) rotate(-45deg); 
     }
     80% {
-        transform: translateY(15px) rotate(-45deg); /* Возврат вниз после отскока */
+        transform: translateY(15px) rotate(-45deg); 
     }
     100% {
-        transform: translateY(0) rotate(-45deg); /* Подъем обратно */
+        transform: translateY(0) rotate(-45deg); 
     }
 }
 

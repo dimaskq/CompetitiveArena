@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../../public/white_logo.png";
+import logo from "../../../public/logo-removebg.png";
 import TabsSection from "./TabSections";
 import "./header-styles/Header.css";
 
