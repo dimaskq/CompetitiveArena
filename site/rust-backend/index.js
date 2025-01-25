@@ -1,4 +1,4 @@
-require('dotenv').config(); // Можно не загружать переменные из .env, если не используешь
+require('dotenv').config(); // Загружаем переменные из .env файла
 
 const express = require('express');
 const session = require('express-session');
@@ -11,6 +11,7 @@ const User = require('./models/User');
 const app = express();
 const db = process.env.DB_URI; 
 const steamApiKey = process.env.STEAM_API_KEY; 
+const secretKey = process.env.SECRET_KEY;
 
 // Подключение к MongoDB
 mongoose
@@ -26,8 +27,8 @@ mongoose
 passport.use(
   new SteamStrategy(
     {
-      returnURL: 'http://localhost:5000/auth/steam/return',
-      realm: 'http://localhost:5000/',
+      returnURL: 'https://rust-oydk.onrender.com/auth/steam/return',
+      realm: 'https://rust-oydk.onrender.com',
       apiKey: steamApiKey, // Используем API ключ Steam из .env
     },
     async (identifier, profile, done) => {
@@ -69,13 +70,13 @@ passport.deserializeUser(async (id, done) => {
 // Настройка middlewares
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://playful-tulumba-4722a2.netlify.app/',
     credentials: true,
   })
 );
 app.use(
   session({
-    secret: 'your_secret_key', // Можешь оставить это, пока не используешь реальный секретный ключ
+    secret: secretKey, // Используем секретный ключ из .env
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -95,7 +96,7 @@ app.get(
   passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
     console.log('Authenticated user session:', req.session);
-    res.redirect('http://localhost:5173');
+    res.redirect('https://playful-tulumba-4722a2.netlify.app/');
   }
 );
 

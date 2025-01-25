@@ -15,7 +15,7 @@ const Header = () => {
   // fetch
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/user", { withCredentials: true })
+      .get("https://rust-oydk.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
         dispatch(setUser(response.data)); // save data to Redux
       })
@@ -25,12 +25,12 @@ const Header = () => {
   }, [dispatch]);
 
   const handleLogin = () => {
-    window.location.href = "http://localhost:5000/auth/steam";
+    window.location.href = "https://rust-oydk.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:5000/logout", { withCredentials: true })
+      .get("https://rust-oydk.onrender.com/logout", { withCredentials: true })
       .then(() => {
         dispatch(clearUser()); // delete data from redux
       })
