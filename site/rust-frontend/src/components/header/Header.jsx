@@ -17,22 +17,25 @@ const Header = () => {
     axios
       .get("https://rust-zowp.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
-        dispatch(setUser(response.data)); // save data to Redux
+        console.log('User data:', response.data); // Логируем успешный ответ
+        dispatch(setUser(response.data)); // Сохраняем в Redux
       })
-      .catch(() => {
-        dispatch(clearUser()); // reset state
+      .catch((error) => {
+        console.error('Error fetching user:', error); // Логируем ошибку
+        dispatch(clearUser()); // Сбрасываем состояние
       });
   }, [dispatch]);
+  
 
   const handleLogin = () => {
-    window.location.href = "https://rust-oydk.onrender.com/auth/steam";
+    window.location.href = "https://rust-zowp.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
     axios
-      .get("https://rust-oydk.onrender.com/logout", { withCredentials: true })
+      .get("https://rust-zowp.onrender.com/logout", { withCredentials: true })
       .then(() => {
-        dispatch(clearUser()); // delete data from redux
+        dispatch(clearUser()); 
       })
       .catch((error) => {
         console.error("Logout error:", error);

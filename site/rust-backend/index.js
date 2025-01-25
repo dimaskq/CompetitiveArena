@@ -79,7 +79,7 @@ passport.deserializeUser(async (id, done) => {
 // Настройка middlewares
 app.use(
   cors({
-    origin: 'playful-tulumba-4722a2.netlify.app',
+    origin: '*',
     credentials: true,
   })
 );
@@ -90,10 +90,13 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      secure: true, 
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000, 
     },
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -116,16 +119,15 @@ app.get('/api/user', (req, res) => {
 });
 
 app.get('/logout', (req, res, next) => {
-  req.logout((err) => {
+  req.session.destroy((err) => {
     if (err) {
-      console.error('Logout error:', err);
+      console.error('Session destruction error:', err);
       return next(err);
     }
-    req.session.destroy(() => {
-      res.json({ message: 'Logged out successfully' });
-    });
+    res.json({ message: 'Logged out successfully' });
   });
 });
+
 
 // Запуск сервера
 const PORT = 5000;
