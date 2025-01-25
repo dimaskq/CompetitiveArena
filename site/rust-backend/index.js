@@ -2,7 +2,6 @@ require('dotenv').config(); // Загружаем переменные из .env
 
 const crypto = require('crypto');
 
-
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
@@ -58,28 +57,35 @@ passport.use(
     }
   )
 );
+console.log('DB_URI:', process.env.DB_URI);
+console.log('STEAM_API_KEY:', process.env.STEAM_API_KEY);
 
 // Сериализация и десериализация пользователя
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id); // Достаём пользователя из базы по ID
+    const user = await User.findById(id);
+    if (!user) {
+      throw new Error('User not found during deserialization');
+    }
     done(null, user);
   } catch (error) {
+    console.error('Error in deserializeUser:', error);
     done(error, null);
   }
 });
 
+
 // Настройка middlewares
 app.use(
   cors({
-    origin: 'https://playful-tulumba-4722a2.netlify.app',
+    origin: 'playful-tulumba-4722a2.netlify.app',
     credentials: true,
   })
 );
 app.use(
   session({
-    secret: secretKey, // Используем секретный ключ из .env
+    secret: secretKey, 
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -94,14 +100,11 @@ app.use(passport.session());
 // Роуты
 app.get('/auth/steam', passport.authenticate('steam'));
 
-app.get(
-  '/auth/steam/return',
-  passport.authenticate('steam', { failureRedirect: '/' }),
-  (req, res) => {
-    console.log('Authenticated user session:', req.session);
-    res.redirect('https://playful-tulumba-4722a2.netlify.app/');
-  }
-);
+app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), (req, res) => {
+  console.log('Authenticated user session:', req.session);
+  res.redirect('https://playful-tulumba-4722a2.netlify.app/'); 
+});
+
 
 app.get('/api/user', (req, res) => {
   if (req.isAuthenticated()) {
