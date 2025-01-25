@@ -29,8 +29,8 @@ mongoose
 passport.use(
   new SteamStrategy(
     {
-      returnURL: 'https://rust-oydk.onrender.com/auth/steam/return',
-      realm: 'https://rust-oydk.onrender.com',
+      returnURL: 'https://rust-zowp.onrender.com/auth/steam/return',
+      realm: 'https://rust-zowp.onrender.com',
       apiKey: steamApiKey, // Используем API ключ Steam из .env
     },
     async (identifier, profile, done) => {

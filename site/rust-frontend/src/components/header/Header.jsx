@@ -15,7 +15,7 @@ const Header = () => {
   // fetch
   useEffect(() => {
     axios
-      .get("https://rust-oydk.onrender.com/api/user", { withCredentials: true })
+      .get("https://rust-zowp.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
         dispatch(setUser(response.data)); // save data to Redux
       })
