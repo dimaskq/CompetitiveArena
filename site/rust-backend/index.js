@@ -1,10 +1,26 @@
+require('dotenv').config(); // Можно не загружать переменные из .env, если не используешь
+
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const SteamStrategy = require('passport-steam').Strategy;
 const cors = require('cors');
+const mongoose = require('mongoose');
+const User = require('./models/User'); 
 
 const app = express();
+const db = process.env.DB_URI; 
+const steamApiKey = process.env.STEAM_API_KEY; 
+
+// Подключение к MongoDB
+mongoose
+  .connect(db)
+  .then(() => {
+    console.log('DB connected!');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Настройки Steam OpenID
 passport.use(
@@ -12,17 +28,43 @@ passport.use(
     {
       returnURL: 'http://localhost:5000/auth/steam/return',
       realm: 'http://localhost:5000/',
-      apiKey: '3BF6FCAC4AEBA9F4E67A180AD3EC45EE',
+      apiKey: steamApiKey, // Используем API ключ Steam из .env
     },
-    (identifier, profile, done) => {
-      return done(null, profile);
+    async (identifier, profile, done) => {
+      try {
+        let user = await User.findOne({ steamId: profile.id });
+
+        if (!user) {
+          user = new User({
+            steamId: profile.id,
+            displayName: profile.displayName,
+            avatar: profile.photos[2]?.value || '', // Берём аватар
+          });
+          
+          console.log('Saving new user:', user); // Логируем данные перед сохранением
+
+          await user.save(); // Сохраняем пользователя в базе
+        }
+
+        return done(null, user); // Возвращаем пользователя
+      } catch (error) {
+        console.error('Error in SteamStrategy:', error);
+        return done(error, null);
+      }
     }
   )
 );
 
 // Сериализация и десериализация пользователя
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((user, done) => done(null, user));
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id); // Достаём пользователя из базы по ID
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
 
 // Настройка middlewares
 app.use(
@@ -33,7 +75,7 @@ app.use(
 );
 app.use(
   session({
-    secret: 'your_secret_key',
+    secret: 'your_secret_key', // Можешь оставить это, пока не используешь реальный секретный ключ
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -53,15 +95,14 @@ app.get(
   passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
     console.log('Authenticated user session:', req.session);
-    console.log('Authenticated user:', req.user);
     res.redirect('http://localhost:5173');
   }
 );
 
 app.get('/api/user', (req, res) => {
-  console.log('Current session:', req.session);
   if (req.isAuthenticated()) {
-    res.json(req.user);
+    const { id, displayName, avatar } = req.user; // Извлекаем только нужные данные
+    res.json({ id, displayName, avatar }); // Возвращаем только нужные поля
   } else {
     res.status(401).json({ error: 'Not authenticated' });
   }

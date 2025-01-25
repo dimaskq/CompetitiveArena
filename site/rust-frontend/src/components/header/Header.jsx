@@ -51,25 +51,27 @@ const Header = () => {
               active={activeTab}
               onChange={(current) => setActiveTab(current)}
             />
-            {user ? (
-              <div className="user-info">
-                <div className="avatar-container">
-                  <img
-                    src={user.photos[2].value}
-                    alt="Avatar"
-                    className="avatar"
-                  />
-                  <span className="username">{user.displayName}</span>
-                </div>
-                <button className="header__person header__person_logOut" onClick={handleLogout}>
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <button className="header__person header__person_logIn" onClick={handleLogin}>
-                LOG IN WITH STEAM
-              </button>
-            )}
+                {user ? (
+      <div className="user-info">
+        <div className="avatar-container">
+          {/* Проверяем наличие avatar */}
+          <img
+            src={user.avatar || "default-avatar.jpg"} // Показываем аватар пользователя
+            alt="Avatar"
+            className="avatar"
+          />
+          <span className="username">{user.displayName}</span>
+        </div>
+        <button className="header__person header__person_logOut" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+    ) : (
+      <button className="header__person header__person_logIn" onClick={handleLogin}>
+        LOG IN WITH STEAM
+      </button>
+    )}
+
           </ul>
         </nav>
       </div>
