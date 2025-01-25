@@ -1,5 +1,8 @@
 require('dotenv').config(); // Загружаем переменные из .env файла
 
+const crypto = require('crypto');
+
+
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
@@ -11,7 +14,7 @@ const User = require('./models/User');
 const app = express();
 const db = process.env.DB_URI; 
 const steamApiKey = process.env.STEAM_API_KEY; 
-const secretKey = process.env.SECRET_KEY;
+const secretKey = crypto.randomBytes(32).toString('hex');
 
 // Подключение к MongoDB
 mongoose
@@ -70,7 +73,7 @@ passport.deserializeUser(async (id, done) => {
 // Настройка middlewares
 app.use(
   cors({
-    origin: 'https://playful-tulumba-4722a2.netlify.app/',
+    origin: 'https://playful-tulumba-4722a2.netlify.app',
     credentials: true,
   })
 );
