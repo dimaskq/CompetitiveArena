@@ -78,27 +78,27 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-// Настройка middlewares
 app.use(
   cors({
-    origin: '*',
-    credentials: true,
+    origin: 'https://deft-peony-874b49.netlify.app/',
+    credentials: true, 
   })
 );
+
 app.use(
   session({
     secret: secretKey, 
     resave: false, 
     saveUninitialized: false, 
     store: MongoStore.create({
-      mongoUrl: process.env.DB_URI, // URL вашей базы MongoDB
-      ttl: 14 * 24 * 60 * 60, // Время жизни сессии (в секундах), здесь 14 дней
+      mongoUrl: process.env.DB_URI, 
+      ttl: 14 * 24 * 60 * 60,
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // true, если используете HTTPS
-      sameSite: 'none', // Для кросс-доменных запросов
-      maxAge: 24 * 60 * 60 * 1000, // 24 часа
+      secure: true, 
+      sameSite: 'none', 
+      maxAge: 24 * 60 * 60 * 1000, 
     },
   })
 );
@@ -119,7 +119,7 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
       console.error('Login error:', err);
       return res.redirect('/error');
     }
-    res.redirect('https://playful-tulumba-4722a2.netlify.app/');
+    res.redirect('https://deft-peony-874b49.netlify.app/');
   });
 });
 

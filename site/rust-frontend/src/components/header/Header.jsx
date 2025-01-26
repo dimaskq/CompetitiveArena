@@ -17,12 +17,12 @@ const Header = () => {
     axios
       .get("https://rust-zowp.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
-        console.log('User data:', response.data); // Логируем успешный ответ
-        dispatch(setUser(response.data)); // Сохраняем в Redux
+        console.log('User data:', response.data); 
+        dispatch(setUser(response.data)); 
       })
       .catch((error) => {
-        console.error('Error fetching user:', error); // Логируем ошибку
-        dispatch(clearUser()); // Сбрасываем состояние
+        console.error('Error fetching user:', error);
+        dispatch(clearUser());
       });
   }, [dispatch]);
   
