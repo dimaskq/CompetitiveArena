@@ -80,7 +80,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(
   cors({
-    origin: 'https://deft-peony-874b49.netlify.app/',
+    origin: 'https://deft-peony-874b49.netlify.app',
     credentials: true, 
   })
 );
