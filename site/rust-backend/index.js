@@ -4,6 +4,7 @@ const crypto = require('crypto');
 
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const SteamStrategy = require('passport-steam').Strategy;
 const cors = require('cors');
@@ -86,16 +87,21 @@ app.use(
 app.use(
   session({
     secret: secretKey, 
-    resave: false,
-    saveUninitialized: true,
+    resave: false, 
+    saveUninitialized: false, 
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URI, // URL вашей базы MongoDB
+      ttl: 14 * 24 * 60 * 60, // Время жизни сессии (в секундах), здесь 14 дней
+    }),
     cookie: {
       httpOnly: true,
-      secure: true, 
-      sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000, 
+      secure: true, // true, если используете HTTPS
+      sameSite: 'none', // Для кросс-доменных запросов
+      maxAge: 24 * 60 * 60 * 1000, // 24 часа
     },
   })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -104,9 +110,18 @@ app.use(passport.session());
 app.get('/auth/steam', passport.authenticate('steam'));
 
 app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), (req, res) => {
-  console.log('Authenticated user session:', req.session);
-  res.redirect('https://playful-tulumba-4722a2.netlify.app/'); 
+  console.log('Authenticated user:', req.user);
+
+  // Проверяем, сохраняется ли пользователь в сессии
+  req.login(req.user, (err) => {
+    if (err) {
+      console.error('Login error:', err);
+      return res.redirect('/error');
+    }
+    res.redirect('https://playful-tulumba-4722a2.netlify.app/');
+  });
 });
+
 
 
 app.get('/api/user', (req, res) => {
