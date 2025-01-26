@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User'); 
 
 const app = express();
-const db = process.env.DB_URI; 
+const db = "mongodb+srv://dmtradmin:QS2wPBeW5tTmQJ7U@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
 // const steamApiKey = process.env.STEAM_API_KEY; 
 const steamApiKey = "B2D7939AAADCD4D71A78AB4D8E200318"
 const secretKey = crypto.randomBytes(32).toString('hex');
