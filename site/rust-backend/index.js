@@ -32,7 +32,7 @@ passport.use(
     {
       returnURL: 'https://rust-zowp.onrender.com/auth/steam/return',
       realm: 'https://rust-zowp.onrender.com',
-      apiKey: steamApiKey,
+      apiKey: "3BF6FCAC4AEBA9F4E67A180AD3EC45EE",
     },
     async (identifier, profile, done) => {
       try {
@@ -98,7 +98,7 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: false, 
+      secure: true, 
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000, 
     },
@@ -127,13 +127,16 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
 
 
 app.get('/api/user', (req, res) => {
+  console.log('Session:', req.session);  // Логируем сессию
   if (req.isAuthenticated()) {
-    const { id, displayName, avatar } = req.user; // Извлекаем только нужные данные
-    res.json({ id, displayName, avatar }); // Возвращаем только нужные поля
+    const { id, displayName, avatar } = req.user;
+    res.json({ id, displayName, avatar });
   } else {
+    console.log('User not authenticated');
     res.status(401).json({ error: 'Not authenticated' });
   }
 });
+
 
 app.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
