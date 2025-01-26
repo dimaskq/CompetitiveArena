@@ -14,7 +14,7 @@ const User = require('./models/User');
 const app = express();
 const db = process.env.DB_URI; 
 // const steamApiKey = process.env.STEAM_API_KEY; 
-const steamApiKey = "3BF6FCAC4AEBA9F4E67A180AD3EC45EE"
+const steamApiKey = "522D624335A02B11B9472C150976AD87"
 const secretKey = crypto.randomBytes(32).toString('hex');
 
 // Подключение к MongoDB
