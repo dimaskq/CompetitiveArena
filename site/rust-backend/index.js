@@ -9,6 +9,7 @@ const SteamStrategy = require('passport-steam').Strategy;
 const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User'); 
+const MongoStore = require('connect-mongo');
 
 const app = express();
 const db = "mongodb+srv://dmtradmin:QS2wPBeW5tTmQJ7U@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
@@ -18,12 +19,15 @@ const secretKey = crypto.randomBytes(32).toString('hex');
 
 // Подключение к MongoDB
 mongoose
-  .connect(db)
-  .then(() => {
-    console.log('DB connected!');
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    maxPoolSize: 50, // Ограничиваем количество подключений
   })
+  .then(() => console.log('DB connected!'))
   .catch((err) => {
-    console.log(err);
+    console.error('DB connection error:', err);
+    process.exit(1); // Останавливаем сервер при ошибке подключения
   });
 
 passport.use(
@@ -85,13 +89,12 @@ app.use(
 app.use(
   session({
     secret: secretKey,
-    resave: false, 
-    saveUninitialized: false, 
-    // Убираем MongoStore
-    store: undefined, // Не используем MongoStore
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: db }),
     cookie: {
       httpOnly: true,
-      secure: true, 
+      secure: true,
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000, // Время жизни сессии
     },
