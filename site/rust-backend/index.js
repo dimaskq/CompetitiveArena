@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User'); 
 
 const app = express();
-const db = process.env.DB_URI; 
+const db = 'mongodb+srv://dmtradmin:QS2wPBeW5tTmQJ7U@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; 
 // const steamApiKey = process.env.STEAM_API_KEY; 
 const steamApiKey = "3BF6FCAC4AEBA9F4E67A180AD3EC45EE"
 const secretKey = crypto.randomBytes(32).toString('hex');
@@ -27,13 +27,12 @@ mongoose
     console.log(err);
   });
 
-// Настройки Steam OpenID
 passport.use(
   new SteamStrategy(
     {
       returnURL: 'https://rust-zowp.onrender.com/auth/steam/return',
       realm: 'https://rust-zowp.onrender.com',
-      apiKey: steamApiKey, // Используем API ключ Steam из .env
+      apiKey: steamApiKey,
     },
     async (identifier, profile, done) => {
       try {
@@ -43,15 +42,15 @@ passport.use(
           user = new User({
             steamId: profile.id,
             displayName: profile.displayName,
-            avatar: profile.photos[2]?.value || '', // Берём аватар
+            avatar: profile.photos[2]?.value || '',
           });
           
-          console.log('Saving new user:', user); // Логируем данные перед сохранением
+          console.log('Saving new user:', user);
 
-          await user.save(); // Сохраняем пользователя в базе
+          await user.save(); 
         }
 
-        return done(null, user); // Возвращаем пользователя
+        return done(null, user); 
       } catch (error) {
         console.error('Error in SteamStrategy:', error);
         return done(error, null);
@@ -62,20 +61,23 @@ passport.use(
 console.log('DB_URI:', process.env.DB_URI);
 console.log('STEAM_API_KEY:', process.env.STEAM_API_KEY);
 
-// Сериализация и десериализация пользователя
-passport.serializeUser((user, done) => done(null, user.id));
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    if (!user) {
-      throw new Error('User not found during deserialization');
+    if (user) {
+      done(null, user); 
+    } else {
+      done(new Error('User not found'), null);
     }
-    done(null, user);
-  } catch (error) {
-    console.error('Error in deserializeUser:', error);
-    done(error, null);
+  } catch (err) {
+    done(err, null);
   }
 });
+
 
 
 app.use(
@@ -87,21 +89,22 @@ app.use(
 
 app.use(
   session({
-    secret: secretKey, 
+    secret: secretKey,
     resave: false, 
     saveUninitialized: false, 
     store: MongoStore.create({
-      mongoUrl: process.env.DB_URI, 
-      ttl: 14 * 24 * 60 * 60,
+      mongoUrl: process.env.DB_URI,
+      ttl: 14 * 24 * 60 * 60, 
     }),
     cookie: {
       httpOnly: true,
       secure: true, 
-      sameSite: 'none', 
+      sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000, 
     },
   })
 );
+
 
 
 app.use(passport.initialize());
@@ -111,9 +114,6 @@ app.use(passport.session());
 app.get('/auth/steam', passport.authenticate('steam'));
 
 app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), (req, res) => {
-  console.log('Authenticated user:', req.user);
-
-  // Проверяем, сохраняется ли пользователь в сессии
   req.login(req.user, (err) => {
     if (err) {
       console.error('Login error:', err);
@@ -122,6 +122,7 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
     res.redirect('https://deft-peony-874b49.netlify.app/');
   });
 });
+
 
 
 
@@ -149,4 +150,11 @@ app.get('/logout', (req, res, next) => {
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+});
+
+app.use((req, res, next) => {
+  console.log('Cookies:', req.cookies);
+  console.log('Session:', req.session);
+  console.log('User:', req.user);
+  next();
 });
