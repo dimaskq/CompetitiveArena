@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User'); 
 
 const app = express();
-const db = 'mongodb+srv://dmtradmin:QS2wPBeW5tTmQJ7U@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; 
+const db = process.env.DB_URI; 
 // const steamApiKey = process.env.STEAM_API_KEY; 
 const steamApiKey = "3BF6FCAC4AEBA9F4E67A180AD3EC45EE"
 const secretKey = crypto.randomBytes(32).toString('hex');
@@ -32,7 +32,7 @@ passport.use(
     {
       returnURL: 'https://rust-zowp.onrender.com/auth/steam/return',
       realm: 'https://rust-zowp.onrender.com',
-      apiKey: "3BF6FCAC4AEBA9F4E67A180AD3EC45EE",
+      apiKey: steamApiKey,
     },
     async (identifier, profile, done) => {
       try {
@@ -114,6 +114,9 @@ app.use(passport.session());
 app.get('/auth/steam', passport.authenticate('steam'));
 
 app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), (req, res) => {
+  console.log('Authenticated user:', req.user);
+
+  // Проверяем, сохраняется ли пользователь в сессии
   req.login(req.user, (err) => {
     if (err) {
       console.error('Login error:', err);
@@ -125,18 +128,14 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
 
 
 
-
 app.get('/api/user', (req, res) => {
-  console.log('Session:', req.session);  // Логируем сессию
   if (req.isAuthenticated()) {
-    const { id, displayName, avatar } = req.user;
-    res.json({ id, displayName, avatar });
+    const { id, displayName, avatar } = req.user; // Извлекаем только нужные данные
+    res.json({ id, displayName, avatar }); // Возвращаем только нужные поля
   } else {
-    console.log('User not authenticated');
     res.status(401).json({ error: 'Not authenticated' });
   }
 });
-
 
 app.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
@@ -153,11 +152,4 @@ app.get('/logout', (req, res, next) => {
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-});
-
-app.use((req, res, next) => {
-  console.log('Cookies:', req.cookies);
-  console.log('Session:', req.session);
-  console.log('User:', req.user);
-  next();
 });
