@@ -15,7 +15,7 @@ const Header = () => {
   // fetch
   useEffect(() => {
     axios
-      .get("https://rust-zowp.onrender.com/api/user", { withCredentials: true })
+      .get("https://rust-bedl.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
         console.log('User data:', response.data); 
         dispatch(setUser(response.data)); 
@@ -28,12 +28,12 @@ const Header = () => {
   
 
   const handleLogin = () => {
-    window.location.href = "https://rust-zowp.onrender.com/auth/steam";
+    window.location.href = "https://rust-bedl.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
     axios
-      .get("https://rust-zowp.onrender.com/logout", { withCredentials: true })
+      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
       .then(() => {
         dispatch(clearUser()); 
       })

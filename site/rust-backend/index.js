@@ -4,7 +4,6 @@ const crypto = require('crypto');
 
 const express = require('express');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const SteamStrategy = require('passport-steam').Strategy;
 const cors = require('cors');
@@ -30,8 +29,8 @@ mongoose
 passport.use(
   new SteamStrategy(
     {
-      returnURL: 'https://rust-zowp.onrender.com/auth/steam/return',
-      realm: 'https://rust-zowp.onrender.com',
+      returnURL: 'https://rust-bedl.onrender.com/auth/steam/return',
+      realm: 'https://rust-bedl.onrender.com',
       apiKey: steamApiKey,
     },
     async (identifier, profile, done) => {
@@ -58,8 +57,6 @@ passport.use(
     }
   )
 );
-console.log('DB_URI:', process.env.DB_URI);
-console.log('STEAM_API_KEY:', process.env.STEAM_API_KEY);
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -78,8 +75,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
-
 app.use(
   cors({
     origin: 'https://deft-peony-874b49.netlify.app',
@@ -92,20 +87,16 @@ app.use(
     secret: secretKey,
     resave: false, 
     saveUninitialized: false, 
-    store: MongoStore.create({
-      mongoUrl: process.env.DB_URI,
-      ttl: 14 * 24 * 60 * 60, 
-    }),
+    // Убираем MongoStore
+    store: undefined, // Не используем MongoStore
     cookie: {
       httpOnly: true,
       secure: true, 
       sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000, 
+      maxAge: 24 * 60 * 60 * 1000, // Время жизни сессии
     },
   })
 );
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -126,8 +117,6 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
   });
 });
 
-
-
 app.get('/api/user', (req, res) => {
   if (req.isAuthenticated()) {
     const { id, displayName, avatar } = req.user; // Извлекаем только нужные данные
@@ -146,7 +135,6 @@ app.get('/logout', (req, res, next) => {
     res.json({ message: 'Logged out successfully' });
   });
 });
-
 
 // Запуск сервера
 const PORT = 5000;
