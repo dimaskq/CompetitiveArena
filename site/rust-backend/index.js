@@ -12,7 +12,7 @@ const User = require('./models/User');
 const MongoStore = require('connect-mongo');
 
 const app = express();
-const db = "mongodb+srv://dmtradmin:QS2wPBeW5tTmQJ7U@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
+const db = "mongodb+srv://dmtradmin:dmtradmin@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
 // const steamApiKey = process.env.STEAM_API_KEY; 
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7"
 const secretKey = "abeee44e6592a1e88d34046c22225129e95c9d185a05030cab71c8c8604507fe";
@@ -84,6 +84,7 @@ app.use(
   cors({
     origin: 'https://deft-peony-874b49.netlify.app',
     credentials: true, 
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], 
   })
 );
 
