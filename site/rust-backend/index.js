@@ -14,20 +14,19 @@ const MongoStore = require('connect-mongo');
 const app = express();
 const db = "mongodb+srv://dmtradmin:QS2wPBeW5tTmQJ7U@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
 // const steamApiKey = process.env.STEAM_API_KEY; 
-const steamApiKey = "B2D7939AAADCD4D71A78AB4D8E200318"
+const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7"
 const secretKey = crypto.randomBytes(32).toString('hex');
 
-// Подключение к MongoDB
 mongoose
   .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    maxPoolSize: 50, // Ограничиваем количество подключений
+    maxPoolSize: 50, 
   })
   .then(() => console.log('DB connected!'))
   .catch((err) => {
     console.error('DB connection error:', err);
-    process.exit(1); // Останавливаем сервер при ошибке подключения
+    process.exit(1);
   });
 
 passport.use(
