@@ -18,11 +18,7 @@ const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7"
 const secretKey = crypto.randomBytes(32).toString('hex');
 
 mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    maxPoolSize: 50, 
-  })
+  .connect(db)
   .then(() => console.log('DB connected!'))
   .catch((err) => {
     console.error('DB connection error:', err);
