@@ -82,7 +82,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://deft-peony-874b49.netlify.app',
     credentials: true, 
   })
 );
@@ -117,8 +117,7 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
       console.error('Login error:', err);
       return res.redirect('/error');
     }
-    // res.redirect('https://deft-peony-874b49.netlify.app/');
-    res.redirect('http://localhost:5173/');
+    res.redirect('https://deft-peony-874b49.netlify.app/');
   });
 });
 
