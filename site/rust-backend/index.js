@@ -58,21 +58,27 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
+  console.log('Serializing user:', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
+    console.log('Deserializing user with ID:', id);
     const user = await User.findById(id);
     if (user) {
-      done(null, user); 
+      console.log('Deserialized user:', user);
+      done(null, user);
     } else {
+      console.error('User not found during deserialization');
       done(new Error('User not found'), null);
     }
   } catch (err) {
+    console.error('Error during deserialization:', err);
     done(err, null);
   }
 });
+
 
 app.use(
   cors({
@@ -138,4 +144,6 @@ app.get('/logout', (req, res, next) => {
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log(steamApiKey)
+  console.log(secretKey)
 });
