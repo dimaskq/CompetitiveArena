@@ -14,20 +14,17 @@ const Header = () => {
 
   // fetch
   useEffect(() => {
-    if (user) {
-      axios
-        .get("https://rust-bedl.onrender.com/api/user", { withCredentials: true })
-        .then((response) => {
-          console.log('User data:', response.data);
-          dispatch(setUser(response.data));
-        })
-        .catch((error) => {
-          console.error('Error fetching user:', error);
-          dispatch(clearUser());
-        });
-    }
-  }, [user, dispatch]);
-  
+    axios
+      .get("https://rust-bedl.onrender.com/api/user", { withCredentials: true })
+      .then((response) => {
+        console.log('User data:', response.data); 
+        dispatch(setUser(response.data)); 
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error);
+        dispatch(clearUser());
+      });
+  }, [dispatch]);
   
 
   const handleLogin = () => {
