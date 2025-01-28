@@ -4,7 +4,6 @@ const express = require("express");
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = require("./models/User");
 
@@ -14,7 +13,6 @@ const app = express();
 const db =
   "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
-const secretKey = "abeee44e6592a1e88d34046c22225129e95c9d185a05030cab71c8c8604507fe";
 
 mongoose
   .connect(db)
@@ -24,6 +22,7 @@ mongoose
     process.exit(1);
   });
 
+// Налаштування Passport.js
 passport.use(
   new SteamStrategy(
     {
@@ -68,7 +67,7 @@ app.use(
   cors({
     origin: "https://deft-peony-874b49.netlify.app",
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type"],
   })
 );
 app.use(express.json());
@@ -82,22 +81,7 @@ app.get(
   async (req, res) => {
     try {
       const user = req.user;
-
-      // Генеруємо токен
-      const token = jwt.sign(
-        {
-          id: user._id,
-          steamId: user.steamId,
-          displayName: user.displayName,
-        },
-        secretKey,
-        { expiresIn: "1d" } // Токен дійсний 24 години
-      );
-
-      // Відправляємо токен у URL, щоб клієнт зміг його забрати
-      res.redirect(
-        `https://deft-peony-874b49.netlify.app?token=${token}` // Передаємо токен на фронт
-      );
+      res.redirect(`https://deft-peony-874b49.netlify.app?userId=${user._id}`);
     } catch (error) {
       console.error("Error generating token:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -105,26 +89,14 @@ app.get(
   }
 );
 
-// Захищений маршрут для отримання даних користувача
-app.get("/api/user", (req, res) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  const token = authHeader.split(" ")[1];
-
+// Публічний маршрут для отримання даних користувача без авторизації
+app.get("/api/user", async (req, res) => {
   try {
-    const decoded = jwt.verify(token, secretKey); // Розшифровуємо токен
-    res.json({
-      id: decoded.id,
-      steamId: decoded.steamId,
-      displayName: decoded.displayName,
-    });
+    const users = await User.find(); // Забираємо всіх користувачів або конкретного за id
+    res.json(users);
   } catch (error) {
-    console.error("Token verification failed:", error);
-    res.status(401).json({ error: "Invalid token" });
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

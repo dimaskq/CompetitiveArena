@@ -12,41 +12,34 @@ const Header = () => {
   const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
 
-  // Fetch user data with token
+  // fetch
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Отримуємо токен з localStorage
-
-    if (token) {
-      // Перевірка на термін дії токену (опційно)
-      axios
-        .get("https://rust-bedl.onrender.com/api/user", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Додаємо токен у заголовок
-          },
-        })
-        .then((response) => {
-          console.log("User data:", response.data);
-          dispatch(setUser(response.data)); // Зберігаємо дані користувача
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error);
-          localStorage.removeItem("token"); // Видаляємо токен, якщо виникла помилка
-          dispatch(clearUser()); // Якщо токен недійсний, очищаємо дані користувача
-        });
-    } else {
-      dispatch(clearUser()); // Якщо токен відсутній, очищаємо дані користувача
-    }
+    axios
+      .get("https://rust-bedl.onrender.com/api/user")
+      .then((response) => {
+        console.log('User data:', response.data); 
+        dispatch(setUser(response.data)); 
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error);
+        dispatch(clearUser());
+      });
   }, [dispatch]);
+  
 
   const handleLogin = () => {
-    // Перенаправляємо користувача на бекенд для аутентифікації
     window.location.href = "https://rust-bedl.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
-    // Очищаємо токен і скидаємо дані користувача
-    localStorage.removeItem("token");
-    dispatch(clearUser());
+    axios
+      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
+      .then(() => {
+        dispatch(clearUser()); 
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
   };
 
   return (
@@ -61,32 +54,27 @@ const Header = () => {
               active={activeTab}
               onChange={(current) => setActiveTab(current)}
             />
-            {user ? (
-              <div className="user-info">
-                <div className="avatar-container">
-                  {/* Перевіряємо наявність avatar */}
-                  <img
-                    src={user.avatar || "default-avatar.jpg"} // Показуємо аватар користувача
-                    alt="Avatar"
-                    className="avatar"
-                  />
-                  <span className="username">{user.displayName}</span>
-                </div>
-                <button
-                  className="header__person header__person_logOut"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <button
-                className="header__person header__person_logIn"
-                onClick={handleLogin}
-              >
-                LOG IN WITH STEAM
-              </button>
-            )}
+                {user ? (
+      <div className="user-info">
+        <div className="avatar-container">
+          {/* Проверяем наличие avatar */}
+          <img
+            src={user.avatar || "default-avatar.jpg"} // Показываем аватар пользователя
+            alt="Avatar"
+            className="avatar"
+          />
+          <span className="username">{user.displayName}</span>
+        </div>
+        <button className="header__person header__person_logOut" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+    ) : (
+      <button className="header__person header__person_logIn" onClick={handleLogin}>
+        LOG IN WITH STEAM
+      </button>
+    )}
+
           </ul>
         </nav>
       </div>
