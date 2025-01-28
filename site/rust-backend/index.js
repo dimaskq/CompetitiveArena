@@ -1,7 +1,6 @@
 require('dotenv').config(); // Загружаем переменные из .env файла
 
 const crypto = require('crypto');
-
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
@@ -13,18 +12,19 @@ const MongoStore = require('connect-mongo');
 
 const app = express();
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
-// const steamApiKey = process.env.STEAM_API_KEY; 
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7"
 const secretKey = "abeee44e6592a1e88d34046c22225129e95c9d185a05030cab71c8c8604507fe";
 
+// Подключение к MongoDB
 mongoose
-  .connect(db)
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DB connected!'))
   .catch((err) => {
     console.error('DB connection error:', err);
     process.exit(1);
   });
 
+// Настройка Passport.js
 passport.use(
   new SteamStrategy(
     {
@@ -42,13 +42,13 @@ passport.use(
             displayName: profile.displayName,
             avatar: profile.photos[2]?.value || '',
           });
-          
+
           console.log('Saving new user:', user);
 
-          await user.save(); 
+          await user.save();
         }
 
-        return done(null, user); 
+        return done(null, user);
       } catch (error) {
         console.error('Error in SteamStrategy:', error);
         return done(error, null);
@@ -79,15 +79,16 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
+// Middleware для CORS
 app.use(
   cors({
     origin: 'https://deft-peony-874b49.netlify.app',
-    credentials: true, 
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], 
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 
+// Middleware для сессий
 app.use(
   session({
     secret: secretKey,
@@ -96,9 +97,9 @@ app.use(
     store: MongoStore.create({ mongoUrl: db }),
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: false, // Установить false для локального тестирования
       sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, // 24 часа
     },
   })
 );
@@ -109,23 +110,29 @@ app.use(passport.session());
 // Роуты
 app.get('/auth/steam', passport.authenticate('steam'));
 
-app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), (req, res) => {
-  console.log('Authenticated user:', req.user);
+app.get(
+  '/auth/steam/return',
+  passport.authenticate('steam', { failureRedirect: '/' }),
+  (req, res) => {
+    console.log('Authenticated user:', req.user);
 
-  // Проверяем, сохраняется ли пользователь в сессии
-  req.login(req.user, (err) => {
-    if (err) {
-      console.error('Login error:', err);
-      return res.redirect('/error');
-    }
-    res.redirect('https://deft-peony-874b49.netlify.app/');
-  });
-});
+    req.login(req.user, (err) => {
+      if (err) {
+        console.error('Login error:', err);
+        return res.redirect('/error');
+      }
+      res.redirect('https://deft-peony-874b49.netlify.app/');
+    });
+  }
+);
 
 app.get('/api/user', (req, res) => {
+  console.log('Session ID:', req.sessionID);
+  console.log('Session data:', req.session);
+
   if (req.isAuthenticated()) {
-    const { id, displayName, avatar } = req.user; // Извлекаем только нужные данные
-    res.json({ id, displayName, avatar }); // Возвращаем только нужные поля
+    const { id, displayName, avatar } = req.user;
+    res.json({ id, displayName, avatar });
   } else {
     res.status(401).json({ error: 'Not authenticated' });
   }
@@ -145,6 +152,4 @@ app.get('/logout', (req, res, next) => {
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-  console.log(steamApiKey)
-  console.log(secretKey)
 });
