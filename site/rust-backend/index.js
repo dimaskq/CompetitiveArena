@@ -97,7 +97,7 @@ app.use(
     store: MongoStore.create({ mongoUrl: db }),
     cookie: {
       httpOnly: true,
-      secure: false, // Установить false для локального тестирования
+      secure: true,
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000, // 24 часа
     },
