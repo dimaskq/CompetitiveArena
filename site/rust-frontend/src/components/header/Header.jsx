@@ -12,34 +12,39 @@ const Header = () => {
   const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
 
-  // fetch
+  // Fetch user data with token
   useEffect(() => {
-    axios
-      .get("https://rust-bedl.onrender.com/api/user", { withCredentials: true })
-      .then((response) => {
-        console.log('User data:', response.data); 
-        dispatch(setUser(response.data)); 
-      })
-      .catch((error) => {
-        console.error('Error fetching user:', error);
-        dispatch(clearUser());
-      });
+    const token = localStorage.getItem("token"); // Отримуємо токен з localStorage
+
+    if (token) {
+      axios
+        .get("https://rust-bedl.onrender.com/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Додаємо токен у заголовок
+          },
+        })
+        .then((response) => {
+          console.log("User data:", response.data);
+          dispatch(setUser(response.data)); // Зберігаємо дані користувача
+        })
+        .catch((error) => {
+          console.error("Error fetching user:", error);
+          dispatch(clearUser());
+        });
+    } else {
+      dispatch(clearUser()); // Якщо токен відсутній, очищаємо дані користувача
+    }
   }, [dispatch]);
-  
 
   const handleLogin = () => {
+    // Перенаправляємо користувача на бекенд для аутентифікації
     window.location.href = "https://rust-bedl.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
-    axios
-      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
-      .then(() => {
-        dispatch(clearUser()); 
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-      });
+    // Очищаємо токен і скидаємо дані користувача
+    localStorage.removeItem("token");
+    dispatch(clearUser());
   };
 
   return (
@@ -54,27 +59,32 @@ const Header = () => {
               active={activeTab}
               onChange={(current) => setActiveTab(current)}
             />
-                {user ? (
-      <div className="user-info">
-        <div className="avatar-container">
-          {/* Проверяем наличие avatar */}
-          <img
-            src={user.avatar || "default-avatar.jpg"} // Показываем аватар пользователя
-            alt="Avatar"
-            className="avatar"
-          />
-          <span className="username">{user.displayName}</span>
-        </div>
-        <button className="header__person header__person_logOut" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    ) : (
-      <button className="header__person header__person_logIn" onClick={handleLogin}>
-        LOG IN WITH STEAM
-      </button>
-    )}
-
+            {user ? (
+              <div className="user-info">
+                <div className="avatar-container">
+                  {/* Перевіряємо наявність avatar */}
+                  <img
+                    src={user.avatar || "default-avatar.jpg"} // Показуємо аватар користувача
+                    alt="Avatar"
+                    className="avatar"
+                  />
+                  <span className="username">{user.displayName}</span>
+                </div>
+                <button
+                  className="header__person header__person_logOut"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button
+                className="header__person header__person_logIn"
+                onClick={handleLogin}
+              >
+                LOG IN WITH STEAM
+              </button>
+            )}
           </ul>
         </nav>
       </div>

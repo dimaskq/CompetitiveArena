@@ -1,30 +1,27 @@
-require('dotenv').config(); // Загружаем переменные из .env файла
+require('dotenv').config();
 
-const crypto = require('crypto');
 const express = require('express');
-const session = require('express-session');
+const session = require('express-session'); // Сесії вже не використовуємо
 const passport = require('passport');
 const SteamStrategy = require('passport-steam').Strategy;
 const cors = require('cors');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 const User = require('./models/User'); 
-const MongoStore = require('connect-mongo');
 
 const app = express();
-const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
-const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7"
-const secretKey = "abeee44e6592a1e88d34046c22225129e95c9d185a05030cab71c8c8604507fe";
+const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
+const jwtSecret = "supersecretkey"; // Замість цього використовуйте значення з .env
 
-// Подключение к MongoDB
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db)
   .then(() => console.log('DB connected!'))
   .catch((err) => {
     console.error('DB connection error:', err);
     process.exit(1);
   });
 
-// Настройка Passport.js
 passport.use(
   new SteamStrategy(
     {
@@ -42,9 +39,6 @@ passport.use(
             displayName: profile.displayName,
             avatar: profile.photos[2]?.value || '',
           });
-
-          console.log('Saving new user:', user);
-
           await user.save();
         }
 
@@ -58,28 +52,19 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log('Serializing user:', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
-    console.log('Deserializing user with ID:', id);
     const user = await User.findById(id);
-    if (user) {
-      console.log('Deserialized user:', user);
-      done(null, user);
-    } else {
-      console.error('User not found during deserialization');
-      done(new Error('User not found'), null);
-    }
+    if (user) done(null, user);
+    else done(new Error('User not found'), null);
   } catch (err) {
-    console.error('Error during deserialization:', err);
     done(err, null);
   }
 });
 
-// Middleware для CORS
 app.use(
   cors({
     origin: 'https://deft-peony-874b49.netlify.app',
@@ -88,64 +73,42 @@ app.use(
   })
 );
 
-// Middleware для сессий
-app.use(
-  session({
-    secret: secretKey,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: db }),
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000, // 24 часа
-    },
-  })
-);
+app.use(express.json()); // Для роботи з JSON у запитах
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Роуты
+// Роут для авторизації через Steam
 app.get('/auth/steam', passport.authenticate('steam'));
 
-app.get(
-  '/auth/steam/return',
-  passport.authenticate('steam', { failureRedirect: '/' }),
-  (req, res) => {
-    console.log('Authenticated user:', req.user);
+// Роут для обробки повернення після авторизації
+app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), async (req, res) => {
+  const user = req.user;
 
-    req.login(req.user, (err) => {
-      if (err) {
-        console.error('Login error:', err);
-        return res.redirect('/error');
-      }
-      res.redirect('https://deft-peony-874b49.netlify.app/');
-    });
-  }
-);
+  // Створюємо токен
+  const token = jwt.sign(
+    { id: user._id, displayName: user.displayName, avatar: user.avatar }, // payload
+    jwtSecret, // секретний ключ
+    { expiresIn: '1d' } // час життя токена
+  );
 
-app.get('/api/user', (req, res) => {
-  console.log('Session ID:', req.sessionID);
-  console.log('Session data:', req.session);
-
-  if (req.isAuthenticated()) {
-    const { id, displayName, avatar } = req.user;
-    res.json({ id, displayName, avatar });
-  } else {
-    res.status(401).json({ error: 'Not authenticated' });
-  }
+  // Відправляємо токен на фронтенд
+  res.redirect(`https://deft-peony-874b49.netlify.app?token=${token}`);
 });
 
-app.get('/logout', (req, res, next) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Session destruction error:', err);
-      return next(err);
-    }
-    res.json({ message: 'Logged out successfully' });
-  });
+// Роут для отримання інформації про користувача
+app.get('/api/user', (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    res.json(decoded); // Повертаємо дані користувача
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
 });
 
 // Запуск сервера
