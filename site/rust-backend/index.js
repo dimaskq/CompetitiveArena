@@ -4,7 +4,7 @@ const express = require("express");
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
-const jwt = require("jsonwebtoken"); // Для роботи з токенами
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = require("./models/User");
 
@@ -24,7 +24,6 @@ mongoose
     process.exit(1);
   });
 
-// Налаштування Passport.js
 passport.use(
   new SteamStrategy(
     {
@@ -95,6 +94,7 @@ app.get(
         { expiresIn: "1d" } // Токен дійсний 24 години
       );
 
+      // Відправляємо токен у URL, щоб клієнт зміг його забрати
       res.redirect(
         `https://deft-peony-874b49.netlify.app?token=${token}` // Передаємо токен на фронт
       );

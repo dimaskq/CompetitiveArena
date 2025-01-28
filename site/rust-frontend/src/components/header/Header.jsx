@@ -17,6 +17,7 @@ const Header = () => {
     const token = localStorage.getItem("token"); // Отримуємо токен з localStorage
 
     if (token) {
+      // Перевірка на термін дії токену (опційно)
       axios
         .get("https://rust-bedl.onrender.com/api/user", {
           headers: {
@@ -29,7 +30,8 @@ const Header = () => {
         })
         .catch((error) => {
           console.error("Error fetching user:", error);
-          dispatch(clearUser());
+          localStorage.removeItem("token"); // Видаляємо токен, якщо виникла помилка
+          dispatch(clearUser()); // Якщо токен недійсний, очищаємо дані користувача
         });
     } else {
       dispatch(clearUser()); // Якщо токен відсутній, очищаємо дані користувача
