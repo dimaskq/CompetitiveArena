@@ -12,30 +12,35 @@ const Header = () => {
   const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
 
-  // fetch
+  // Fetch user data on component mount
   useEffect(() => {
+    // Якщо користувач вже є в сесії або в cookies, API можна запитати для даних користувача
     axios
       .get("https://rust-bedl.onrender.com/api/user")
       .then((response) => {
-        console.log('User data:', response.data); 
-        dispatch(setUser(response.data)); 
+        if (response.data && response.data.length > 0) {
+          const currentUser = response.data.find((user) => user.steamId === response.data.steamId);
+          if (currentUser) {
+            dispatch(setUser(currentUser));
+          }
+        }
       })
       .catch((error) => {
         console.error('Error fetching user:', error);
         dispatch(clearUser());
       });
   }, [dispatch]);
-  
 
   const handleLogin = () => {
     window.location.href = "https://rust-bedl.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
+    // Ваша логіка виходу
     axios
       .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
       .then(() => {
-        dispatch(clearUser()); 
+        dispatch(clearUser());
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -54,27 +59,26 @@ const Header = () => {
               active={activeTab}
               onChange={(current) => setActiveTab(current)}
             />
-                {user ? (
-      <div className="user-info">
-        <div className="avatar-container">
-          {/* Проверяем наличие avatar */}
-          <img
-            src={user.avatar || "default-avatar.jpg"} // Показываем аватар пользователя
-            alt="Avatar"
-            className="avatar"
-          />
-          <span className="username">{user.displayName}</span>
-        </div>
-        <button className="header__person header__person_logOut" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    ) : (
-      <button className="header__person header__person_logIn" onClick={handleLogin}>
-        LOG IN WITH STEAM
-      </button>
-    )}
-
+            {user ? (
+              <div className="user-info">
+                <div className="avatar-container">
+                  {/* Проверяем наличие avatar */}
+                  <img
+                    src={user.avatar || "default-avatar.jpg"} // Показываем аватар пользователя
+                    alt="Avatar"
+                    className="avatar"
+                  />
+                  <span className="username">{user.displayName}</span>
+                </div>
+                <button className="header__person header__person_logOut" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button className="header__person header__person_logIn" onClick={handleLogin}>
+                LOG IN WITH STEAM
+              </button>
+            )}
           </ul>
         </nav>
       </div>
