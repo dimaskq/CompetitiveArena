@@ -25,7 +25,7 @@ mongoose
 // Настройка сессий
 app.use(
   session({
-    secret: `${secretKey}`, 
+    secret: `5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff`, 
     resave: false,
     saveUninitialized: false,
   })
