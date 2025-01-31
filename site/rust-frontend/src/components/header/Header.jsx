@@ -14,21 +14,21 @@ const Header = () => {
 
   // Fetch user data on component mount
   useEffect(() => {
-    // Якщо користувач вже є в сесії або в cookies, API можна запитати для даних користувача
     axios
-      .get("https://rust-bedl.onrender.com/api/user")
-      .then((response) => {
-        if (response.data && response.data.length > 0) {
-          const currentUser = response.data.find((user) => user.steamId === response.data.steamId);
-          if (currentUser) {
-            dispatch(setUser(currentUser));
-          }
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching user:', error);
-        dispatch(clearUser());
-      });
+  .get("https://rust-bedl.onrender.com/api/user", { credentials: 'include' })
+  .then((response) => {
+    if (response.data && response.data.length > 0) {
+      const currentUser = response.data.find((user) => user.steamId === response.data[0].steamId);
+      if (currentUser) {
+        dispatch(setUser(currentUser));
+      }
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching user:', error);
+    dispatch(clearUser());
+  });
+
   }, [dispatch]);
 
   const handleLogin = () => {
