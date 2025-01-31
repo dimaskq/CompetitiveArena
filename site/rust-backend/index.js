@@ -102,7 +102,6 @@ app.get(
 
 // Получение данных текущего пользователя
 app.get("/api/user", async (req, res) => {
-  res.json({ message: "API доступен без аутентификации" });
   res.json(req.user);
 });
 
