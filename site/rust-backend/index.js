@@ -26,8 +26,8 @@ app.use(passport.session());
 
 // Настройка passport с использованием Steam
 passport.use(new SteamStrategy({
-  returnURL: 'https://yourdomain.com/auth/steam/return',
-  realm: 'https://yourdomain.com/',
+  returnURL: 'https://rust-bedl.onrender.com/auth/steam/return',
+  realm: 'https://rust-bedl.onrender.com',
   apiKey: 'YOUR_STEAM_API_KEY'
 }, function(identifier, profile, done) {
   // Здесь profile - это объект, содержащий информацию о пользователе Steam
