@@ -83,20 +83,21 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log(`Serialized user: ${user.id}`);
+  console.log('Serialized user:', user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    console.log(`Deserialized user: ${user.displayName}`);
+    console.log('Deserialized user:', user);
     done(null, user);
   } catch (err) {
-    console.error("Error during deserialization:", err);
+    console.error('Error during deserialization:', err);
     done(err, null);
   }
 });
+
 
 // Middleware для CORS
 app.use(
@@ -145,6 +146,13 @@ app.use((err, req, res, next) => {
   console.error("Server error:", err);
   res.status(500).json({ error: "Internal Server Error" });
 });
+
+app.use((req, res, next) => {
+  console.log('Session ID:', req.sessionID);
+  console.log('User in session:', req.user);
+  next();
+});
+
 
 // Запуск сервера
 const PORT = 5000;
