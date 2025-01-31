@@ -7,6 +7,7 @@ const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./models/User");
+const MongoStore = require("connect-mongo");
 
 const app = express();
 
@@ -25,11 +26,17 @@ mongoose
 // Настройка сессий
 app.use(
   session({
-    secret: `5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff`, 
+    secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff", 
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: db,  
+      collectionName: 'sessions'  
+    }),
+    cookie: { secure: true } 
   })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
