@@ -1,6 +1,7 @@
-require("dotenv").config(); // Завантажуємо змінні з .env файлу
+require("dotenv").config();
 
 const express = require("express");
+const session = require("express-session");
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
@@ -9,9 +10,8 @@ const User = require("./models/User");
 
 const app = express();
 
-// База даних і ключі
-const db =
-  "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const secretKey = process.env.SECRET_KEY;
+const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
 mongoose
@@ -22,7 +22,18 @@ mongoose
     process.exit(1);
   });
 
-// Налаштування Passport.js
+// Настройка сессий
+app.use(
+  session({
+    secret: `${secretKey}`, 
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.use(
   new SteamStrategy(
     {
@@ -42,7 +53,6 @@ passport.use(
           });
           await user.save();
         }
-
         return done(null, user);
       } catch (error) {
         console.error("Error in SteamStrategy:", error);
@@ -51,7 +61,6 @@ passport.use(
     }
   )
 );
-
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
@@ -73,32 +82,30 @@ app.use(
 );
 app.use(express.json());
 
-// Роут для аутентифікації через Steam
+// Аутентификация через Steam
 app.get("/auth/steam", passport.authenticate("steam"));
 
 app.get(
   "/auth/steam/return",
   passport.authenticate("steam", { failureRedirect: "/" }),
-  async (req, res) => {
-    try {
-      const user = req.user;
-      res.redirect(`https://deft-peony-874b49.netlify.app?userId=${user._id}`);
-    } catch (error) {
-      console.error("Error generating token:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
+  (req, res) => {
+    res.redirect("https://deft-peony-874b49.netlify.app");
   }
 );
 
-// Публічний маршрут для отримання даних користувача без авторизації
+// Получение данных текущего пользователя
 app.get("/api/user", async (req, res) => {
-  try {
-    const users = await User.find(); // Забираємо всіх користувачів або конкретного за id
-    res.json(users);
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ error: "Internal server error" });
+  if (!req.user) {
+    return res.status(401).json({ error: "Not authenticated" });
   }
+  res.json(req.user);
+});
+
+// Выход пользователя
+app.get("/logout", (req, res) => {
+  req.logout(() => {
+    res.redirect("/");
+  });
 });
 
 // Запуск сервера
