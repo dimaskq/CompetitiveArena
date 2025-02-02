@@ -36,7 +36,6 @@ app.use(
   })
 );
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,7 +67,11 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => done(null, user.id));
+passport.serializeUser((user, done) => {
+  console.log("Serializing user:", user.id);
+  done(null, user.id);
+});
+
 passport.deserializeUser(async (id, done) => {
   console.log("Deserializing user:", id);
   try {
@@ -82,12 +85,12 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
+
 // Middleware
 app.use(
   cors({
     origin: "https://deft-peony-874b49.netlify.app",
     credentials: true,
-    allowedHeaders: ["Content-Type"],
   })
 );
 app.use(express.json());
@@ -98,9 +101,12 @@ app.get(
   "/auth/steam/return",
   passport.authenticate("steam", { failureRedirect: "/" }),
   (req, res) => {
+    console.log("User after login:", req.user);
+    console.log("Session after login:", req.session);
     res.redirect("https://deft-peony-874b49.netlify.app");
   }
 );
+
 
 app.get("/api/user", (req, res) => {
   console.log("Session:", req.session);
