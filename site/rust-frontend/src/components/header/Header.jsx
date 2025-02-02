@@ -19,7 +19,7 @@ const Header = () => {
       .then((response) => {
         if (response.data) {
           setUserState(response.data);
-          dispatch(setUser(response.data));  // Отправляем данные в Redux
+          dispatch(setUser(response.data));  
         }
       })
       .catch((error) => {

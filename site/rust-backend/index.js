@@ -70,13 +70,17 @@ passport.use(
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
+  console.log("Deserializing user:", id);
   try {
     const user = await User.findById(id);
+    console.log("Found user:", user);
     done(null, user);
   } catch (err) {
+    console.error("Error in deserializeUser:", err);
     done(err, null);
   }
 });
+
 
 // Middleware
 app.use(
@@ -98,9 +102,12 @@ app.get(
   }
 );
 
-app.get("/api/user", async (req, res) => {
-  res.json(req.user);
+app.get("/api/user", (req, res) => {
+  console.log("Session:", req.session);
+  console.log("User:", req.user);
+  res.json(req.user || { error: "User not found" });
 });
+
 
 app.get("/logout", (req, res) => {
   req.logout(() => {
