@@ -73,17 +73,16 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log("Deserializing user:", id);
+  console.log("Deserializing user:", id, typeof id); // Логируем id
   try {
-    const user = await User.findOne({ _id: id }); 
+    const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
     console.log("Found user in DB:", user);
-    done(null, user);
+    done(null, user || null);
   } catch (err) {
     console.error("Error in deserializeUser:", err);
     done(err, null);
   }
 });
-
 
 
 
@@ -112,8 +111,14 @@ app.get(
 app.get("/api/user", (req, res) => {
   console.log("Session:", req.session);
   console.log("User:", req.user);
-  res.json(req.user || { error: "User not found" });
+
+  if (!req.user) {
+    return res.status(401).json({ error: "User not found" });
+  }
+  
+  res.json(req.user);
 });
+
 
 
 app.get("/logout", (req, res) => {

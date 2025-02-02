@@ -15,7 +15,7 @@ const Header = () => {
   // Fetch user data on component mount
   useEffect(() => {
     axios
-      .get("https://rust-bedl.onrender.com/api/user")
+      .get("https://rust-bedl.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
         if (response.data) {
           setUserState(response.data);
