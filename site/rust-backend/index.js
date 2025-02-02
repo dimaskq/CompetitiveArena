@@ -1,74 +1,112 @@
-const express = require('express');
-const passport = require('passport');
-const session = require('express-session');
-const SteamStrategy = require('passport-steam').Strategy;
-const cors = require('cors');
+require("dotenv").config();
 
-// Создаем Express приложение
+const express = require("express");
+const session = require("express-session");
+const passport = require("passport");
+const SteamStrategy = require("passport-steam").Strategy;
+const cors = require("cors");
+const mongoose = require("mongoose");
+const User = require("./models/User");
+const MongoStore = require("connect-mongo");
+
 const app = express();
 
-// Настроим CORS для общедоступного API
-app.use(cors({
-  origin: '*', // Это позволяет всем сайтам обращаться к вашему API
-  credentials: false,
-}));
+const secretKey = process.env.SECRET_KEY;
+const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
-// Настройка сессий
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: true
-}));
+mongoose
+  .connect(db)
+  .then(() => console.log("DB connected!"))
+  .catch((err) => {
+    console.error("DB connection error:", err);
+    process.exit(1);
+  });
 
-// Инициализация passport
+app.use(
+  session({
+    secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff", 
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: db,  
+      collectionName: 'sessions'  
+    }),
+    cookie: { secure: true } 
+  })
+);
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Настройка passport с использованием Steam
-passport.use(new SteamStrategy({
-  returnURL: 'https://rust-bedl.onrender.com/auth/steam/return',
-  realm: 'https://rust-bedl.onrender.com',
-  apiKey: 'YOUR_STEAM_API_KEY'
-}, function(identifier, profile, done) {
-  // Здесь profile - это объект, содержащий информацию о пользователе Steam
-  return done(null, profile);
-}));
+passport.use(
+  new SteamStrategy(
+    {
+      returnURL: "https://rust-bedl.onrender.com/auth/steam/return",
+      realm: "https://rust-bedl.onrender.com",
+      apiKey: steamApiKey,
+    },
+    async (identifier, profile, done) => {
+      try {
+        let user = await User.findOne({ steamId: profile.id });
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
+        if (!user) {
+          user = new User({
+            steamId: profile.id,
+            displayName: profile.displayName,
+            avatar: profile.photos[2]?.value || "",
+          });
+          await user.save();
+        }
+        return done(null, user);
+      } catch (error) {
+        console.error("Error in SteamStrategy:", error);
+        return done(error, null);
+      }
+    }
+  )
+);
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-// Маршрут для аутентификации через Steam
-app.get('/auth/steam', passport.authenticate('steam'));
-
-// Маршрут, на который пользователь будет возвращен после авторизации через Steam
-app.get('/auth/steam/return', 
-  passport.authenticate('steam', { failureRedirect: '/' }),
-  function(req, res) {
-    // После успешной аутентификации, перенаправляем пользователя
-    res.redirect('/');
-  });
-
-// Маршрут для получения данных пользователя (без авторизации)
-app.get('/api/user', (req, res) => {
-  if (req.isAuthenticated()) {
-    // Если пользователь авторизован через Steam, возвращаем его данные
-    res.json({
-      steamId: req.user.id,
-      displayName: req.user.displayName,
-      avatar: req.user.photos[2].value,  // Получаем ссылку на аватар пользователя
-    });
-  } else {
-    // Если пользователь не авторизован, возвращаем ошибку
-    res.status(401).json({ message: 'User not authenticated' });
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
   }
 });
 
-// Запуск сервера
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+// Middleware
+app.use(
+  cors({
+    origin: "https://deft-peony-874b49.netlify.app",
+    credentials: true,
+    allowedHeaders: ["Content-Type"],
+  })
+);
+app.use(express.json());
+
+app.get("/auth/steam", passport.authenticate("steam"));
+
+app.get(
+  "/auth/steam/return",
+  passport.authenticate("steam", { failureRedirect: "/" }),
+  (req, res) => {
+    res.redirect("https://deft-peony-874b49.netlify.app");
+  }
+);
+
+app.get("/api/user", async (req, res) => {
+  res.json(req.user);
 });
+
+app.get("/logout", (req, res) => {
+  req.logout(() => {
+    res.redirect("/");
+  });
+});
+
+const PORT = 5000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
