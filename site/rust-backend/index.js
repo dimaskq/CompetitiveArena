@@ -126,9 +126,9 @@ app.get("/api/user", (req, res) => {
   console.log("Session:", req.session);
   console.log("User:", req.user);
 
-  if (!req.user) {
-    return res.status(401).json({ error: "User not found" });
-  }
+  // if (!req.user) {
+  //   return res.status(401).json({ error: "User not found" });
+  // }
   
   res.json(req.user);
 });
