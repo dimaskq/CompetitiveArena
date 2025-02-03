@@ -85,7 +85,7 @@ passport.deserializeUser(async (id, done) => {
   console.log("🔄 Deserializing user:", id, typeof id);
 
   try {
-    const user = await User.findById(new mongoose.Types.ObjectId(id));
+    const user = await User.findById(id);
     console.log("✅ Found user:", user);
     done(null, user || null);
   } catch (err) {
