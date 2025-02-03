@@ -23,19 +23,25 @@ mongoose
     process.exit(1);
   });
 
-app.use(
-  session({
-    secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff", 
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: db,  
-      collectionName: 'sessions'  
-    }),
-    cookie: { secure: true } 
-  })
-);
-
+  app.use(
+    session({
+      secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff", 
+      resave: false,
+      saveUninitialized: false, 
+      store: MongoStore.create({
+        mongoUrl: db,  
+        collectionName: 'sessions',
+        ttl: 7 * 24 * 60 * 60, 
+      }),
+      cookie: { 
+        maxAge: 7 * 24 * 60 * 60 * 1000, 
+        secure: true, 
+        httpOnly: true,
+        sameSite: "lax",
+      }
+    })
+  );
+  
 
 passport.use(
   new SteamStrategy(
