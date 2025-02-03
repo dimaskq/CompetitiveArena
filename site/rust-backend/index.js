@@ -72,10 +72,16 @@ passport.serializeUser((user, done) => {
   done(null, user._id.toString()); 
 });
 
+app.use((req, res, next) => {
+  console.log("🛠 Middleware: Checking session:", req.session);
+  next();
+});
+
 passport.deserializeUser(async (id, done) => {
   console.log("🔄 Deserializing user:", id, typeof id);
+
   try {
-    const user = await User.findById(new mongoose.Types.ObjectId(id)); 
+    const user = await User.findById(new mongoose.Types.ObjectId(id));
     console.log("✅ Found user:", user);
     done(null, user || null);
   } catch (err) {
@@ -83,6 +89,7 @@ passport.deserializeUser(async (id, done) => {
     done(err, null);
   }
 });
+
 
 
 
