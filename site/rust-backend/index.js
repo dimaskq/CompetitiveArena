@@ -36,7 +36,6 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
 
 passport.use(
   new SteamStrategy(
@@ -88,7 +87,7 @@ passport.deserializeUser(async (id, done) => {
     done(err, null);
   }
 });
-
+app.use(passport.initialize());
 app.use(passport.session());
 
 
