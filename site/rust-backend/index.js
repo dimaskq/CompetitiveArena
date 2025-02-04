@@ -82,17 +82,29 @@ app.use((req, res, next) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log("🔄 Deserializing user:", id, typeof id);
-
   try {
+    console.log("🔄 Deserializing user ID:", id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.error("❌ Invalid ObjectId format:", id);
+      return done(null, false); 
+    }
+
     const user = await User.findById(id);
-    console.log("✅ Found user:", user);
+
+    if (!user) {
+      console.warn("⚠️ User not found in DB for ID:", id);
+      return done(null, false);
+    }
+
+    console.log("✅ Deserialized user:", user);
     done(null, user);
   } catch (err) {
     console.error("❌ Error in deserializeUser:", err);
     done(err, null);
   }
 });
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -112,44 +124,23 @@ app.use(express.json());
 
 app.get("/auth/steam", passport.authenticate("steam"));
 
-app.get(
-  "/auth/steam/return",
-  passport.authenticate("steam", { failureRedirect: "/" }),
-  (req, res) => {
-    console.log("User after login:", req.user);
-    console.log("Session after login:", req.session);
-    res.redirect("https://deft-peony-874b49.netlify.app");
-  }
-);
-
-app.get("/api/user", async (req, res) => {
-  console.log("🛠 Checking session in /api/user route:", req.session);
-  console.log("🔒 User from session:", req.user);
-
-  if (!req.user) {
-    // Якщо користувач не в сесії, спробуємо знайти його за steamId у базі
-    if (req.session.steamId) {
-      try {
-        const user = await User.findOne({ steamId: req.session.steamId });
-        if (user) {
-          // Знайшли користувача, повертаємо його
-          return res.json(user);
-        } else {
-          return res.status(401).json({ error: "User not found in database" });
-        }
-      } catch (error) {
-        console.error("❌ Error while finding user in DB:", error);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-    } else {
-      // Якщо немає навіть steamId в сесії
-      return res.status(401).json({ error: "User not authenticated" });
+app.get("/auth/steam/return", passport.authenticate("steam"), (req, res) => {
+  req.session.save((err) => {
+    if (err) {
+      console.error("❌ Session save error:", err);
     }
-  }
-
-  // Якщо користувач є в сесії, повертаємо його
-  res.json(req.user);
+    res.redirect("https://deft-peony-874b49.netlify.app");
+  });
 });
+
+
+app.get("/api/user", (req, res) => {
+  if (req.user) {
+    return res.json(req.user);
+  }
+  return res.status(401).json({ error: "User not authenticated" });
+});
+
 
 
 
