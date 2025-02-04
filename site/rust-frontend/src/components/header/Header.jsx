@@ -14,30 +14,41 @@ const Header = () => {
 
   // Fetch user data on component mount
   useEffect(() => {
-    axios
-      .get("https://rust-bedl.onrender.com/api/user", { withCredentials: true })
-      .then((response) => {
-        if (response.data) {
-          setUserState(response.data);
-          dispatch(setUser(response.data));  
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  }, [dispatch]);
+    const token = localStorage.getItem("jwtToken");
 
+    if (token) {
+      axios
+        .get("https://rust-bedl.onrender.com/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          if (response.data) {
+            dispatch(setUser(response.data));
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user:", error);
+        });
+    }
+  }, [dispatch]);
 
   const handleLogin = () => {
     window.location.href = "https://rust-bedl.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
-    // Ваша логіка виходу
+    // Удаляем токен из localStorage
+    localStorage.removeItem("jwtToken");
+
+    // Логика выхода
     axios
       .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
       .then(() => {
         dispatch(clearUser());
+        window.location.href = "/";  // Редирект на главную
       })
       .catch((error) => {
         console.error("Logout error:", error);

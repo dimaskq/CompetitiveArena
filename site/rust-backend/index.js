@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -7,7 +6,7 @@ const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./models/User");
-const Session = require("./models/Session"); // Подключаем модель сессии
+const Session = require("./models/Session");
 const MongoStore = require("connect-mongo");
 const jwt = require("jsonwebtoken");
 
@@ -33,18 +32,10 @@ app.use(
     store: MongoStore.create({
       mongoUrl: db,
       collectionName: "sessions",
-      transformData(session) {
-        return {
-          user_id: session.passport?.user || "guest",
-          jwt: session.jwtToken || null,
-          createdAt: new Date(),
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
-        };
-      },
     }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
-      secure: true,
+      secure: false, // Для локальной разработки
       httpOnly: true,
       sameSite: "lax",
     },
@@ -82,48 +73,24 @@ passport.use(
 passport.serializeUser(async (user, done) => {
   try {
     console.log("Serializing user:", user._id);
-    
-    // Создание записи сессии в БД, если её нет
     const jwtToken = generateJwt(user);
 
-    const sessionRecord = await Session.create({
-      user_id: user._id.toString(),
-      jwt: jwtToken,
-      createdAt: new Date(),
-      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    });
-
-    done(null, sessionRecord._id.toString()); // Сохраняем ID сессии
+    done(null, { userId: user._id, jwtToken }); // Возвращаем jwtToken вместе с ID
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
   }
 });
 
-passport.deserializeUser(async (sessionId, done) => {
+passport.deserializeUser(async (sessionData, done) => {
   try {
-    console.log("Deserializing session ID:", sessionId);
-
-    const session = await Session.findById(sessionId);
-    if (!session) {
-      console.warn("⚠️ No session found for ID:", sessionId);
-      return done(null, false);
-    }
-
-    const user = await User.findById(session.user_id);
-    if (!user) {
-      console.warn("⚠️ User not found for session:", sessionId);
-      return done(null, false);
-    }
-
-    console.log("✅ Deserialized user:", user);
+    const user = await User.findById(sessionData.userId);
     done(null, user);
   } catch (err) {
     console.error("❌ Error during deserialization:", err);
     done(err, null);
   }
 });
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -134,6 +101,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 app.get("/auth/steam", passport.authenticate("steam"));
@@ -142,24 +110,7 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
   const jwtToken = generateJwt(req.user);
   req.session.jwtToken = jwtToken;
 
-  try {
-    await Session.create({
-      user_id: req.user._id.toString(),
-      jwt: jwtToken,
-      createdAt: new Date(),
-      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    });
-
-    req.session.save((err) => {
-      if (err) {
-        console.error("❌ Error saving session:", err);
-      }
-      res.redirect("https://deft-peony-874b49.netlify.app");
-    });
-  } catch (err) {
-    console.error("❌ Error creating session in DB:", err);
-    res.status(500).json({ error: "Session storage error" });
-  }
+  res.redirect("https://deft-peony-874b49.netlify.app");  // Перенаправление на фронт
 });
 
 function generateJwt(user) {
@@ -170,43 +121,17 @@ function generateJwt(user) {
   return jwt.sign(payload, secretKey, { expiresIn: "7d" });
 }
 
-app.get("/api/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    return res.json(users);
-  } catch (err) {
-    console.error("❌ Error fetching users:", err);
-    return res.status(500).json({ error: "Server error" });
-  }
-});
-
-app.get("/api/sessions", async (req, res) => {
-  try {
-    const sessions = await Session.find();
-    return res.json(sessions);
-  } catch (err) {
-    console.error("❌ Error fetching sessions:", err);
-    return res.status(500).json({ error: "Server error fetching sessions" });
-  }
-});
-
 app.get("/api/user", (req, res) => {
   if (req.user) {
-    return res.json(req.user);
+    return res.json(req.user);  // Отправляем данные пользователя
   }
   return res.status(401).json({ error: "User not authenticated" });
 });
 
 app.get("/logout", async (req, res) => {
-  try {
-    await Session.deleteOne({ user_id: req.user?._id.toString() }); // Удаление сессии
-    req.logout(() => {
-      res.redirect("/");
-    });
-  } catch (err) {
-    console.error("❌ Error logging out:", err);
-    res.status(500).json({ error: "Logout error" });
-  }
+  req.logout(() => {
+    res.redirect("/");  // Редирект на главную страницу
+  });
 });
 
 const PORT = 5000;
