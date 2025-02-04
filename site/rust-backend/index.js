@@ -79,39 +79,51 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
-  console.log("Serializing user:", user._id.toString());
-  done(null, user._id.toString());
-});
-
-app.use((req, res, next) => {
-  console.log("🛠 Middleware: Checking session:", req.session);
-  next();
-});
-
-passport.deserializeUser(async (id, done) => {
+passport.serializeUser(async (user, done) => {
   try {
-    console.log("🔄 Deserializing user ID:", id);
+    console.log("Serializing user:", user._id);
+    
+    // Создание записи сессии в БД, если её нет
+    const jwtToken = generateJwt(user);
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      console.error("❌ Invalid ObjectId format:", id);
+    const sessionRecord = await Session.create({
+      user_id: user._id.toString(),
+      jwt: jwtToken,
+      createdAt: new Date(),
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    });
+
+    done(null, sessionRecord._id.toString()); // Сохраняем ID сессии
+  } catch (err) {
+    console.error("❌ Error during serialization:", err);
+    done(err, null);
+  }
+});
+
+passport.deserializeUser(async (sessionId, done) => {
+  try {
+    console.log("Deserializing session ID:", sessionId);
+
+    const session = await Session.findById(sessionId);
+    if (!session) {
+      console.warn("⚠️ No session found for ID:", sessionId);
       return done(null, false);
     }
 
-    const user = await User.findById(id);
-
+    const user = await User.findById(session.user_id);
     if (!user) {
-      console.warn("⚠️ User not found in DB for ID:", id);
+      console.warn("⚠️ User not found for session:", sessionId);
       return done(null, false);
     }
 
     console.log("✅ Deserialized user:", user);
     done(null, user);
   } catch (err) {
-    console.error("❌ Error in deserializeUser:", err);
+    console.error("❌ Error during deserialization:", err);
     done(err, null);
   }
 });
+
 
 app.use(passport.initialize());
 app.use(passport.session());
