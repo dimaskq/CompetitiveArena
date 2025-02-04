@@ -133,6 +133,16 @@ app.get("/auth/steam/return", passport.authenticate("steam"), (req, res) => {
   });
 });
 
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find(); // Знайти всіх користувачів
+    return res.json(users);
+  } catch (err) {
+    console.error("❌ Error fetching users:", err);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 app.get("/api/user", (req, res) => {
   if (req.user) {
@@ -140,11 +150,6 @@ app.get("/api/user", (req, res) => {
   }
   return res.status(401).json({ error: "User not authenticated" });
 });
-
-
-
-
-
 
 app.get("/logout", (req, res) => {
   req.logout(() => {
