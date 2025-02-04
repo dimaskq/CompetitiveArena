@@ -180,6 +180,16 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
+app.get("/api/sessions", async (req, res) => {
+  try {
+    const sessions = await Session.find();
+    return res.json(sessions);
+  } catch (err) {
+    console.error("❌ Error fetching sessions:", err);
+    return res.status(500).json({ error: "Server error fetching sessions" });
+  }
+});
+
 app.get("/api/user", (req, res) => {
   if (req.user) {
     return res.json(req.user);
