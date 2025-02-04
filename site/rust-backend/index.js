@@ -12,7 +12,7 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 
-const secretKey = process.env.SECRET_KEY;
+// const secretKey = process.env.SECRET_KEY;
 if (!secretKey) {
   console.error("❌ SECRET_KEY is not defined in environment variables.");
   process.exit(1);
