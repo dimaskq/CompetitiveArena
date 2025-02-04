@@ -81,18 +81,19 @@ app.use((req, res, next) => {
   next();
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser(async (id, done) => {
   console.log("🔄 Deserializing user:", id, typeof id);
 
   try {
-    const user = User.findById(id);
+    const user = await User.findById(id);
     console.log("✅ Found user:", user);
-    done(null, user || null);
+    done(null, user);
   } catch (err) {
     console.error("❌ Error in deserializeUser:", err);
     done(err, null);
   }
 });
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -121,17 +122,36 @@ app.get(
   }
 );
 
-
-app.get("/api/user", (req, res) => {
-  console.log("Session:", req.session);
-  console.log("User:", req.user);
+app.get("/api/user", async (req, res) => {
+  console.log("🛠 Checking session in /api/user route:", req.session);
+  console.log("🔒 User from session:", req.user);
 
   if (!req.user) {
-    return res.status(401).json({ error: "User not found" });
+    // Якщо користувач не в сесії, спробуємо знайти його за steamId у базі
+    if (req.session.steamId) {
+      try {
+        const user = await User.findOne({ steamId: req.session.steamId });
+        if (user) {
+          // Знайшли користувача, повертаємо його
+          return res.json(user);
+        } else {
+          return res.status(401).json({ error: "User not found in database" });
+        }
+      } catch (error) {
+        console.error("❌ Error while finding user in DB:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    } else {
+      // Якщо немає навіть steamId в сесії
+      return res.status(401).json({ error: "User not authenticated" });
+    }
   }
-  
+
+  // Якщо користувач є в сесії, повертаємо його
   res.json(req.user);
 });
+
+
 
 
 
