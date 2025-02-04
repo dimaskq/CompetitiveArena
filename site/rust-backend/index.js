@@ -7,11 +7,13 @@ const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./models/User");
+const Session = require("./models/Session"); // Подключаем модель сессии
 const MongoStore = require("connect-mongo");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const secretKey = "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff"
+
+const secretKey = "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff";
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
@@ -25,7 +27,7 @@ mongoose
 
 app.use(
   session({
-    secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff",
+    secret: secretKey,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -35,11 +37,13 @@ app.use(
         return {
           user_id: session.passport?.user || "guest",
           jwt: session.jwtToken || null,
+          createdAt: new Date(),
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
         };
       },
     }),
     cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
       secure: true,
       httpOnly: true,
       sameSite: "lax",
@@ -122,16 +126,28 @@ app.use(express.json());
 
 app.get("/auth/steam", passport.authenticate("steam"));
 
-app.get("/auth/steam/return", passport.authenticate("steam"), (req, res) => {
+app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
   const jwtToken = generateJwt(req.user);
   req.session.jwtToken = jwtToken;
 
-  req.session.save((err) => {
-    if (err) {
-      console.error("❌ Error saving session:", err);
-    }
-    res.redirect("https://deft-peony-874b49.netlify.app");
-  });
+  try {
+    await Session.create({
+      user_id: req.user._id.toString(),
+      jwt: jwtToken,
+      createdAt: new Date(),
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    });
+
+    req.session.save((err) => {
+      if (err) {
+        console.error("❌ Error saving session:", err);
+      }
+      res.redirect("https://deft-peony-874b49.netlify.app");
+    });
+  } catch (err) {
+    console.error("❌ Error creating session in DB:", err);
+    res.status(500).json({ error: "Session storage error" });
+  }
 });
 
 function generateJwt(user) {
@@ -159,10 +175,16 @@ app.get("/api/user", (req, res) => {
   return res.status(401).json({ error: "User not authenticated" });
 });
 
-app.get("/logout", (req, res) => {
-  req.logout(() => {
-    res.redirect("/");
-  });
+app.get("/logout", async (req, res) => {
+  try {
+    await Session.deleteOne({ user_id: req.user?._id.toString() }); // Удаление сессии
+    req.logout(() => {
+      res.redirect("/");
+    });
+  } catch (err) {
+    console.error("❌ Error logging out:", err);
+    res.status(500).json({ error: "Logout error" });
+  }
 });
 
 const PORT = 5000;
