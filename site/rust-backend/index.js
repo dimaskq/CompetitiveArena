@@ -81,11 +81,11 @@ app.use((req, res, next) => {
   next();
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser((id, done) => {
   console.log("🔄 Deserializing user:", id, typeof id);
 
   try {
-    const user = await User.findById(id);
+    const user = User.findById(id);
     console.log("✅ Found user:", user);
     done(null, user || null);
   } catch (err) {
@@ -126,9 +126,9 @@ app.get("/api/user", (req, res) => {
   console.log("Session:", req.session);
   console.log("User:", req.user);
 
-  // if (!req.user) {
-  //   return res.status(401).json({ error: "User not found" });
-  // }
+  if (!req.user) {
+    return res.status(401).json({ error: "User not found" });
+  }
   
   res.json(req.user);
 });
