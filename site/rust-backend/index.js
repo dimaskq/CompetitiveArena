@@ -8,10 +8,16 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./models/User");
 const MongoStore = require("connect-mongo");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
 const secretKey = process.env.SECRET_KEY;
+if (!secretKey) {
+  console.error("❌ SECRET_KEY is not defined in environment variables.");
+  process.exit(1);
+}
+
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
@@ -23,31 +29,29 @@ mongoose
     process.exit(1);
   });
 
-  app.use(
-    session({
-      secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff",
-      resave: false,
-      saveUninitialized: false,
-      store: MongoStore.create({
-        mongoUrl: db,
-        collectionName: "sessions",
-        transformData(session) {
-          return {
-            user_id: session.passport?.user || "guest",
-            jwt: session.jwtToken || null,
-          };
-        },
-      }),
-      cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        secure: true,
-        httpOnly: true,
-        sameSite: "lax",
+app.use(
+  session({
+    secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: db,
+      collectionName: "sessions",
+      transformData(session) {
+        return {
+          user_id: session.passport?.user || "guest",
+          jwt: session.jwtToken || null,
+        };
       },
-    })
-  );
-  
-  
+    }),
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true,
+      httpOnly: true,
+      sameSite: "lax",
+    },
+  })
+);
 
 passport.use(
   new SteamStrategy(
@@ -79,7 +83,7 @@ passport.use(
 
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user._id.toString());
-  done(null, user._id.toString()); 
+  done(null, user._id.toString());
 });
 
 app.use((req, res, next) => {
@@ -93,7 +97,7 @@ passport.deserializeUser(async (id, done) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       console.error("❌ Invalid ObjectId format:", id);
-      return done(null, false); 
+      return done(null, false);
     }
 
     const user = await User.findById(id);
@@ -111,15 +115,9 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-
-
-// Middleware
 app.use(
   cors({
     origin: "https://deft-peony-874b49.netlify.app",
@@ -131,7 +129,7 @@ app.use(express.json());
 app.get("/auth/steam", passport.authenticate("steam"));
 
 app.get("/auth/steam/return", passport.authenticate("steam"), (req, res) => {
-  const jwtToken = generateJwt(req.user); 
+  const jwtToken = generateJwt(req.user);
   req.session.jwtToken = jwtToken;
 
   req.session.save((err) => {
@@ -150,17 +148,15 @@ function generateJwt(user) {
   return jwt.sign(payload, secretKey, { expiresIn: "7d" });
 }
 
-
 app.get("/api/users", async (req, res) => {
   try {
-    const users = await User.find(); // Знайти всіх користувачів
+    const users = await User.find();
     return res.json(users);
   } catch (err) {
     console.error("❌ Error fetching users:", err);
     return res.status(500).json({ error: "Server error" });
   }
 });
-
 
 app.get("/api/user", (req, res) => {
   if (req.user) {
