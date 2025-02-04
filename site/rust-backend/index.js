@@ -25,22 +25,28 @@ mongoose
 
   app.use(
     session({
-      secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff", 
+      secret: "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff",
       resave: false,
-      saveUninitialized: false, 
+      saveUninitialized: false,
       store: MongoStore.create({
-        mongoUrl: db,  
-        collectionName: 'sessions',
-        ttl: 7 * 24 * 60 * 60, 
+        mongoUrl: db,
+        collectionName: "sessions",
+        transformData(session) {
+          return {
+            user_id: session.passport?.user || "guest",
+            jwt: session.jwtToken || null,
+          };
+        },
       }),
-      cookie: { 
-        maxAge: 7 * 24 * 60 * 60 * 1000, 
-        secure: true, 
+      cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: true,
         httpOnly: true,
         sameSite: "lax",
-      }
+      },
     })
   );
+  
   
 
 passport.use(
@@ -125,13 +131,25 @@ app.use(express.json());
 app.get("/auth/steam", passport.authenticate("steam"));
 
 app.get("/auth/steam/return", passport.authenticate("steam"), (req, res) => {
+  const jwtToken = generateJwt(req.user); 
+  req.session.jwtToken = jwtToken;
+
   req.session.save((err) => {
     if (err) {
-      console.error("❌ Session save error:", err);
+      console.error("❌ Error saving session:", err);
     }
     res.redirect("https://deft-peony-874b49.netlify.app");
   });
 });
+
+function generateJwt(user) {
+  const payload = {
+    id: user._id,
+    steamId: user.steamId,
+  };
+  return jwt.sign(payload, secretKey, { expiresIn: "7d" });
+}
+
 
 app.get("/api/users", async (req, res) => {
   try {
