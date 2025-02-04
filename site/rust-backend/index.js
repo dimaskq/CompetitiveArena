@@ -11,7 +11,7 @@ const MongoStore = require("connect-mongo");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-
+const secretKey = "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff"
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
