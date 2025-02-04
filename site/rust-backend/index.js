@@ -12,12 +12,6 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 
-// const secretKey = process.env.SECRET_KEY;
-if (!secretKey) {
-  console.error("❌ SECRET_KEY is not defined in environment variables.");
-  process.exit(1);
-}
-
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
