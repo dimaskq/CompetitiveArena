@@ -82,10 +82,11 @@ passport.serializeUser(async (user, done) => {
   }
 });
 
-passport.deserializeUser(async (sessionData, done) => {
-  console.log("Session data:", sessionData);  
+passport.deserializeUser(async (sessionData, done) => {  
   try {
+    console.log("Session data:", sessionData);  
     const userId = mongoose.Types.ObjectId(sessionData.userId);
+    console.log("UserID:", userId);  
     const user = await User.findById(userId);
     done(null, user);
   } catch (err) {
