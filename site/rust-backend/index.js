@@ -74,27 +74,34 @@ passport.serializeUser(async (user, done) => {
   try {
     console.log("Serializing user:", user._id);
     const jwtToken = generateJwt(user);
-    
-    const sessionData = { userId: user._id.toString(), jwtToken };
-    console.log("Saving session:", sessionData);
-    
-    done(null, sessionData);
+
+    const session = await Session.findOneAndUpdate(
+      { user_id: user._id.toString() }, 
+      {
+        jwt: jwtToken,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
+      },
+      { upsert: true, new: true } 
+    );
+
+    console.log("Session saved/updated:", session);
+    done(null, session._id.toString()); 
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
   }
 });
 
-
-passport.deserializeUser(async (sessionData, done) => {
+passport.deserializeUser(async (sessionId, done) => {
   try {
-    console.log("Loading session data:", sessionData);
-    
-    if (!sessionData || !sessionData.userId) throw new Error("Invalid session data");
-    const user = await User.findById(sessionData.userId);
-    
+    console.log("Loading session with ID:", sessionId);
+
+    const session = await Session.findById(sessionId);
+    if (!session) throw new Error("Session not found");
+
+    const user = await User.findById(session.user_id);
     if (!user) throw new Error("User not found");
-    
+
     console.log("Deserialized user:", user);
     done(null, user);
   } catch (err) {
@@ -119,11 +126,14 @@ app.use(express.json());
 app.get("/auth/steam", passport.authenticate("steam"));
 
 app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
-  const jwtToken = generateJwt(req.user);
-  req.session.jwtToken = jwtToken;
+  console.log("User authenticated:", req.user); 
 
-  res.redirect("https://deft-peony-874b49.netlify.app");  // Перенаправление на фронт
+  const jwtToken = generateJwt(req.user);
+  req.session.jwtToken = jwtToken; 
+
+  res.redirect("https://deft-peony-874b49.netlify.app"); 
 });
+
 
 function generateJwt(user) {
   const payload = {
