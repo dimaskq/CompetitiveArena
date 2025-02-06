@@ -148,3 +148,8 @@ app.get("/logout", async (req, res) => {
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+app.use((req, res, next) => {
+  console.log("Session data:", req.session);
+  next();
+});
