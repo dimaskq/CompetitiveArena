@@ -150,14 +150,14 @@ function generateJwt(user) {
 
 app.get("/api/user", (req, res) => {
   if (req.user) {
-    return res.json(req.user);  // Отправляем данные пользователя
+    return res.json({ user: req.user, jwt: req.session.jwtToken });
   }
   return res.status(401).json({ error: "User not authenticated" });
 });
 
 app.get("/logout", async (req, res) => {
   req.logout(() => {
-    res.redirect("/");  // Редирект на главную страницу
+    res.redirect("/");  
   });
 });
 
