@@ -40,15 +40,13 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // Удаляем токен из localStorage
     localStorage.removeItem("jwtToken");
 
-    // Логика выхода
     axios
       .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
       .then(() => {
         dispatch(clearUser());
-        window.location.href = "/";  // Редирект на главную
+        window.location.href = "/";
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -70,9 +68,9 @@ const Header = () => {
             {user ? (
               <div className="user-info">
                 <div className="avatar-container">
-                  {/* Проверяем наличие avatar */}
+                  {/* is avatar? */}
                   <img
-                    src={user.avatar || "default-avatar.jpg"} // Показываем аватар пользователя
+                    src={user.avatar || "default-avatar.jpg"}
                     alt="Avatar"
                     className="avatar"
                   />

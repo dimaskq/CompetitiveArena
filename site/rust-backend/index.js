@@ -85,7 +85,8 @@ passport.serializeUser(async (user, done) => {
 passport.deserializeUser(async (sessionData, done) => {
   console.log("Session data:", sessionData);  
   try {
-    const user = await User.findById(sessionData.userId);
+    const userId = mongoose.Types.ObjectId(sessionData.userId);
+    const user = await User.findById(userId);
     done(null, user);
   } catch (err) {
     console.error("❌ Error during deserialization:", err);
