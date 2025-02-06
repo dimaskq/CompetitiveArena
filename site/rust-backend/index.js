@@ -28,14 +28,14 @@ app.use(
   session({
     secret: secretKey,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: db,
       collectionName: "sessions",
     }),
     cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
-      secure: false, // Для локальной разработки
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: true, 
       httpOnly: true,
       sameSite: "lax",
     },
@@ -75,7 +75,7 @@ passport.serializeUser(async (user, done) => {
     console.log("Serializing user:", user._id);
     const jwtToken = generateJwt(user);
 
-    done(null, { userId: user._id, jwtToken }); // Возвращаем jwtToken вместе с ID
+    done(null, { userId: user._id, jwtToken });
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
@@ -83,6 +83,7 @@ passport.serializeUser(async (user, done) => {
 });
 
 passport.deserializeUser(async (sessionData, done) => {
+  console.log("Session data:", sessionData);  
   try {
     const user = await User.findById(sessionData.userId);
     done(null, user);
