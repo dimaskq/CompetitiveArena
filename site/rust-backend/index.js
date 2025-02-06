@@ -74,26 +74,27 @@ passport.serializeUser(async (user, done) => {
   try {
     console.log("Serializing user:", user._id);
     const jwtToken = generateJwt(user);
-
-    done(null, { userId: user._id, jwtToken });
+    
+    done(null, { userId: user._id.toString(), jwtToken });
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
   }
 });
 
-passport.deserializeUser(async (sessionData, done) => {  
+
+const mongoose = require("mongoose");
+
+passport.deserializeUser(async (sessionData, done) => {
   try {
-    console.log("Session data:", sessionData);  
-    const userId = mongoose.Types.ObjectId(sessionData.userId);
-    console.log("UserID:", userId);  
-    const user = await User.findById(userId);
+    const user = await User.findById(new mongoose.Types.ObjectId(sessionData.userId));
     done(null, user);
   } catch (err) {
     console.error("❌ Error during deserialization:", err);
     done(err, null);
   }
 });
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -113,14 +114,8 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
   const jwtToken = generateJwt(req.user);
   req.session.jwtToken = jwtToken;
 
-  req.session.save((err) => {
-    if (err) {
-      console.error("❌ Ошибка сохранения сессии:", err);
-    }
-    res.redirect("https://deft-peony-874b49.netlify.app");
-  });
+  res.redirect("https://deft-peony-874b49.netlify.app");  // Перенаправление на фронт
 });
-
 
 function generateJwt(user) {
   const payload = {
