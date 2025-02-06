@@ -75,16 +75,27 @@ passport.serializeUser(async (user, done) => {
     console.log("Serializing user:", user._id);
     const jwtToken = generateJwt(user);
     
-    done(null, { userId: user._id.toString(), jwtToken });
+    const sessionData = { userId: user._id.toString(), jwtToken };
+    console.log("Saving session:", sessionData);
+    
+    done(null, sessionData);
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
   }
 });
 
+
 passport.deserializeUser(async (sessionData, done) => {
   try {
-    const user = await User.findById(new mongoose.Types.ObjectId(sessionData.userId));
+    console.log("Loading session data:", sessionData);
+    
+    if (!sessionData || !sessionData.userId) throw new Error("Invalid session data");
+    const user = await User.findById(sessionData.userId);
+    
+    if (!user) throw new Error("User not found");
+    
+    console.log("Deserialized user:", user);
     done(null, user);
   } catch (err) {
     console.error("❌ Error during deserialization:", err);
