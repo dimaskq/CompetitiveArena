@@ -82,9 +82,6 @@ passport.serializeUser(async (user, done) => {
   }
 });
 
-
-const mongoose = require("mongoose");
-
 passport.deserializeUser(async (sessionData, done) => {
   try {
     const user = await User.findById(new mongoose.Types.ObjectId(sessionData.userId));
