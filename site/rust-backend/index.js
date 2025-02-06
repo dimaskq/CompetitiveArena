@@ -75,33 +75,22 @@ passport.serializeUser(async (user, done) => {
     console.log("Serializing user:", user._id);
     const jwtToken = generateJwt(user);
 
-    // Ищем сессию для пользователя
-    let session = await Session.findOne({ user_id: user._id.toString() });
-
-    if (session) {
-      // Если сессия существует, обновляем её
-      session.jwt = jwtToken;
-      session.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Обновляем срок действия сессии
-      await session.save(); // Сохраняем обновленную сессию
-    } else {
-      // Если сессия не найдена, создаём новую
-      session = new Session({
-        user_id: user._id.toString(),
+    const session = await Session.findOneAndUpdate(
+      { user_id: user._id.toString() }, 
+      {
         jwt: jwtToken,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
-      });
-      await session.save(); // Сохраняем новую сессию
-    }
+      },
+      { upsert: true, new: true } 
+    );
 
     console.log("Session saved/updated:", session);
-    done(null, session._id.toString()); // Сериализуем ID сессии
+    done(null, session._id.toString()); 
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
   }
 });
-
-
 
 passport.deserializeUser(async (sessionId, done) => {
   try {
@@ -168,15 +157,9 @@ app.get("/api/user", (req, res) => {
 
 app.get("/logout", async (req, res) => {
   req.logout(() => {
-    Session.deleteOne({ _id: req.sessionID }).then(() => {
-      res.redirect("/");  
-    }).catch((err) => {
-      console.error("Error during logout session cleanup:", err);
-      res.redirect("/");
-    });
+    res.redirect("/");  
   });
 });
-
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
