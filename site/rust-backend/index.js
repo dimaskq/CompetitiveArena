@@ -75,29 +75,32 @@ passport.serializeUser(async (user, done) => {
     console.log("Serializing user:", user._id);
     const jwtToken = generateJwt(user);
 
-    // Проверьте, существует ли сессия для данного пользователя
+    // Ищем сессию для пользователя
     let session = await Session.findOne({ user_id: user._id.toString() });
 
-    if (!session) {
+    if (session) {
+      // Если сессия существует, обновляем её
+      session.jwt = jwtToken;
+      session.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Обновляем срок действия сессии
+      await session.save(); // Сохраняем обновленную сессию
+    } else {
+      // Если сессия не найдена, создаём новую
       session = new Session({
         user_id: user._id.toString(),
         jwt: jwtToken,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
       });
-      await session.save(); 
-    } else {
-      session.jwt = jwtToken; 
-      session.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); 
-      await session.save(); 
+      await session.save(); // Сохраняем новую сессию
     }
 
     console.log("Session saved/updated:", session);
-    done(null, session._id.toString());
+    done(null, session._id.toString()); // Сериализуем ID сессии
   } catch (err) {
     console.error("❌ Error during serialization:", err);
     done(err, null);
   }
 });
+
 
 
 passport.deserializeUser(async (sessionId, done) => {
