@@ -94,13 +94,17 @@ passport.serializeUser(async (user, done) => {
 
 passport.deserializeUser(async (sessionId, done) => {
   try {
-    console.log("Loading session with ID:", sessionId);
+    console.log("Session ID from request:", sessionId);
 
     const session = await Session.findById(sessionId);
-    if (!session) throw new Error("Session not found");
+    if (!session) {
+      return done(new Error("Session not found"));
+    }
 
     const user = await User.findById(session.user_id);
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      return done(new Error("User not found"));
+    }
 
     console.log("Deserialized user:", user);
     done(null, user);
@@ -109,6 +113,7 @@ passport.deserializeUser(async (sessionId, done) => {
     done(err, null);
   }
 });
+
 
 
 app.use(passport.initialize());

@@ -14,25 +14,18 @@ const Header = () => {
 
   // Fetch user data on component mount
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
-
-    if (token) {
-      axios
-        .get("https://rust-bedl.onrender.com/api/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        })
-        .then((response) => {
-          if (response.data) {
-            dispatch(setUser(response.data));
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error);
-        });
-    }
+    axios
+      .get("https://rust-bedl.onrender.com/api/user", {
+        withCredentials: true, // Отправка с cookies
+      })
+      .then((response) => {
+        if (response.data) {
+          dispatch(setUser(response.data));
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
   }, [dispatch]);
 
   const handleLogin = () => {
@@ -40,13 +33,11 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
-
     axios
-      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true })
+      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true }) // Отправляем с cookies
       .then(() => {
         dispatch(clearUser());
-        window.location.href = "/";
+        window.location.href = "/"; // Перенаправление на главную
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -68,7 +59,7 @@ const Header = () => {
             {user ? (
               <div className="user-info">
                 <div className="avatar-container">
-                  {/* is avatar? */}
+                  {/* Отображаем аватарку пользователя */}
                   <img
                     src={user.avatar || "default-avatar.jpg"}
                     alt="Avatar"
@@ -76,12 +67,18 @@ const Header = () => {
                   />
                   <span className="username">{user.displayName}</span>
                 </div>
-                <button className="header__person header__person_logOut" onClick={handleLogout}>
+                <button
+                  className="header__person header__person_logOut"
+                  onClick={handleLogout}
+                >
                   Logout
                 </button>
               </div>
             ) : (
-              <button className="header__person header__person_logIn" onClick={handleLogin}>
+              <button
+                className="header__person header__person_logIn"
+                onClick={handleLogin}
+              >
                 LOG IN WITH STEAM
               </button>
             )}
