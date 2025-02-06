@@ -113,8 +113,14 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
   const jwtToken = generateJwt(req.user);
   req.session.jwtToken = jwtToken;
 
-  res.redirect("https://deft-peony-874b49.netlify.app");  // Перенаправление на фронт
+  req.session.save((err) => {
+    if (err) {
+      console.error("❌ Ошибка сохранения сессии:", err);
+    }
+    res.redirect("https://deft-peony-874b49.netlify.app");
+  });
 });
+
 
 function generateJwt(user) {
   const payload = {
