@@ -9,6 +9,7 @@ const User = require("./models/User");
 const Session = require("./models/Session");
 const MongoStore = require("connect-mongo");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -45,7 +46,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://deft-peony-874b49.netlify.app",
+    origin: "*", //"https://deft-peony-874b49.netlify.app",
     credentials: true,
   })
 );
@@ -81,13 +82,11 @@ passport.use(
 passport.serializeUser(async (user, done) => {
   try {
     console.log("Serializing user:", user._id);
-    //const jwtToken = generateJwt(user);
 
     const session = await Session.findOneAndUpdate(
       { user_id: user._id.toString() }, 
       {
-        //jwt: jwtToken,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
       },
       { upsert: true, new: true } 
     );
@@ -104,7 +103,7 @@ passport.deserializeUser(async (userId, done) => {
   try {
     console.log("Deserializing user with User ID:", userId);
 
-    const user = await User.findone({ user_id: user._id });
+    const user = await User.findOne({ user_id: userId });
     if (!user) {
       console.error("User not found for user_id:", userId);
       return done(new Error("User not found"));
@@ -118,49 +117,38 @@ passport.deserializeUser(async (userId, done) => {
   }
 });
 
-
-
-
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.json());
 
-// app.get('/', function(req, res){
-//   console.log("user: " + req.user);
-//  // res.render('index', { user: req.user });
-// });
-
-app.get('/auth/steam',
-  passport.authenticate('steam', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect("https://deft-peony-874b49.netlify.app/");
-  });
+app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "https://deft-peony-874b49.netlify.app" }), (req, res) => {
+  res.redirect("https://deft-peony-874b49.netlify.app/");
+});
 
 app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
   console.log("User authenticated:", req.user); 
 
-  //const jwtToken = generateJwt(req.user);
-  //req.session.jwtToken = jwtToken; 
+  if (req.user) {
+    const tokenPayload = { userId: req.user._id, displayName: req.user.displayName };
+    const jwtToken = jwt.sign(tokenPayload, secretKey, { expiresIn: "7d" });
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
 
-  res.redirect("https://deft-peony-874b49.netlify.app/");
+    res.cookie("id_token", jwtToken, { expires, httpOnly: true, secure: true, sameSite: "Lax" });
+    res.redirect(302, "https://deft-peony-874b49.netlify.app/");
+  } else {
+    res.status(401).json({ error: "Authentication failed" });
+  }
 });
-
-function generateJwt(user) {
-  const payload = {
-    id: user._id,
-    steamId: user.steamId,
-  };
-  return jwt.sign(payload, secretKey, { expiresIn: "7d" });
-}
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect("https://deft-peony-874b49.netlify.app/");
+  passport.authenticate("steam", { failureRedirect: "https://deft-peony-874b49.netlify.app" });
 }
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
-    return res.json({ user: req.user, jwt: req.session });
+  return res.json({ user: req.user, jwt: req.session });
 });
 
 app.get("/logout", async (req, res) => {
