@@ -26,8 +26,9 @@ mongoose
 
 app.use(
   session({
+    name: "session.id",
     secret: secretKey,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: db,
@@ -80,12 +81,12 @@ passport.use(
 passport.serializeUser(async (user, done) => {
   try {
     console.log("Serializing user:", user._id);
-    const jwtToken = generateJwt(user);
+    //const jwtToken = generateJwt(user);
 
     const session = await Session.findOneAndUpdate(
       { user_id: user._id.toString() }, 
       {
-        jwt: jwtToken,
+        //jwt: jwtToken,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 
       },
       { upsert: true, new: true } 
@@ -103,7 +104,7 @@ passport.deserializeUser(async (userId, done) => {
   try {
     console.log("Deserializing user with User ID:", userId);
 
-    const user = await User.findById(userId);
+    const user = await User.findone({ user_id: user._id });
     if (!user) {
       console.error("User not found for user_id:", userId);
       return done(new Error("User not found"));
@@ -125,15 +126,24 @@ app.use(passport.session());
 
 app.use(express.json());
 
-app.get("/auth/steam", passport.authenticate("steam"));
+app.get('/', function(req, res){
+  console.log("user: " + req.user);
+  res.render('index', { user: req.user });
+});
+
+app.get('/auth/steam',
+  passport.authenticate('steam', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
   console.log("User authenticated:", req.user); 
 
-  const jwtToken = generateJwt(req.user);
-  req.session.jwtToken = jwtToken; 
+  //const jwtToken = generateJwt(req.user);
+  //req.session.jwtToken = jwtToken; 
 
-  res.redirect("https://deft-peony-874b49.netlify.app"); 
+  res.redirect("/"); 
 });
 
 function generateJwt(user) {
@@ -144,11 +154,13 @@ function generateJwt(user) {
   return jwt.sign(payload, secretKey, { expiresIn: "7d" });
 }
 
-app.get("/api/user", (req, res) => {
-  if (req.user) {
-    return res.json({ user: req.user, jwt: req.session.jwtToken });
-  }
-  return res.status(401).json({ error: "User not authenticated" });
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}
+
+app.get("/api/user", ensureAuthenticated, (req, res) => {
+    return res.json({ user: req.user, jwt: req.session });
 });
 
 app.get("/logout", async (req, res) => {
