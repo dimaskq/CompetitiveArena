@@ -128,7 +128,7 @@ app.use(express.json());
 
 app.get('/', function(req, res){
   console.log("user: " + req.user);
-  res.render('index', { user: req.user });
+ // res.render('index', { user: req.user });
 });
 
 app.get('/auth/steam',
