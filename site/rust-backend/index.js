@@ -126,15 +126,15 @@ app.use(passport.session());
 
 app.use(express.json());
 
-app.get('/', function(req, res){
-  console.log("user: " + req.user);
- // res.render('index', { user: req.user });
-});
+// app.get('/', function(req, res){
+//   console.log("user: " + req.user);
+//  // res.render('index', { user: req.user });
+// });
 
 app.get('/auth/steam',
   passport.authenticate('steam', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect("https://deft-peony-874b49.netlify.app/");
   });
 
 app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
@@ -143,7 +143,7 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
   //const jwtToken = generateJwt(req.user);
   //req.session.jwtToken = jwtToken; 
 
-  res.redirect("/"); 
+  res.redirect("https://deft-peony-874b49.netlify.app/");
 });
 
 function generateJwt(user) {
@@ -156,7 +156,7 @@ function generateJwt(user) {
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
+  res.redirect("https://deft-peony-874b49.netlify.app/");
 }
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
@@ -165,7 +165,7 @@ app.get("/api/user", ensureAuthenticated, (req, res) => {
 
 app.get("/logout", async (req, res) => {
   req.logout(() => {
-    res.redirect("/");  
+    res.redirect("https://deft-peony-874b49.netlify.app/");  
   });
 });
 
