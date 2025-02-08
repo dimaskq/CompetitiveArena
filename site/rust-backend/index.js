@@ -131,14 +131,23 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
   console.log("User authenticated:", req.user); 
 
   if (req.user) {
-    const tokenPayload = { userId: req.user._id, displayName: req.user.displayName };
-    const jwtToken = jwt.sign(tokenPayload, secretKey, { expiresIn: "7d" });
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); 
 
-    res.cookie("id_token", jwtToken, { expires, httpOnly: true, secure: true, sameSite: "Lax" });
-    res.redirect(302, "https://deft-peony-874b49.netlify.app/");
-  } else {
-    res.status(401).json({ error: "Authentication failed" });
+    res.cookie("user_id", req.user._id.toString(), { 
+      expires, 
+      httpOnly: true, 
+      secure: true, 
+      sameSite: "Lax" 
+    });
+
+    res.cookie("session_id", req.sessionID, {
+      expires,
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax"
+    });
+    
+    res.redirect(302, "http://localhost:8080");
   }
 });
 
