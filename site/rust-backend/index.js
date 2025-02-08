@@ -42,6 +42,13 @@ app.use(
   })
 );
 
+app.use(
+  cors({
+    origin: "https://deft-peony-874b49.netlify.app",
+    credentials: true,
+  })
+);
+
 passport.use(
   new SteamStrategy(
     {
@@ -79,7 +86,7 @@ passport.serializeUser(async (user, done) => {
       { user_id: user._id.toString() }, 
       {
         jwt: jwtToken,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 
       },
       { upsert: true, new: true } 
     );
@@ -92,17 +99,13 @@ passport.serializeUser(async (user, done) => {
   }
 });
 
-passport.deserializeUser(async (sessionId, done) => {
+passport.deserializeUser(async (userId, done) => {
   try {
-    console.log("Session ID from request:", sessionId);
+    console.log("Deserializing user with User ID:", userId);
 
-    const session = await Session.findById(sessionId);
-    if (!session) {
-      return done(new Error("Session not found"));
-    }
-
-    const user = await User.findById(session.user_id);
+    const user = await User.findById(userId);
     if (!user) {
+      console.error("User not found for user_id:", userId);
       return done(new Error("User not found"));
     }
 
@@ -116,15 +119,9 @@ passport.deserializeUser(async (sessionId, done) => {
 
 
 
+
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(
-  cors({
-    origin: "https://deft-peony-874b49.netlify.app",
-    credentials: true,
-  })
-);
 
 app.use(express.json());
 
@@ -138,7 +135,6 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
 
   res.redirect("https://deft-peony-874b49.netlify.app"); 
 });
-
 
 function generateJwt(user) {
   const payload = {

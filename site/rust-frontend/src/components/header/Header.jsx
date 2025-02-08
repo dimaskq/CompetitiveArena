@@ -12,11 +12,10 @@ const Header = () => {
   const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
 
-  // Fetch user data on component mount
   useEffect(() => {
     axios
       .get("https://rust-bedl.onrender.com/api/user", {
-        withCredentials: true, // Отправка с cookies
+        withCredentials: true,
       })
       .then((response) => {
         if (response.data) {
@@ -34,10 +33,10 @@ const Header = () => {
 
   const handleLogout = () => {
     axios
-      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true }) // Отправляем с cookies
+      .get("https://rust-bedl.onrender.com/logout", { withCredentials: true }) 
       .then(() => {
         dispatch(clearUser());
-        window.location.href = "/"; // Перенаправление на главную
+        window.location.href = "/"; 
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -59,7 +58,7 @@ const Header = () => {
             {user ? (
               <div className="user-info">
                 <div className="avatar-container">
-                  {/* Отображаем аватарку пользователя */}
+                  {/* Show user's avatar */}
                   <img
                     src={user.avatar || "default-avatar.jpg"}
                     alt="Avatar"
