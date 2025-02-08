@@ -146,8 +146,8 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
       secure: true,
       sameSite: "Lax"
     });
-    
-    res.redirect(302, "http://localhost:8080");
+
+    res.redirect(302, "https://deft-peony-874b49.netlify.app/");
   }
 });
 
