@@ -60,7 +60,7 @@ const Header = () => {
                 <div className="avatar-container">
                   {/* Show user's avatar */}
                   <img
-                    src={user.avatar || "default-avatar.jpg"}
+                    src={user.avatar}
                     alt="Avatar"
                     className="avatar"
                   />

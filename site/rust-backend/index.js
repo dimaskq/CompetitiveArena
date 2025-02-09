@@ -160,7 +160,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
+// });
 
