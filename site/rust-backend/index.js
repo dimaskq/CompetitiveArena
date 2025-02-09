@@ -19,11 +19,11 @@ const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
 // Serve static files from frontend build
-app.use(express.static(path.join(__dirname, "..rust-frontend/dist")));
+app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
 
 // Handle all other routes for React routing
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..rust-frontend/dist", "index.html"));
+  res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
 });
 
 mongoose
@@ -63,8 +63,8 @@ app.use(
 passport.use(
   new SteamStrategy(
     {
-      returnURL: "https://rust-bedl.onrender.com/auth/steam/return",
-      realm: "https://rust-bedl.onrender.com",
+      returnURL: "https://rust-677c.onrender.com/auth/steam/return",
+      realm: "https://rust-677c.onrender.com",
       apiKey: steamApiKey,
     },
     async (identifier, profile, done) => {
