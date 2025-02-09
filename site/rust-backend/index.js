@@ -46,7 +46,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "*", //"https://deft-peony-874b49.netlify.app",
+    origin: "https://rust-677c.onrender.com",
     credentials: true,
   })
 );
@@ -136,6 +136,7 @@ app.get('/auth/steam/return',
 });
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
+  console.log("user: " + req.user)
   if (!req.user) {
     return res.status(401).json({ message: "Not authenticated" });
   }
@@ -149,13 +150,6 @@ app.get("/logout", async (req, res) => {
   });
 });
 
-// Serve static files from frontend build
-app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
-
-// Handle all other routes for React routing
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
-});
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
@@ -165,4 +159,8 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/');
 }
 
+app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
+});
 
