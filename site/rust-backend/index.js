@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 const User = require("./models/User");
 const Session = require("./models/Session");
 const MongoStore = require("connect-mongo");
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
@@ -132,41 +131,20 @@ app.use(passport.session());
 
 app.use(express.json());
 
-app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("/");
+app.get('/auth/steam',
+  passport.authenticate('steam', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+app.get('/auth/steam/return',
+  passport.authenticate('steam', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
 });
-
-app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
-  console.log("User authenticated:", req.user); 
-
-  if (req.user) {
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); 
-
-    res.cookie("user_id", req.user._id.toString(), { 
-      expires, 
-      httpOnly: true, 
-      secure: true, 
-      sameSite: "Lax" 
-    });
-
-    res.cookie("session_id", req.sessionID, {
-      expires,
-      httpOnly: true,
-      secure: true,
-      sameSite: "Lax"
-    });
-
-    res.redirect(302, "/");
-  }
-});
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  passport.authenticate("steam", { failureRedirect: "https://deft-peony-874b49.netlify.app" });
-}
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
-  return res.json({ user: req.user, jwt: req.session });
+  return res.json({ user: req.user});
 });
 
 app.get("/logout", async (req, res) => {
@@ -177,3 +155,8 @@ app.get("/logout", async (req, res) => {
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}
