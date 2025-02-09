@@ -10,7 +10,6 @@ const path = require("path");
 const app = express();
 
 const secretKey = "secret-key-for-local-session";
-
 // In-memory user and session storage
 const users = {};
 const sessions = {};
@@ -42,7 +41,7 @@ passport.use(
     {
       returnURL: "http://localhost:5000/auth/steam/return",
       realm: "http://localhost:5000",
-      apiKey: "your-steam-api-key", // Replace with your own key
+      apiKey: "3BF6FCAC4AEBA9F4E67A180AD3EC45EE",
     },
     (identifier, profile, done) => {
       const user = users[profile.id] || {
