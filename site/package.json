@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm --prefix rust-frontend run dev\" \"npm --prefix rust-backend start\""
+    "dev": "concurrently \"npm --prefix rust-frontend run dev\" \"npm --prefix rust-backend start\"",
+    "build": "npm --prefix rust-frontend install && npm --prefix rust-frontend run build",
+    "start": "npm --prefix rust-backend start"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

@@ -10,12 +10,21 @@ const Session = require("./models/Session");
 const MongoStore = require("connect-mongo");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const app = express();
 
 const secretKey = "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff";
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
+
+// Serve static files from frontend build
+app.use(express.static(path.join(__dirname, "..rust-frontend/dist")));
+
+// Handle all other routes for React routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..rust-frontend/dist", "index.html"));
+});
 
 mongoose
   .connect(db)
@@ -123,8 +132,8 @@ app.use(passport.session());
 
 app.use(express.json());
 
-app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "https://deft-peony-874b49.netlify.app" }), (req, res) => {
-  res.redirect("https://deft-peony-874b49.netlify.app/");
+app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "/" }), (req, res) => {
+  res.redirect("/");
 });
 
 app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) => {
@@ -147,7 +156,7 @@ app.get("/auth/steam/return", passport.authenticate("steam"), async (req, res) =
       sameSite: "Lax"
     });
 
-    res.redirect(302, "https://deft-peony-874b49.netlify.app/");
+    res.redirect(302, "/");
   }
 });
 
@@ -162,7 +171,7 @@ app.get("/api/user", ensureAuthenticated, (req, res) => {
 
 app.get("/logout", async (req, res) => {
   req.logout(() => {
-    res.redirect("https://deft-peony-874b49.netlify.app/");  
+    res.redirect("/");  
   });
 });
 
