@@ -154,10 +154,10 @@ app.get("/logout", async (req, res) => {
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
-}
+// function ensureAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) { return next(); }
+//   res.redirect('/');
+// }
 
 app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
 // app.get("*", (req, res) => {
