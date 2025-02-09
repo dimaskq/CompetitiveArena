@@ -4,26 +4,16 @@ const session = require("express-session");
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
-const mongoose = require("mongoose");
-const User = require("./models/User");
-const Session = require("./models/Session");
-const MongoStore = require("connect-mongo");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
 const app = express();
 
-const secretKey = "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d8ff";
-const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
+const secretKey = "secret-key-for-local-session";
 
-mongoose
-  .connect(db)
-  .then(() => console.log("DB connected!"))
-  .catch((err) => {
-    console.error("DB connection error:", err);
-    process.exit(1);
-  });
+// In-memory user and session storage
+const users = {};
+const sessions = {};
 
 app.use(
   session({
@@ -31,13 +21,9 @@ app.use(
     secret: secretKey,
     resave: true,
     saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: db,
-      collectionName: "sessions",
-    }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: true, 
+      secure: false, // Set false for localhost
       httpOnly: true,
       sameSite: "lax",
     },
@@ -46,7 +32,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://rust-677c.onrender.com",
+    origin: "http://localhost:5173", // Frontend URL
     credentials: true,
   })
 );
@@ -54,113 +40,69 @@ app.use(
 passport.use(
   new SteamStrategy(
     {
-      returnURL: "https://rust-677c.onrender.com/auth/steam/return",
-      realm: "https://rust-677c.onrender.com",
-      apiKey: steamApiKey,
+      returnURL: "http://localhost:5000/auth/steam/return",
+      realm: "http://localhost:5000",
+      apiKey: "your-steam-api-key", // Replace with your own key
     },
-    async (identifier, profile, done) => {
-      try {
-        let user = await User.findOne({ steamId: profile.id });
-
-        if (!user) {
-          user = new User({
-            steamId: profile.id,
-            displayName: profile.displayName,
-            avatar: profile.photos[2]?.value || "",
-          });
-          await user.save();
-        }
-        return done(null, user);
-      } catch (error) {
-        console.error("Error in SteamStrategy:", error);
-        return done(error, null);
-      }
+    (identifier, profile, done) => {
+      const user = users[profile.id] || {
+        steamId: profile.id,
+        displayName: profile.displayName,
+        avatar: profile.photos[2]?.value || "",
+      };
+      users[profile.id] = user;
+      return done(null, user);
     }
   )
 );
 
-passport.serializeUser(async (user, done) => {
-  try {
-    console.log("Serializing user:", user._id);
-
-    const session = await Session.findOneAndUpdate(
-      { user_id: user._id.toString() }, 
-      {
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-      },
-      { upsert: true, new: true } 
-    );
-
-    console.log("Session saved/updated:", session);
-    done(null, session._id.toString()); 
-  } catch (err) {
-    console.error("❌ Error during serialization:", err);
-    done(err, null);
-  }
+passport.serializeUser((user, done) => {
+  const sessionId = user.steamId;
+  sessions[sessionId] = user;
+  done(null, sessionId);
 });
 
-passport.deserializeUser(async (userId, done) => {
-  try {
-    console.log("Deserializing user with User ID:", userId);
-
-    const user = await User.findOne({ user_id: userId });
-    if (!user) {
-      console.error("User not found for user_id:", userId);
-      return done(new Error("User not found"));
-    }
-
-    console.log("Deserialized user:", user);
-    done(null, user);
-  } catch (err) {
-    console.error("❌ Error during deserialization:", err);
-    done(err, null);
-  }
+passport.deserializeUser((sessionId, done) => {
+  const user = sessions[sessionId];
+  done(null, user || null);
 });
 
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(express.json());
 
-app.get('/auth/steam',
-  passport.authenticate('steam', { failureRedirect: '/' }),
-  function(req, res) {
-    //res.redirect('/');
-  });
+app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "/" }));
 
-app.get('/auth/steam/return',
-  passport.authenticate('steam', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/');
+app.get("/auth/steam/return", passport.authenticate("steam", { failureRedirect: "/" }), (req, res) => {
+  res.redirect("/");
 });
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
-  console.log("user: " + req.user)
   if (!req.user) {
     return res.status(401).json({ message: "Not authenticated" });
   }
   return res.json(req.user);
 });
 
-
-app.get("/logout", async (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("/");  
+    res.redirect("/");
   });
 });
-
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) { return next(); }
-//   res.redirect('/');
-// }
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ message: "Unauthorized" });
+}
 
 app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
+// Uncomment if you need to serve frontend
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
 // });
-
