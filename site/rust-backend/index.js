@@ -134,7 +134,7 @@ app.use(express.json());
 app.get('/auth/steam',
   passport.authenticate('steam', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/');
+    //res.redirect('/');
   });
 
 app.get('/auth/steam/return',
