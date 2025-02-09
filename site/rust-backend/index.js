@@ -17,14 +17,6 @@ const secretKey = "5f8d7a3c8f45c9be82e2b43f9b9470e9481e0bfa59f01b00b3a6d62c0349d
 const db = "mongodb+srv://dmtradmin:p3oB0a1aH6L1Mi8I@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const steamApiKey = "B6EEE9D935588CF3DAC3521B2F1AC8E7";
 
-// Serve static files from frontend build
-app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
-
-// Handle all other routes for React routing
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
-});
-
 mongoose
   .connect(db)
   .then(() => console.log("DB connected!"))
@@ -144,13 +136,25 @@ app.get('/auth/steam/return',
 });
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
-  return res.json({ user: req.user});
+  if (!req.user) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  return res.json(req.user);
 });
+
 
 app.get("/logout", async (req, res) => {
   req.logout(() => {
     res.redirect("/");  
   });
+});
+
+// Serve static files from frontend build
+app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
+
+// Handle all other routes for React routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
 });
 
 const PORT = 5000;
@@ -160,3 +164,5 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/');
 }
+
+
