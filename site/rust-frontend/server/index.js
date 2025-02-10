@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
@@ -12,9 +13,6 @@ const User = require('./models/User');
 const app = express();
 
 const secretKey = "secret-key-for-local-session";
-// In-memory user and session storage
-// const users = {};
-// const sessions = {};
 
 mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
@@ -29,15 +27,19 @@ mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongod
 
 app.use(
   session({
-    name: "session.id",
+    name: 'session.id',
     secret: secretKey,
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://dmtradmin:dmtradmin@cluster0.cco8h.mongodb.net/sessions?retryWrites=true&w=majority',
+      ttl: 14 * 24 * 60 * 60, // Тривалість сесії (14 днів)
+    }),
     cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: false, // Set false for localhost
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 днів
+      secure: false, // У разі локальної розробки, змінити на true для продакшн
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: 'lax',
     },
   })
 );
