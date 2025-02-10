@@ -16,7 +16,7 @@ const secretKey = "secret-key-for-local-session";
 // const users = {};
 // const sessions = {};
 
-mongoose.connect('mongodb+srv://dmtradmin:dmtradmin@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
