@@ -32,7 +32,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://dmtradmin:dmtradmin@cluster0.cco8h.mongodb.net/sessions?retryWrites=true&w=majority',
+      mongoUrl: 'mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
       ttl: 14 * 24 * 60 * 60, // Тривалість сесії (14 днів)
     }),
     cookie: {
