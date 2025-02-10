@@ -13,7 +13,7 @@ function SloganBlock() {
         <section className="slogan">
             <div className="slogan__container">
                 <div className="slogan__box">
-                    <h2 className="slogan__box_title">Competetive2Earn</h2>
+                    <h2 className="slogan__box_title">Competitive2Earn</h2>
                     <p className="slogan__box_information">Purchase a pass to our exclusive</p>
                     <div className="slogan__btn_container">
                         <a href="app/servers" className="slogan__box_btn">Watch Price</a>

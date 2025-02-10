@@ -6,13 +6,26 @@ const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const mongoose = require('mongoose');
+const User = require('./models/User');
 
 const app = express();
 
 const secretKey = "secret-key-for-local-session";
 // In-memory user and session storage
-const users = {};
-const sessions = {};
+// const users = {};
+// const sessions = {};
+
+mongoose.connect('mongodb+srv://dmtradmin:dmtradmin@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('MongoDB connected');
+})
+.catch((error) => {
+  console.error('MongoDB connection error:', error);
+});
 
 app.use(
   session({
@@ -43,28 +56,41 @@ passport.use(
       realm: "https://rust-pkqo.onrender.com",
       apiKey: "5EE6CC358E5F32B973DC26FB00AB5D03",
     },
-    (identifier, profile, done) => {
-      const user = users[profile.id] || {
-        steamId: profile.id,
-        displayName: profile.displayName,
-        avatar: profile.photos[2]?.value || "",
-      };
-      users[profile.id] = user;
-      return done(null, user);
+    async (identifier, profile, done) => {
+      try {
+        // Перевіряємо, чи є користувач у базі даних
+        let user = await User.findOne({ steamId: profile.id });
+
+        if (!user) {
+          user = new User({
+            steamId: profile.id,
+            displayName: profile.displayName,
+            avatar: profile.photos[2]?.value || "",
+          });
+          await user.save();
+        }
+
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
   )
 );
 
 passport.serializeUser((user, done) => {
-  const sessionId = user.steamId;
-  sessions[sessionId] = user;
-  done(null, sessionId);
+  done(null, user.steamId);
 });
 
-passport.deserializeUser((sessionId, done) => {
-  const user = sessions[sessionId];
-  done(null, user || null);
+passport.deserializeUser(async (steamId, done) => {
+  try {
+    const user = await User.findOne({ steamId });
+    done(null, user || null);
+  } catch (err) {
+    done(err);
+  }
 });
+
 
 app.use(cookieParser());
 app.use(passport.initialize());
