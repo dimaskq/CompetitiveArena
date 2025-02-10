@@ -14,7 +14,7 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5173/api/user", {
+      .get("https://rust-pkqo.onrender.com/api/user", {
         withCredentials: true,
       })
       .then((response) => {
@@ -28,15 +28,15 @@ const Header = () => {
   }, [dispatch]);
 
   const handleLogin = () => {
-    window.location.href = "http://localhost:5173/auth/steam";
+    window.location.href = "https://rust-pkqo.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:5173/logout", { withCredentials: true }) 
+      .get("https://rust-pkqo.onrender.com/logout", { withCredentials: true }) 
       .then(() => {
         dispatch(clearUser());
-        window.location.href = "http://localhost:5173"; 
+        window.location.href = "https://rust-pkqo.onrender.com"; 
       })
       .catch((error) => {
         console.error("Logout error:", error);

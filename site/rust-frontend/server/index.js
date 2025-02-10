@@ -31,7 +31,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: "https://rust-pkqo.onrender.com", 
     credentials: true,
   })
 );
@@ -39,8 +39,8 @@ app.use(
 passport.use(
   new SteamStrategy(
     {
-      returnURL: "http://localhost:5173/auth/steam/return",
-      realm: "http://localhost:5173",
+      returnURL: "https://rust-pkqo.onrender.com/auth/steam/return",
+      realm: "https://rust-pkqo.onrender.com",
       apiKey: "E68BDC91A6F39B06E1BEF11E3C2AD9D5",
     },
     (identifier, profile, done) => {
