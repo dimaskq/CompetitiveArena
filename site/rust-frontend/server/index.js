@@ -37,7 +37,7 @@ app.use(
     }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 днів
-      secure: true,
+      secure: false, 
       httpOnly: true,
       sameSite: 'lax',
     },
