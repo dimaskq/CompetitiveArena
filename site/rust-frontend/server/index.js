@@ -33,10 +33,10 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: 'mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-      ttl: 14 * 24 * 60 * 60, // Тривалість сесії (14 днів)
+      ttl: 14 * 24 * 60 * 60, 
     }),
     cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 днів
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       secure: false, 
       httpOnly: true,
       sameSite: 'lax',
@@ -112,6 +112,15 @@ app.get("/api/user", ensureAuthenticated, (req, res) => {
   return res.json(req.user);
 });
 
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error });
+  }
+});
+
 app.get("/logout", (req, res) => {
   req.logout(() => {
     res.redirect("/");
@@ -128,10 +137,8 @@ function ensureAuthenticated(req, res, next) {
   res.status(401).json({ message: "Unauthorized" });
 }
 
-// Обслуговуємо статичні файли з Vite-білда
 app.use(express.static(path.join(__dirname, "../dist")));
 
-// Всі невідомі маршрути віддають `index.html`
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist", "index.html"));
 });
