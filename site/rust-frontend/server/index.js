@@ -41,7 +41,7 @@ passport.use(
     {
       returnURL: "https://rust-pkqo.onrender.com/auth/steam/return",
       realm: "https://rust-pkqo.onrender.com",
-      apiKey: "E68BDC91A6F39B06E1BEF11E3C2AD9D5",
+      apiKey: "5EE6CC358E5F32B973DC26FB00AB5D03",
     },
     (identifier, profile, done) => {
       const user = users[profile.id] || {
