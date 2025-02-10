@@ -14,7 +14,7 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get("https://rust-677c.onrender.com/api/user", {
+      .get("http://localhost:5173/api/user", {
         withCredentials: true,
       })
       .then((response) => {
@@ -28,15 +28,15 @@ const Header = () => {
   }, [dispatch]);
 
   const handleLogin = () => {
-    window.location.href = "https://rust-677c.onrender.com/auth/steam";
+    window.location.href = "http://localhost:5173/auth/steam";
   };
 
   const handleLogout = () => {
     axios
-      .get("https://rust-677c.onrender.com/logout", { withCredentials: true }) 
+      .get("http://localhost:5173/logout", { withCredentials: true }) 
       .then(() => {
         dispatch(clearUser());
-        window.location.href = "/"; 
+        window.location.href = "http://localhost:5173"; 
       })
       .catch((error) => {
         console.error("Logout error:", error);

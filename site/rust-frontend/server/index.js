@@ -39,8 +39,8 @@ app.use(
 passport.use(
   new SteamStrategy(
     {
-      returnURL: "http://localhost:5000/auth/steam/return",
-      realm: "http://localhost:5000",
+      returnURL: "http://localhost:5173/auth/steam/return",
+      realm: "http://localhost:5173",
       apiKey: "E68BDC91A6F39B06E1BEF11E3C2AD9D5",
     },
     (identifier, profile, done) => {
@@ -74,7 +74,7 @@ app.use(express.json());
 app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "/" }));
 
 app.get("/auth/steam/return", passport.authenticate("steam", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("http://localhost:5173/");
+  res.redirect("/");
 });
 
 app.get("/api/user", ensureAuthenticated, (req, res) => {
@@ -86,11 +86,11 @@ app.get("/api/user", ensureAuthenticated, (req, res) => {
 
 app.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("http://localhost:5173");
+    res.redirect("/");
   });
 });
 
-const PORT = 5000;
+const PORT = 5173;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
 function ensureAuthenticated(req, res, next) {
@@ -100,8 +100,10 @@ function ensureAuthenticated(req, res, next) {
   res.status(401).json({ message: "Unauthorized" });
 }
 
-app.use(express.static(path.join(__dirname, "../rust-frontend/dist")));
-// Uncomment if you need to serve frontend
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../rust-frontend/dist", "index.html"));
-// });
+// Обслуговуємо статичні файли з Vite-білда
+app.use(express.static(path.join(__dirname, "../dist")));
+
+// Всі невідомі маршрути віддають `index.html`
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist", "index.html"));
+});
