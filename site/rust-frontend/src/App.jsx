@@ -18,6 +18,7 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/servers" element={<ServersPage />} />
               <Route path="/rules" element={<RulesPage />} />
+              <Route path="/top" element={<TopUsersPage />} />
             </Routes>
         </main>
         <Footer />
