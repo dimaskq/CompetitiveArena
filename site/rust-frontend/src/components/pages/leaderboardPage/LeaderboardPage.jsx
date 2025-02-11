@@ -24,12 +24,18 @@ function LeaderboardPage() {
 
     return (
         <div className="leaderboard">
-            <h1>Leaderboard</h1>
+            <h1>Топ користувачів по KD</h1>
             <table>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Ім'я</th>
+                        <th>Wood</th>
+                        <th>Stone</th>
+                        <th>Metal</th>
+                        <th>Sulfur</th>
+                        <th>Scrap</th>
+                        <th>HQM</th>
                         <th>KD</th>
                     </tr>
                 </thead>
@@ -38,6 +44,12 @@ function LeaderboardPage() {
                         <tr key={user.steamId}>
                             <td>{index + 1}</td>
                             <td>{user.displayName}</td>
+                            <td>{user.wood}</td>
+                            <td>{user.stone}</td>
+                            <td>{user.metal}</td>
+                            <td>{user.sulfur}</td>
+                            <td>{user.scrap}</td>
+                            <td>{user.hqm}</td>
                             <td>{user.kd.toFixed(2)}</td>
                         </tr>
                     ))}
