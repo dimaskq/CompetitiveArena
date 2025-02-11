@@ -1,49 +1,90 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, clearUser } from "../../store/userSlice";
 import { Link } from "react-router-dom";
 import logo from "../../../public/logo-removebg.png";
-import TabsSection from "./TabSections";
+import axios from "axios";
 import "./header-styles/Header.css";
+import TabsSection from "./TabSections";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0); 
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+    axios
+      .get("https://rust-pkqo.onrender.com/api/user", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data) {
+          dispatch(setUser(response.data));
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
+  }, [dispatch]);
 
-      if (currentScrollY > 121) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+  const handleLogin = () => {
+    window.location.href = "https://rust-pkqo.onrender.com/auth/steam";
+  };
 
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  const handleLogout = () => {
+    axios
+      .get("https://rust-pkqo.onrender.com/logout", { withCredentials: true }) 
+      .then(() => {
+        dispatch(clearUser());
+        window.location.href = "https://rust-pkqo.onrender.com"; 
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
+  };
 
   return (
-    <>
-      <header className="header">
-        <div className="header-container container">
-          <Link className="header__logo" to="/">
-            <img src={logo} alt="logo" />
-          </Link>
-          <nav className="header-menu">
-            <ul className="menu__list">
-              <TabsSection
-                active={activeTab}
-                onChange={(current) => setActiveTab(current)}
-              />
-            </ul>
-          </nav>
-        </div>
-      </header>
-    </>
+    <header className="header">
+      <div className="header-container container">
+        <Link className="header__logo" to="/">
+          <img src={logo} alt="logo" />
+        </Link>
+        <nav className="header-menu">
+          <ul className="menu__list">
+            <TabsSection
+              active={activeTab}
+              onChange={(current) => setActiveTab(current)}
+            />
+            {user ? (
+              <div className="user-info">
+                <div className="avatar-container">
+                  {/* Show user's avatar */}
+                  <img
+                    src={user.avatar}
+                    alt="Avatar"
+                    className="avatar"
+                  />
+                  <span className="username">{user.displayName}</span>
+                </div>
+                <button
+                  className="header__person header__person_logOut"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button
+                className="header__person header__person_logIn"
+                onClick={handleLogin}
+              >
+                LOG IN WITH STEAM
+              </button>
+            )}
+          </ul>
+        </nav>
+      </div>
+    </header>
   );
 };
 

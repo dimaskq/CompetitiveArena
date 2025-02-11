@@ -33,6 +33,13 @@ export default function TabsSection({ active, onChange }) {
           </Button>
         </div>
       </Link>
+      <Link to="/leaderboard">
+        <div className="button-container">
+          <Button isActive={active === "leaderboard"} onClick={() => onChange("leaderboard")}>
+            Leaderboard
+          </Button>
+        </div>
+      </Link>
     </section>
   );
 }
