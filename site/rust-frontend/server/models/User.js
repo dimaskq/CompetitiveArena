@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   methal: { type: Number, default: 0 },
   sulfur: { type: Number, default: 0 },
   scrap: { type: Number, default: 0 },
-  mvk: { type: Number, default: 0 },
+  hqm: { type: Number, default: 0 },
   kd: { type: Number, default: 0 }
 });
 
