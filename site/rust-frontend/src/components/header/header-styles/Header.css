@@ -1,72 +1,70 @@
-/* First Header */
 .header {
-    background: transparent;
-    max-height: 120px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    opacity: 1;
-  }
-  
-  /* Container styling */
-  .header-container {
-    /* position: absolute; */
-    display: flex;
-    align-items: center;
-    width: 80%;
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-  
-  .header-menu {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .menu__list {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .tabSection {
-    display: flex;
-    gap: 40px;
-  }
-  
-  /* Button styling */
-  .header-btn {
-    font-family: "Open Sans";
-    font-weight: 500;
-    font-size: 1.2rem;
-    background: #00000000;
-    color: #fff;
-    position: relative;
-    transition: 0.3s all ease;
-  }
-  
-  .header-btn:hover {
-    color: #df1313;
-    transition: 0.3s all ease;
-  }
-  
-  /* Logo Styling */
-  .header__logo {
-    width: 8%;
-  }
-  
-  .header__logo img {
-    width: 100%;
-  }
+  background: transparent;
+  max-height: 120px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  opacity: 1;
+}
 
-/* Стилі для пунктів меню */
+.header-container {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.header-menu {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between; /* Align items to the edges */
+  align-items: center; /* Vertically center the items */
+  position: relative;
+}
+
+.menu__list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tabSection {
+  display: flex;
+  gap: 40px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.header-btn {
+  font-family: "Open Sans";
+  font-weight: 500;
+  font-size: 1.2rem;
+  background: #00000000;
+  color: #fff;
+  position: relative;
+  transition: 0.3s all ease;
+}
+
+.header-btn:hover {
+  color: #df1313;
+  transition: 0.3s all ease;
+}
+
+.header__logo {
+  width: 8%;
+}
+
+.header__logo img {
+  width: 100%;
+}
+
 .menu__list .button-container {
   position: relative;
 }
@@ -101,4 +99,42 @@
 
 .menu__list .button-container:hover::after {
   transform: scaleX(1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.username {
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+  font-family: "Open Sans";
+}
+
+.header__person {
+  background: #df1313;
+  color: #fff;
+  padding: 5px 20px;
+  font-size: 1rem;
+  font-family: 'Open Sans';
+}
+
+.header__person:hover {
+  background: #e73535;
 }
