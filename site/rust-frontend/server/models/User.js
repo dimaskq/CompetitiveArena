@@ -10,7 +10,9 @@ const UserSchema = new mongoose.Schema({
   sulfur: { type: Number, default: 0 },
   scrap: { type: Number, default: 0 },
   hqm: { type: Number, default: 0 },
-  kd: { type: Number, default: 0 }
+  kd: { type: Number, default: 0 },
+  kill: { type: Number, default: 0 },
+  death: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model('User', UserSchema);

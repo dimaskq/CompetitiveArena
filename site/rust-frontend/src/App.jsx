@@ -6,7 +6,7 @@ import ServersPage from "./components/pages/servers/Servers";
 import Footer from "./components/footer/Footer";
 import RulesPage from "./components/pages/rules/RulesPage";
 import "../src/base-styles/reset.css"
-import TopUsersPage from "./components/pages/topUsers/TopUsersPage";
+import LeaderboardPage from "./components/pages/topUsers/LeaderboardPage";
 function App() {
   return (
     <Router>
@@ -18,7 +18,7 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/servers" element={<ServersPage />} />
               <Route path="/rules" element={<RulesPage />} />
-              <Route path="/top" element={<TopUsersPage />} />
+              <Route path="/leaderboard" element={<LeaderboardPage />} />
             </Routes>
         </main>
         <Footer />

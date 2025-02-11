@@ -9,7 +9,7 @@
     "build": "vite build",  
     "start-server": "cd server && node index.js",  
     "lint": "eslint .",  
-    "preview": "vite preview" 
+    "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
