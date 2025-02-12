@@ -5,7 +5,7 @@ import Header from "./components/header/Header";
 import ServersPage from "./components/pages/servers/Servers";
 import Footer from "./components/footer/Footer";
 import RulesPage from "./components/pages/rules/RulesPage";
-import "../src/base-styles/reset.css"
+import "../src/base-styles/reset.css";
 import LeaderboardPage from "./components/pages/LeaderboardPage/LeaderboardPage";
 function App() {
   return (
