@@ -14,10 +14,7 @@ const app = express();
 
 const secretKey = "secret-key-for-local-session";
 
-mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 .then(() => {
   console.log('MongoDB connected');
 })
@@ -125,6 +122,52 @@ app.get("/logout", (req, res) => {
   req.logout(() => {
     res.redirect("/");
   });
+});
+
+// Route for accepting and updating/creating users
+app.post('/api/save-users', async (req, res) => {
+  try {
+    const users = req.body; // Arr of users
+
+    // is Arr?
+    if (!Array.isArray(users) || users.length === 0) {
+      return res.status(400).json({ message: "Invalid data format. Expected an array of users." });
+    }
+
+    // arr for bulkWrite
+    const operations = users.map(user => ({
+      updateOne: {
+        filter: { steamId: user.steamId }, // Filter to search user by steamId
+        update: {
+          $set: {
+            displayName: user.displayName,
+            avatar: user.avatar,
+            wood: user.wood,
+            stone: user.stone,
+            methal: user.methal,
+            sulfur: user.sulfur,
+            scrap: user.scrap,
+            hqm: user.hqm,
+            kd: user.kd,
+            kill: user.kill,
+            death: user.death,
+          },
+        },
+        upsert: true, // If the user does not exist, it will be created.
+      },
+    }));
+
+    // Performing bulkWrite
+    const result = await User.bulkWrite(operations);
+
+    res.status(200).json({
+      message: `${result.upsertedCount} users created, ${result.modifiedCount} users updated`,
+      data: result,
+    });
+  } catch (error) {
+    console.error('Error saving users:', error);
+    res.status(500).json({ message: "Error saving users", error });
+  }
 });
 
 const PORT = 5173;
