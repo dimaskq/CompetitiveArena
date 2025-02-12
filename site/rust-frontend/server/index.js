@@ -43,10 +43,16 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://rust-pkqo.onrender.com", 
-    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || origin === "http://87.120.167.110:31275" || origin === "https://87.120.167.110:31275" || origin === "https://rust-pkqo.onrender.com") {
+        return callback(null, true); 
+      }
+      return callback(new Error("CORS not allowed from this origin"), false); 
+    },
+    credentials: true, 
   })
 );
+
 
 passport.use(
   new SteamStrategy(
@@ -124,17 +130,24 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// Route for accepting and updating/creating users
+const allowedIp = '87.120.167.110';
+
 app.post('/api/save-users', async (req, res) => {
   try {
-    const users = req.body; // Arr of users
+    // Check if the request is from the allowed IP address
+    const requestIp = req.ip || req.connection.remoteAddress;
+    if (!requestIp.includes(allowedIp)) {
+      return res.status(403).json({ message: "Forbidden: Invalid IP address." });
+    }
+
+    const users = req.body; // Array of users
 
     // is Arr?
     if (!Array.isArray(users) || users.length === 0) {
       return res.status(400).json({ message: "Invalid data format. Expected an array of users." });
     }
 
-    // arr for bulkWrite
+    // Array for bulkWrite operations
     const operations = users.map(user => ({
       updateOne: {
         filter: { steamId: user.steamId }, // Filter to search user by steamId
@@ -151,6 +164,10 @@ app.post('/api/save-users', async (req, res) => {
             kd: user.kd,
             kill: user.kill,
             death: user.death,
+            solo: user.solo,
+            duo: user.duo,
+            trio: user.trio,
+            squad: user.squad, // Corrected typo (was skuad)
           },
         },
         upsert: true, // If the user does not exist, it will be created.
@@ -169,6 +186,7 @@ app.post('/api/save-users', async (req, res) => {
     res.status(500).json({ message: "Error saving users", error });
   }
 });
+
 
 const PORT = 5173;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -13,6 +13,11 @@ const UserSchema = new mongoose.Schema({
   kd: { type: Number, default: 0 },
   kill: { type: Number, default: 0 },
   death: { type: Number, default: 0 },
+  solo: { type: Number, default: 0 },
+  duo: { type: Number, default: 0 },
+  squad: { type: Number, default: 0 },
+  trio: { type: Number, default: 0 },
+
 });
 
 module.exports = mongoose.model('User', UserSchema);
