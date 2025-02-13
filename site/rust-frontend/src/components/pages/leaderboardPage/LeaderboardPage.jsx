@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./leaderboardPage-styles/leaderboardPage.css"
 
 function LeaderboardPage() {
     const [users, setUsers] = useState([]);
@@ -36,8 +37,8 @@ function LeaderboardPage() {
             });
     }, []);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    if (loading) return <div className="loading">Loading...</div>;
+    if (error) return <div className="error">{error}</div>;
 
     const topOverall = [...users].sort((a, b) => b.totalScore - a.totalScore);
     const topKD = [...users].sort((a, b) => b.kd - a.kd);
