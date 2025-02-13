@@ -62,9 +62,15 @@ const LeaderboardTable = ({ title, data, type }) => {
             <table className="leaderboard__table">
                 <thead>
                     <tr>
-                        <th>Rank</th>
+                        <th className="leaderboard__rank">Rank</th>
                         <th>Name</th>
-                        {type === "total" && <th>Total Score</th>}
+                        {type === "total" && (
+                            <>
+                                <th>Total Score</th>
+                                <th>Resource Score</th>
+                                <th>KD</th>
+                            </>
+                        )}
                         {type === "kd" && (
                             <>
                                 <th>Kills</th>
@@ -90,7 +96,13 @@ const LeaderboardTable = ({ title, data, type }) => {
                         <tr key={user.steamId} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                             <td className="leaderboard__table_rank">{index + 1}</td>
                             <td className="leaderboard__table_playerName">{user.displayName}</td>
-                            {type === "total" && <td>{user.totalScore.toFixed(2)}</td>}
+                            {type === "total" && (
+                                <>
+                                    <td>{user.kd.toFixed(2)}</td>
+                                    <td>{user.resourceScore.toFixed(2)}</td>
+                                    <td>{user.totalScore.toFixed(2)}</td>
+                                </>
+                            )}
                             {type === "kd" && (
                                 <>
                                     <td>{user.kill}</td>

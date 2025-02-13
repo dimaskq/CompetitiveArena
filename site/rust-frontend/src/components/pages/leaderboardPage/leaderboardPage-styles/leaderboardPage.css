@@ -58,3 +58,7 @@
     font-weight: bold;
     color: white;
 }
+
+.leaderboard__rank, .leaderboard__table_rank{
+    max-width: 75px;
+}
