@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LeaderboardTable from "./LeaderboardTable"; 
 
-import "./styles/leaderboardPage.css";
+import "./leaderboardPage-styles/leaderboardPage.css";
 
 function LeaderboardPage() {
     const [users, setUsers] = useState([]);
