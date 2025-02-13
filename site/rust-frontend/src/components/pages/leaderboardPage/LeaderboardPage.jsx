@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import "./leaderboardPage-styles/leaderboardPage.css"
-import LeaderboardSceleton from "./LeaderbordSceleton"
+import "./leaderboardPage-styles/leaderboardPage.css";
+import LeaderboardSceleton from "./LeaderbordSceleton"; // Скелетон компонент
 
 function LeaderboardPage() {
     const [users, setUsers] = useState([]);
@@ -38,7 +38,7 @@ function LeaderboardPage() {
             });
     }, []);
 
-    if (loading) return <LeaderboardSceleton />;
+    if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">{error}</div>;
 
     const topOverall = [...users].sort((a, b) => b.totalScore - a.totalScore);
@@ -48,15 +48,15 @@ function LeaderboardPage() {
     return (
         <div className="leaderboard">
             <div className="leaderboard__container">
-                <LeaderboardTable title="Overall Rankings" data={topOverall} type="total" />
-                <LeaderboardTable title="KD Leaderboard" data={topKD} type="kd" />
-                <LeaderboardTable title="Farm Leaderboard" data={topFarming} type="resource" />
+                <LeaderboardTable title="Overall Rankings" data={topOverall} type="total" loading={loading} />
+                <LeaderboardTable title="KD Leaderboard" data={topKD} type="kd" loading={loading} />
+                <LeaderboardTable title="Farm Leaderboard" data={topFarming} type="resource" loading={loading} />
             </div>
         </div>
     );
 }
 
-const LeaderboardTable = ({ title, data, type }) => {
+const LeaderboardTable = ({ title, data, type, loading }) => {
     return (
         <div className="leaderboard__box">
             <h2 className="leaderboard__title">{title}</h2>
@@ -93,37 +93,69 @@ const LeaderboardTable = ({ title, data, type }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((user, index) => (
-                        <tr key={user.steamId} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-                            <td className="leaderboard__table_rank">{index + 1}</td>
-                            <td className="leaderboard__table_playerName">{user.displayName}</td>
-                            {type === "total" && (
-                                <>
-                                    <td>{user.kd.toFixed(2)}</td>
-                                    <td>{user.resourceScore.toFixed(2)}</td>
-                                    <td>{user.totalScore.toFixed(2)}</td>
-                                </>
-                            )}
-                            {type === "kd" && (
-                                <>
-                                    <td>{user.kill}</td>
-                                    <td>{user.death}</td>
-                                    <td>{user.kd.toFixed(2)}</td>
-                                </>
-                            )}
-                            {type === "resource" && (
-                                <>
-                                    <td>{user.wood}</td>
-                                    <td>{user.stone}</td>
-                                    <td>{user.metal}</td>
-                                    <td>{user.sulfur}</td>
-                                    <td>{user.scrap}</td>
-                                    <td>{user.hqm}</td>
-                                    <td>{user.resourceScore.toFixed(2)}</td>
-                                </>
-                            )}
-                        </tr>
-                    ))}
+                    {loading
+                        ? Array.from({ length: 10 }).map((_, index) => (
+                              <tr key={index}>
+                                  <td><LeaderboardSceleton /></td>
+                                  <td><LeaderboardSceleton /></td>
+                                  {type === "total" && (
+                                      <>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                      </>
+                                  )}
+                                  {type === "kd" && (
+                                      <>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                      </>
+                                  )}
+                                  {type === "resource" && (
+                                      <>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                          <td><LeaderboardSceleton /></td>
+                                      </>
+                                  )}
+                              </tr>
+                          ))
+                        : data.map((user, index) => (
+                              <tr key={user.steamId} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+                                  <td className="leaderboard__table_rank">{index + 1}</td>
+                                  <td className="leaderboard__table_playerName">{user.displayName}</td>
+                                  {type === "total" && (
+                                      <>
+                                          <td>{user.kd.toFixed(2)}</td>
+                                          <td>{user.resourceScore.toFixed(2)}</td>
+                                          <td>{user.totalScore.toFixed(2)}</td>
+                                      </>
+                                  )}
+                                  {type === "kd" && (
+                                      <>
+                                          <td>{user.kill}</td>
+                                          <td>{user.death}</td>
+                                          <td>{user.kd.toFixed(2)}</td>
+                                      </>
+                                  )}
+                                  {type === "resource" && (
+                                      <>
+                                          <td>{user.wood}</td>
+                                          <td>{user.stone}</td>
+                                          <td>{user.metal}</td>
+                                          <td>{user.sulfur}</td>
+                                          <td>{user.scrap}</td>
+                                          <td>{user.hqm}</td>
+                                          <td>{user.resourceScore.toFixed(2)}</td>
+                                      </>
+                                  )}
+                              </tr>
+                          ))}
                 </tbody>
             </table>
         </div>
