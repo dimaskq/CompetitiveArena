@@ -57,7 +57,7 @@ const LeaderboardTable = ({ title, data, type }) => {
     return (
         <div className="leaderboard">
             <h2>{title}</h2>
-            <table>
+            <table className="styled-table">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -85,9 +85,9 @@ const LeaderboardTable = ({ title, data, type }) => {
                 </thead>
                 <tbody>
                     {data.map((user, index) => (
-                        <tr key={user.steamId}>
-                            <td>{index + 1}</td>
-                            <td>{user.displayName}</td>
+                        <tr key={user.steamId} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+                            <td className="rank">{index + 1}</td>
+                            <td className="player-name">{user.displayName}</td>
                             {type === "total" && <td>{user.totalScore.toFixed(2)}</td>}
                             {type === "kd" && (
                                 <>
