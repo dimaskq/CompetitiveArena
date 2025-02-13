@@ -20,7 +20,7 @@ const STEAM_API_KEY = process.env.STEAM_API_KEY;
 const STEAM_RETURN_URL = process.env.STEAM_RETURN_URL;
 const STEAM_REALM = process.env.STEAM_REALM;
 
-mongoose.connect(`${DB_URI}`)
+mongoose.connect(DB_URI)
   .then(() => {
     console.log('MongoDB connected');
   })
@@ -32,16 +32,16 @@ mongoose.connect(`${DB_URI}`)
 app.use(
   session({
     name: 'session.id',
-    secret: `${SESSION_SECRET}`,
+    secret: SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: `${DB_URI}`,
+      mongoUrl: DB_URI,
       ttl: 14 * 24 * 60 * 60, // Time to live for session
     }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: false,  // Set to true if using https
+      secure: false, 
       httpOnly: true,
       sameSite: 'lax',
     },
@@ -65,9 +65,9 @@ app.use(
 passport.use(
   new SteamStrategy(
     {
-      returnURL: `${STEAM_RETURN_URL}`,
-      realm: `${STEAM_REALM}`,
-      apiKey: `${STEAM_API_KEY}`,
+      returnURL: STEAM_RETURN_URL,
+      realm: STEAM_REALM,
+      apiKey: STEAM_API_KEY,
     },
     async (identifier, profile, done) => {
       try {
