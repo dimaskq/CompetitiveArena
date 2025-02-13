@@ -1,7 +1,7 @@
-const LeaderbordSceleton = () => (
+const LeaderboardSceleton = () => (
     <div className="skeleton">
-            <div className="skeleton__cell"></div>
+        <div className="skeleton__cell"></div>
     </div>
 );
 
-export default LeaderbordSceleton;
+export default LeaderboardSceleton;
