@@ -38,7 +38,7 @@ function LeaderboardPage() {
             });
     }, []);
 
-    if (loading) return <div className="loading">Loading...</div>;
+    // if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">{error}</div>;
 
     const topOverall = [...users].sort((a, b) => b.totalScore - a.totalScore);
