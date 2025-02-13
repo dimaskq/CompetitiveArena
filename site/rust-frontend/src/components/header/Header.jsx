@@ -66,7 +66,7 @@ const Header = () => {
                   <img src={user.avatar} alt="Avatar" className="avatar" />
                   <div className="user-details">
                     <span className="username">{user.displayName}</span>
-                    <span className="userid">ID: {user.id}</span>
+                    <span className="userid">ID: {user.userId}</span>
                   </div>
                 </div>
                 {dropdownOpen && (

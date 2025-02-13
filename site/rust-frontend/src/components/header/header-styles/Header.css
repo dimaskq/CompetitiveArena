@@ -120,7 +120,6 @@
 }
 
 .username {
-  font-weight: bold;
   color: #fff;
   font-family: "Open Sans";
 }
@@ -163,7 +162,7 @@
   background: #a00;
 }
 
-.header__person_logIn{
+.header__person_logIn, .userid{
   font-family: "Open Sans" !important;
 }
 
