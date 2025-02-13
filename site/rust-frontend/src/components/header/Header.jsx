@@ -72,7 +72,7 @@ const Header = () => {
                 {dropdownOpen && (
                   <div className="dropdown-menu" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
                     <Link to="/api/user" className="dropdown-item" onClick={(event) => event.stopPropagation()}>
-                      Профиль
+                      Profile
                     </Link>
                     <button className="dropdown-item logout-button" onClick={(event) => {event.stopPropagation(); handleLogout();}}>
                       Logout
