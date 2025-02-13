@@ -11,7 +11,7 @@ function LeaderboardPage() {
         fetch("https://rust-pkqo.onrender.com/api/users")
             .then(response => response.json())
             .then(data => {
-                const W = 1.5; // Коефіцієнт покарання за смерті
+                const W = 1.5;
                 
                 const processedUsers = data.map(user => {
                     const kd = user.kill - (user.death * W);
@@ -63,7 +63,7 @@ const LeaderboardTable = ({ title, data, type, loading }) => {
                 <thead>
                     <tr>
                         <th className="leaderboard__rank">Rank</th>
-                        <th>Name</th>
+                        <th className="leaderboard__table_playerName">Name</th>
                         {type === "total" && (
                             <>
                                 <th>Total Score</th>

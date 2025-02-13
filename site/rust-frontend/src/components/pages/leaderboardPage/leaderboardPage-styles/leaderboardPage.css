@@ -86,3 +86,13 @@
         background-color: #555; 
     }
 }
+
+.leaderboard__table_playerName {
+    font-weight: bold;
+    color: white;
+    width: 225px;
+    max-width: 225px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
