@@ -62,8 +62,8 @@ const LeaderboardTable = ({ title, data, type }) => {
             <table className="leaderboard__table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Ім'я</th>
+                        <th>Rank</th>
+                        <th>Name</th>
                         {type === "total" && <th>Total Score</th>}
                         {type === "kd" && (
                             <>
