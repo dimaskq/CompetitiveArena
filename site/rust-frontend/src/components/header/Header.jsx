@@ -71,10 +71,10 @@ const Header = () => {
                 </div>
                 {dropdownOpen && (
                   <div className="dropdown-menu" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
-                    <Link to="/profile" className="dropdown-item">
+                    <Link to="/api/user" className="dropdown-item" onClick={(event) => event.stopPropagation()}>
                       Профиль
                     </Link>
-                    <button className="dropdown-item logout-button" onClick={handleLogout}>
+                    <button className="dropdown-item logout-button" onClick={(event) => {event.stopPropagation(); handleLogout();}}>
                       Logout
                     </button>
                   </div>

@@ -172,3 +172,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.userid{
+    font-size: 0.7rem;
+}
