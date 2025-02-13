@@ -59,6 +59,10 @@
     color: white;
 }
 
-.leaderboard__table th {
+.leaderboard__table th.leaderboard__rank,
+.leaderboard__table td.leaderboard__table_rank {
     width: 75px;
+    max-width: 75px;
+    text-align: center;
+    white-space: nowrap;
 }
