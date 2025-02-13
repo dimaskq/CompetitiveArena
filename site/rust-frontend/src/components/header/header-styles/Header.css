@@ -167,41 +167,15 @@
   font-family: "Open Sans" !important;
 }
 
-.header__person_logIn {
-  position: relative;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: white;
-  background: transparent;
-  border: 2px solid white;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  overflow: hidden;
-}
-
-.header__person_logIn::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  background: white;
-  transition: width 0.3s ease, left 0.3s ease;
+.header__person_logIn{
   background-color: #00000000;
+  color: #fff;
+  font-size: 1rem;
 }
 
-.header__person_logIn:hover {
-  color: rgb(255, 252, 252);
-  background: white;
-  border-color: white;
-  transform: scale(1.05);
-}
-
-.header__person_logIn:hover::after {
-  width: 100%;
-  left: 0;
+.header__person_logIn:hover{
+  text-decoration: underline;
+  transition: 0.3s all ease;
 }
 
 .user-details{
