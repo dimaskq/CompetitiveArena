@@ -11,6 +11,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -33,10 +34,10 @@ const Header = () => {
 
   const handleLogout = () => {
     axios
-      .get("https://rust-pkqo.onrender.com/logout", { withCredentials: true }) 
+      .get("https://rust-pkqo.onrender.com/logout", { withCredentials: true })
       .then(() => {
         dispatch(clearUser());
-        window.location.href = "https://rust-pkqo.onrender.com"; 
+        window.location.href = "https://rust-pkqo.onrender.com";
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -56,22 +57,28 @@ const Header = () => {
               onChange={(current) => setActiveTab(current)}
             />
             {user ? (
-              <div className="user-info">
+              <div
+                className="user-info"
+                onMouseEnter={() => setDropdownOpen(true)}
+                onMouseLeave={() => setDropdownOpen(false)}
+              >
                 <div className="avatar-container">
-                  {/* Show user's avatar */}
-                  <img
-                    src={user.avatar}
-                    alt="Avatar"
-                    className="avatar"
-                  />
+                  <img src={user.avatar} alt="Avatar" className="avatar" />
                   <span className="username">{user.displayName}</span>
                 </div>
-                <button
-                  className="header__person header__person_logOut"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+                {dropdownOpen && (
+                  <div className="dropdown-menu">
+                    <Link to="/profile" className="dropdown-item">
+                      Профиль
+                    </Link>
+                    <button
+                      className="dropdown-item logout-button"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <button

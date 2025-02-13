@@ -102,39 +102,62 @@
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  position: relative;
+  display: inline-block;
 }
 
 .avatar-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 2px solid #fff;
+  margin-right: 10px;
 }
 
 .username {
+  font-weight: bold;
   color: #fff;
-  font-size: 0.9rem;
-  text-align: center;
-  font-family: "Open Sans";
 }
 
-.header__person {
-  background: #df1313;
-  color: #fff;
-  padding: 5px 20px;
-  font-size: 1rem;
-  font-family: 'Open Sans';
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: #222;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width: 120px;
+  z-index: 10;
 }
 
-.header__person:hover {
-  background: #e73535;
+.dropdown-item {
+  display: block;
+  padding: 8px;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.dropdown-item:hover {
+  background: #444;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.logout-button:hover {
+  background: #a00;
 }
