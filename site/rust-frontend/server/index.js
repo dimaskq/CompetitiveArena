@@ -12,9 +12,9 @@ const User = require('./models/User');
 
 const app = express();
 
-const secretKey = "secret-key-for-local-session";
-
-mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+const { DB_URI, SESSION_SECRET, STEAM_API_KEY, STEAM_RETURN_URL, STEAM_REALM } = process.env;
+const allowedIp = '87.120.167.110';
+mongoose.connect(DB_URI)
 .then(() => {
   console.log('MongoDB connected');
 })
@@ -25,11 +25,11 @@ mongoose.connect('mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongod
 app.use(
   session({
     name: 'session.id',
-    secret: secretKey,
+    secret: SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://dmtradmin:XUkNarWj7QvCODTc@cluster0.cco8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+      mongoUrl: DB_URI,
       ttl: 14 * 24 * 60 * 60, 
     }),
     cookie: {
@@ -57,9 +57,9 @@ app.use(
 passport.use(
   new SteamStrategy(
     {
-      returnURL: "https://rust-pkqo.onrender.com/auth/steam/return",
-      realm: "https://rust-pkqo.onrender.com",
-      apiKey: "5EE6CC358E5F32B973DC26FB00AB5D03",
+      returnURL: STEAM_RETURN_URL,
+      realm: STEAM_REALM,
+      apiKey: STEAM_API_KEY,
     },
     async (identifier, profile, done) => {
       try {
@@ -130,11 +130,8 @@ app.get("/logout", (req, res) => {
   });
 });
 
-const allowedIp = '87.120.167.110';
-
 app.post('/api/save-users', async (req, res) => {
   try {
-    // Check if the request is from the allowed IP address
     const requestIp = req.ip || req.connection.remoteAddress;
     if (!requestIp.includes(allowedIp)) {
       return res.status(403).json({ message: "Forbidden: Invalid IP address." });
