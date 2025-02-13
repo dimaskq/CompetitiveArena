@@ -47,9 +47,9 @@ function LeaderboardPage() {
     return (
         <div className="leaderboard">
             <div className="leaderboard__container">
-                <LeaderboardTable title="Топ Общий" data={topOverall} type="total" />
-                <LeaderboardTable title="Топ по KD" data={topKD} type="kd" />
-                <LeaderboardTable title="Топ по фармингу" data={topFarming} type="resource" />
+                <LeaderboardTable title="Overall Rankings" data={topOverall} type="total" />
+                <LeaderboardTable title="KD Leaderboard" data={topKD} type="kd" />
+                <LeaderboardTable title="Farm Leaderboard" data={topFarming} type="resource" />
             </div>
         </div>
     );
