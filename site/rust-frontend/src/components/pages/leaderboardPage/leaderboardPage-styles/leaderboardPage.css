@@ -35,14 +35,6 @@
     background-color: black;
     color: red;
     font-weight: bold;
-}l
-
-.leaderboard__table tr:nth-child(even) {
-    background-color: #333;
-}
-
-.leaderboard__table tr:nth-child(odd) {
-    background-color: #222;
 }
 
 .leaderboard__table tr:hover {
