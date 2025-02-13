@@ -1,4 +1,4 @@
-const SkeletonLoader = () => (
+const LeaderbordSceleton = () => (
     <div className="skeleton">
         <div className="skeleton__row">
             <div className="skeleton__cell"></div>
@@ -14,3 +14,5 @@ const SkeletonLoader = () => (
         </div>
     </div>
 );
+
+export default LeaderbordSceleton;
