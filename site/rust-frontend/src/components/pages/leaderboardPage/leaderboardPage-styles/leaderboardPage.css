@@ -5,7 +5,7 @@
 
 .leaderboard__container{
     max-width: 1280px;
-    margin: 5% auto;
+    margin: 7% auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -16,7 +16,7 @@
 }
 
 .leaderboard__title {
-    color: red;
+    color: white;
 }
 
 .leaderboard__table {
@@ -59,6 +59,6 @@
     color: white;
 }
 
-.leaderboard__rank, .leaderboard__table_rank{
-    max-width: 75px;
+.leaderboard__table th {
+    width: 75px;
 }
