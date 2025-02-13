@@ -45,7 +45,7 @@ function LeaderboardPage() {
     const topFarming = [...users].sort((a, b) => b.resourceScore - a.resourceScore);
 
     return (
-        <div className="leaderboard-container">
+        <div className="leaderboard">
             <LeaderboardTable title="Топ Общий" data={topOverall} type="total" />
             <LeaderboardTable title="Топ по KD" data={topKD} type="kd" />
             <LeaderboardTable title="Топ по фармингу" data={topFarming} type="resource" />
@@ -55,9 +55,9 @@ function LeaderboardPage() {
 
 const LeaderboardTable = ({ title, data, type }) => {
     return (
-        <div className="leaderboard">
-            <h2>{title}</h2>
-            <table className="styled-table">
+        <div className="leaderboard__box">
+            <h2 className="leaderboard__title">{title}</h2>
+            <table className="leaderboard__table">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -86,8 +86,8 @@ const LeaderboardTable = ({ title, data, type }) => {
                 <tbody>
                     {data.map((user, index) => (
                         <tr key={user.steamId} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-                            <td className="rank">{index + 1}</td>
-                            <td className="player-name">{user.displayName}</td>
+                            <td className="leaderboard__table_rank">{index + 1}</td>
+                            <td className="leaderboard__table_playerName">{user.displayName}</td>
                             {type === "total" && <td>{user.totalScore.toFixed(2)}</td>}
                             {type === "kd" && (
                                 <>
