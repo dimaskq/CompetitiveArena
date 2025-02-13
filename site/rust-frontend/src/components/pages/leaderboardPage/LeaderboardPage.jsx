@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./leaderboardPage-styles/leaderboardPage.css"
+import LeaderboardSceleton from "./LeaderbordSceleton"
 
 function LeaderboardPage() {
     const [users, setUsers] = useState([]);
@@ -37,7 +38,7 @@ function LeaderboardPage() {
             });
     }, []);
 
-    if (loading) return <div className="loading">Loading...</div>;
+    if (loading) return <LeaderboardSceleton />;
     if (error) return <div className="error">{error}</div>;
 
     const topOverall = [...users].sort((a, b) => b.totalScore - a.totalScore);
