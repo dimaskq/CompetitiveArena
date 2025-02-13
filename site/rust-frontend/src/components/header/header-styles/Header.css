@@ -137,6 +137,7 @@
 }
 
 .dropdown-item {
+  font-size: 1rem;
   display: block;
   padding: 8px;
   color: white;
