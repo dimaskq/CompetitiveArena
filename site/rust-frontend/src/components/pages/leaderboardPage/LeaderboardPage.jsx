@@ -9,19 +9,22 @@ function LeaderboardPage() {
         fetch("https://rust-pkqo.onrender.com/api/users")
             .then(response => response.json())
             .then(data => {
-                // Вычисляем Resource Score
+                const W = 1.5; // Коефіцієнт покарання за смерті
+                
                 const processedUsers = data.map(user => {
+                    const kd = user.kill - (user.death * W);
+                    
                     const resourceScore = 
                         (user.wood * 0.01) +
                         (user.stone * 0.01) +
                         (user.metal * 0.1) +
                         (user.scrap * 0.3) +
-                        (user.sera * 0.5) +
-                        (user.hqm * 1); // MVK = HQM
+                        (user.sulfur * 0.5) +
+                        (user.hqm * 1);
+                    
+                    const totalScore = kd + (resourceScore * 0.01);
 
-                    const totalScore = user.kd + (resourceScore * 0.01);
-
-                    return { ...user, resourceScore, totalScore };
+                    return { ...user, kd, resourceScore, totalScore };
                 });
 
                 setUsers(processedUsers);
@@ -36,20 +39,14 @@ function LeaderboardPage() {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
-    // Сортируем пользователей для разных таблиц
     const topOverall = [...users].sort((a, b) => b.totalScore - a.totalScore);
     const topKD = [...users].sort((a, b) => b.kd - a.kd);
     const topFarming = [...users].sort((a, b) => b.resourceScore - a.resourceScore);
 
     return (
         <div className="leaderboard-container">
-            {/* Общий Топ */}
             <LeaderboardTable title="Топ Общий" data={topOverall} type="total" />
-            
-            {/* Топ по KD */}
             <LeaderboardTable title="Топ по KD" data={topKD} type="kd" />
-
-            {/* Топ по фармингу */}
             <LeaderboardTable title="Топ по фармингу" data={topFarming} type="resource" />
         </div>
     );
@@ -65,7 +62,13 @@ const LeaderboardTable = ({ title, data, type }) => {
                         <th>#</th>
                         <th>Ім'я</th>
                         {type === "total" && <th>Total Score</th>}
-                        {type === "kd" && <th>KD</th>}
+                        {type === "kd" && (
+                            <>
+                                <th>Kills</th>
+                                <th>Deaths</th>
+                                <th>KD</th>
+                            </>
+                        )}
                         {type === "resource" && (
                             <>
                                 <th>Wood</th>
@@ -85,13 +88,19 @@ const LeaderboardTable = ({ title, data, type }) => {
                             <td>{index + 1}</td>
                             <td>{user.displayName}</td>
                             {type === "total" && <td>{user.totalScore.toFixed(2)}</td>}
-                            {type === "kd" && <td>{user.kd.toFixed(2)}</td>}
+                            {type === "kd" && (
+                                <>
+                                    <td>{user.kill}</td>
+                                    <td>{user.death}</td>
+                                    <td>{user.kd.toFixed(2)}</td>
+                                </>
+                            )}
                             {type === "resource" && (
                                 <>
                                     <td>{user.wood}</td>
                                     <td>{user.stone}</td>
                                     <td>{user.metal}</td>
-                                    <td>{user.sera}</td>
+                                    <td>{user.sulfur}</td>
                                     <td>{user.scrap}</td>
                                     <td>{user.hqm}</td>
                                     <td>{user.resourceScore.toFixed(2)}</td>
