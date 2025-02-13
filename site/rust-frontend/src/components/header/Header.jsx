@@ -60,21 +60,21 @@ const Header = () => {
               <div
                 className="user-info"
                 onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
+                onMouseLeave={() => setTimeout(() => setDropdownOpen(false), 300)}
               >
-                <div className="avatar-container">
+                <div className="avatar-container" onClick={() => setDropdownOpen(!dropdownOpen)}>
                   <img src={user.avatar} alt="Avatar" className="avatar" />
-                  <span className="username">{user.displayName}</span>
+                  <div className="user-details">
+                    <span className="username">{user.displayName}</span>
+                    <span className="userid">ID: {user.id}</span>
+                  </div>
                 </div>
                 {dropdownOpen && (
-                  <div className="dropdown-menu">
+                  <div className="dropdown-menu" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
                     <Link to="/profile" className="dropdown-item">
                       Профиль
                     </Link>
-                    <button
-                      className="dropdown-item logout-button"
-                      onClick={handleLogout}
-                    >
+                    <button className="dropdown-item logout-button" onClick={handleLogout}>
                       Logout
                     </button>
                   </div>
