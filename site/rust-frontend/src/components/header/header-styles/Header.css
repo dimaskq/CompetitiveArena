@@ -24,8 +24,8 @@
 .header-menu {
   flex-grow: 1;
   display: flex;
-  justify-content: space-between; /* Align items to the edges */
-  align-items: center; /* Vertically center the items */
+  justify-content: space-between;
+  align-items: center; 
   position: relative;
 }
 
@@ -122,6 +122,7 @@
 .username {
   font-weight: bold;
   color: #fff;
+  font-family: "Open Sans";
 }
 
 .dropdown-menu {
@@ -155,8 +156,19 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
+  font-family: "Open Sans";
 }
 
 .logout-button:hover {
   background: #a00;
+}
+
+.header__person_logIn{
+  font-family: "Open Sans" !important;
+}
+
+.user-details{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
