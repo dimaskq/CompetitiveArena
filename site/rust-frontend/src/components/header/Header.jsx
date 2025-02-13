@@ -58,9 +58,9 @@ const Header = () => {
             />
             {user ? (
               <div
-                className="user-info"
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setTimeout(() => setDropdownOpen(false), 1000)}
+              className="user-info"
+              tabIndex={0} 
+              onBlur={() => setDropdownOpen(false)}
               >
                 <div className="avatar-container" onClick={() => setDropdownOpen(!dropdownOpen)}>
                   <img src={user.avatar} alt="Avatar" className="avatar" />
@@ -85,7 +85,7 @@ const Header = () => {
                 className="header__person header__person_logIn"
                 onClick={handleLogin}
               >
-                LOG IN WITH STEAM
+                LOG IN
               </button>
             )}
           </ul>
