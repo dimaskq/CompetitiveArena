@@ -22,7 +22,7 @@
     flex-direction: row-reverse;
 }
 .slogan__box{
-    width: 60%;
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
