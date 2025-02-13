@@ -1,3 +1,12 @@
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, clearUser } from "../../store/userSlice";
+import { Link } from "react-router-dom";
+import logo from "../../../public/logo-removebg.png";
+import axios from "axios";
+import "./header-styles/Header.css";
+import TabsSection from "./TabSections";
+
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -6,7 +15,9 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get("https://rust-pkqo.onrender.com/api/user", { withCredentials: true })
+      .get("https://rust-pkqo.onrender.com/api/user", {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data) {
           dispatch(setUser(response.data));
@@ -48,13 +59,10 @@ const Header = () => {
             {user ? (
               <div
                 className="user-info"
-                tabIndex={0} // Позволяет отслеживать потерю фокуса
-                onBlur={() => setDropdownOpen(false)} // Закрывает меню, когда фокус теряется
+                onMouseEnter={() => setDropdownOpen(true)}
+                onMouseLeave={() => setTimeout(() => setDropdownOpen(false), 1000)}
               >
-                <div
-                  className="avatar-container"
-                  onClick={() => setDropdownOpen((prev) => !prev)}
-                >
+                <div className="avatar-container" onClick={() => setDropdownOpen(!dropdownOpen)}>
                   <img src={user.avatar} alt="Avatar" className="avatar" />
                   <div className="user-details">
                     <span className="username">{user.displayName}</span>
@@ -62,21 +70,11 @@ const Header = () => {
                   </div>
                 </div>
                 {dropdownOpen && (
-                  <div className="dropdown-menu">
-                    <Link
-                      to="/profile"
-                      className="dropdown-item"
-                      onClick={(event) => event.stopPropagation()}
-                    >
+                  <div className="dropdown-menu" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
+                    <Link to="/api/user" className="dropdown-item" onClick={(event) => event.stopPropagation()}>
                       Профиль
                     </Link>
-                    <button
-                      className="dropdown-item logout-button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleLogout();
-                      }}
-                    >
+                    <button className="dropdown-item logout-button" onClick={(event) => {event.stopPropagation(); handleLogout();}}>
                       Logout
                     </button>
                   </div>
@@ -96,3 +94,5 @@ const Header = () => {
     </header>
   );
 };
+
+export default Header;
