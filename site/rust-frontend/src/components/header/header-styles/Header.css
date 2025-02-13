@@ -163,7 +163,7 @@
   background: #a00;
 }
 
-.header__person_logIn, .userid{
+.header__person_logIn, .userid, .dropdown-item{
   font-family: "Open Sans" !important;
 }
 
