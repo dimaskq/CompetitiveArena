@@ -231,4 +231,8 @@
     flex-grow: 1;
     justify-content: flex-end;
   }
+
+  .nav-item{
+    background-color: #00000000 !important;
+  }
 }
