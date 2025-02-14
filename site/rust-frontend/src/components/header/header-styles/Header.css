@@ -187,9 +187,11 @@
 .userid{
     font-size: 0.7rem;
 }
-.burger-menu{
+
+.header-menu__pc{
   display: none;
 }
+
 @media only screen and (max-width: 967px) {
   .tabSection{
     gap: 20px;
@@ -214,5 +216,7 @@
 
   .button-container{
     font-family: "Open Sans";
+    font-size: 1.2rem;
+    background-color: #00000000;
   }
 }
