@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledBurger = styled.button.attrs(({ open }) => ({
-  "aria-expanded": open, // Добавляем для доступности
-}))`
+const StyledBurger = styled.button`
   position: absolute;
   top: 30%;
   left: 2rem;
@@ -31,21 +29,20 @@ const StyledBurger = styled.button.attrs(({ open }) => ({
     position: relative;
     transform-origin: 1px;
 
-    :first-child {
-      transform: ${({ open }) =>
-        open ? "rotate(45deg) translate(5px, 5px) !important" : "rotate(0) !important"};
-    }
+    ${({ open }) => open && `
+      :first-child {
+        transform: rotate(45deg) translate(5px, 5px) !important;
+      }
+      
+      :nth-child(2) {
+        opacity: 0 !important;
+        transform: translateX(20px) !important;
+      }
 
-    :nth-child(2) {
-      opacity: ${({ open }) => (open ? "0 !important" : "1 !important")};
-      transform: ${({ open }) =>
-        open ? "translateX(20px) !important" : "translateX(0) !important"};
-    }
-
-    :nth-child(3) {
-      transform: ${({ open }) =>
-        open ? "rotate(-45deg) translate(5px, -5px) !important" : "rotate(0) !important"};
-    }
+      :nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px) !important;
+      }
+    `}
   }
 `;
 
