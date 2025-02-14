@@ -21,12 +21,19 @@ const StyledMenu = styled.nav`
   }
 `;
 
-const Menu = ({ open, activeTab, setActiveTab }) => {
+const Menu = ({ open, activeTab, setActiveTab, setOpen }) => {
+    const handleMenuClick = (tab, path) => {
+        setActiveTab(tab);
+        setOpen(false);
+      };
   return (
     <StyledMenu open={open}>
       <TabsSection
         active={activeTab}
-        onChange={(current) => setActiveTab(current)}
+        onChange={(current) => {
+          setActiveTab(current);
+          setOpen(false);
+        }}
       />
     </StyledMenu>
   );
