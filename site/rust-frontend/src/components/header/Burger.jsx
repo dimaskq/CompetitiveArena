@@ -26,20 +26,21 @@ const StyledBurger = styled.button`
     background: #EFFFFA;
     border-radius: 10px;
     transition: all 0.3s linear;
-    position: absolute;
-    transform-origin: center;
-  }
+    position: relative;
+    transform-origin: 1px;
 
-  div:first-child {
-    transform: ${({ open }) => (open ? "rotate(45deg) translate(5px, 5px)" : "rotate(0)")};
-  }
+    :first-child {
+      transform: ${({ open }) => (open ? "rotate(45deg) translate(5px, 5px)" : "rotate(0)")};
+    }
 
-  div:nth-child(2) {
-    opacity: ${({ open }) => (open ? "0" : "1")};
-  }
+    :nth-child(2) {
+      opacity: ${({ open }) => (open ? "0" : "1")};
+      transform: ${({ open }) => (open ? "translateX(20px)" : "translateX(0)")};
+    }
 
-  div:nth-child(3) {
-    transform: ${({ open }) => (open ? "rotate(-45deg) translate(5px, -5px)" : "rotate(0)")};
+    :nth-child(3) {
+      transform: ${({ open }) => (open ? "rotate(-45deg) translate(5px, -5px)" : "rotate(0)")};
+    }
   }
 `;
 
