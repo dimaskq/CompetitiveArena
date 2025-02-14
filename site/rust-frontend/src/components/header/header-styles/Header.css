@@ -224,12 +224,16 @@
   }
 
   .header__logo{
-    align-self: center;
-    flex-grow: 1;
+    margin: 0 0 0 30%;
   }
 
   .header-menu{
-    flex-grow: 0;
+    flex-grow: 1;
+    justify-content: flex-end;
   }
 
+  .jjjgmx{
+    top: 30%;
+    left: 2rem;
+  }
 }
