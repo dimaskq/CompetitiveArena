@@ -58,7 +58,7 @@
 }
 
 .header__logo {
-  width: 90px;
+  max-width: 90px;
 }
 
 .header__logo img {
@@ -225,6 +225,11 @@
 
   .header__logo{
     align-self: center;
+    flex-grow: 1;
+  }
+
+  .header-menu{
+    flex-grow: 0;
   }
 
 }
