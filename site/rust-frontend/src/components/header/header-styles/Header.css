@@ -192,6 +192,9 @@
   display: none;
 }
 
+.burger-menu{
+  display: none;
+}
 @media only screen and (max-width: 967px) {
   .tabSection{
     gap: 20px;
@@ -219,4 +222,9 @@
     font-size: 1.2rem;
     background-color: #00000000;
   }
+
+  .header__logo{
+    align-self: center;
+  }
+
 }
