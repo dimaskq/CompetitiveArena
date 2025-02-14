@@ -201,9 +201,18 @@
     display: block;
   }
 
+  .menu__list{
+    display: none;
+  }
+  
   .tabSection{
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding: 20% 0 0 0;
+  }
+
+  .button-container{
+    font-family: "Open Sans";
   }
 }
