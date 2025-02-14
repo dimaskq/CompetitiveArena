@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, clearUser } from "../../store/userSlice";
 import { Link } from "react-router-dom";
@@ -12,7 +11,7 @@ import Menu from "./Menu";
 
 const useOnClickOutside = (ref, handler) => {
   useEffect(() => {
-    const listener = event => {
+    const listener = (event) => {
       if (!ref.current || ref.current.contains(event.target)) return;
       handler(event);
     };
@@ -64,8 +63,6 @@ const Header = () => {
       });
   };
 
-  
-
   return (
     <header className="header">
       <div className="header-container container">
@@ -80,11 +77,14 @@ const Header = () => {
             />
             {user ? (
               <div
-              className="user-info"
-              tabIndex={0} 
-              onBlur={() => setDropdownOpen(false)}
+                className="user-info"
+                tabIndex={0}
+                onBlur={() => setDropdownOpen(false)}
               >
-                <div className="avatar-container" onClick={() => setDropdownOpen(!dropdownOpen)}>
+                <div
+                  className="avatar-container"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
                   <img src={user.avatar} alt="Avatar" className="avatar" />
                   <div className="user-details">
                     <span className="username">{user.displayName}</span>
@@ -92,11 +92,25 @@ const Header = () => {
                   </div>
                 </div>
                 {dropdownOpen && (
-                  <div className="dropdown-menu" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
-                    <Link to="/api/user" className="dropdown-item" onClick={(event) => event.stopPropagation()}>
+                  <div
+                    className="dropdown-menu"
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseLeave={() => setDropdownOpen(false)}
+                  >
+                    <Link
+                      to="/api/user"
+                      className="dropdown-item"
+                      onClick={(event) => event.stopPropagation()}
+                    >
                       Profile
                     </Link>
-                    <button className="dropdown-item logout-button" onClick={(event) => {event.stopPropagation(); handleLogout();}}>
+                    <button
+                      className="dropdown-item logout-button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleLogout();
+                      }}
+                    >
                       Logout
                     </button>
                   </div>
@@ -114,7 +128,7 @@ const Header = () => {
         </nav>
         <div className="burger-menu" ref={node}>
           <Burger open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen} activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
       </div>
     </header>

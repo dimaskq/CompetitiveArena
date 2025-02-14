@@ -19,35 +19,15 @@ const StyledMenu = styled.nav`
   @media (max-width: 576px) {
     width: 100%;
   }
-
-  a {
-    font-size: 2rem;
-    text-transform: uppercase;
-    padding: 2rem 0;
-    font-weight: bold;
-    letter-spacing: 0.5rem;
-    color: #0d0c1d;
-    text-decoration: none;
-    transition: color 0.3s linear;
-
-    @media (max-width: 576px) {
-      font-size: 1.5rem;
-      text-align: center;
-    }
-
-    &:hover {
-      color: #343078;
-    }
-  }
 `;
 
-const Menu = ({ open }) => {
+const Menu = ({ open, activeTab, setActiveTab }) => {
   return (
     <StyledMenu open={open}>
-       <TabsSection
-            active={activeTab}
-            onChange={(current) => setActiveTab(current)}
-        />
+      <TabsSection
+        active={activeTab}
+        onChange={(current) => setActiveTab(current)}
+      />
     </StyledMenu>
   );
 };
