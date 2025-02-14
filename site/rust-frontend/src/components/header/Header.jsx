@@ -6,12 +6,31 @@ import logo from "../../../public/logo-removebg.png";
 import axios from "axios";
 import "./header-styles/Header.css";
 import TabsSection from "./TabSections";
+import Burger from "./Burger";
+import Menu from "./Menu";
+
+const useOnClickOutside = (ref, handler) => {
+  React.useEffect(() => {
+    const listener = event => {
+      if (!ref.current || ref.current.contains(event.target)) return;
+      handler(event);
+    };
+    document.addEventListener("mousedown", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+    };
+  }, [ref, handler]);
+};
 
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [activeTab, setActiveTab] = useState("home");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const node = React.useRef();
+  useOnClickOutside(node, () => setOpen(false));
 
   useEffect(() => {
     axios
@@ -43,6 +62,8 @@ const Header = () => {
         console.error("Logout error:", error);
       });
   };
+
+  
 
   return (
     <header className="header">
@@ -90,6 +111,10 @@ const Header = () => {
             )}
           </ul>
         </nav>
+        <div className="burger-menu" ref={node}>
+          <Burger open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen} />
+        </div>
       </div>
     </header>
   );
