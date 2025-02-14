@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledBurger = styled.button`
+const StyledBurger = styled.button.attrs(({ open }) => ({
+  "aria-expanded": open, // Добавляем для доступности
+}))`
   position: absolute;
   top: 30%;
   left: 2rem;
@@ -23,23 +25,26 @@ const StyledBurger = styled.button`
   div {
     width: 2rem;
     height: 0.25rem;
-    background: #EFFFFA;
+    background: #EFFFFA !important;
     border-radius: 10px;
-    transition: all 0.3s linear;
+    transition: all 0.3s linear !important;
     position: relative;
     transform-origin: 1px;
 
     :first-child {
-      transform: ${({ open }) => (open ? "rotate(45deg) translate(5px, 5px)" : "rotate(0)")};
+      transform: ${({ open }) =>
+        open ? "rotate(45deg) translate(5px, 5px) !important" : "rotate(0) !important"};
     }
 
     :nth-child(2) {
-      opacity: ${({ open }) => (open ? "0" : "1")};
-      transform: ${({ open }) => (open ? "translateX(20px)" : "translateX(0)")};
+      opacity: ${({ open }) => (open ? "0 !important" : "1 !important")};
+      transform: ${({ open }) =>
+        open ? "translateX(20px) !important" : "translateX(0) !important"};
     }
 
     :nth-child(3) {
-      transform: ${({ open }) => (open ? "rotate(-45deg) translate(5px, -5px)" : "rotate(0)")};
+      transform: ${({ open }) =>
+        open ? "rotate(-45deg) translate(5px, -5px) !important" : "rotate(0) !important"};
     }
   }
 `;
