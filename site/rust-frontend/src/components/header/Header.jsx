@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, clearUser } from "../../store/userSlice";
@@ -10,7 +11,7 @@ import Burger from "./Burger";
 import Menu from "./Menu";
 
 const useOnClickOutside = (ref, handler) => {
-  React.useEffect(() => {
+  useEffect(() => {
     const listener = event => {
       if (!ref.current || ref.current.contains(event.target)) return;
       handler(event);
