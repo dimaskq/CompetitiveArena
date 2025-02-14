@@ -187,10 +187,17 @@
 .userid{
     font-size: 0.7rem;
 }
-
+.burger-menu{
+  display: none;
+}
 @media only screen and (max-width: 967px) {
   .tabSection{
     gap: 20px;
   }
 }
 
+@media only screen and (max-width: 885px) {
+  .burger-menu{
+    display: block;
+  }
+}
