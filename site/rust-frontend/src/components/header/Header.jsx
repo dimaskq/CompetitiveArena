@@ -72,6 +72,7 @@ const Header = () => {
         <nav className="header-menu">
           <ul className="menu__list">
             <TabsSection
+              className="header-menu__pc"
               active={activeTab}
               onChange={(current) => setActiveTab(current)}
             />
