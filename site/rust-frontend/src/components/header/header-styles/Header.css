@@ -200,4 +200,10 @@
   .burger-menu{
     display: block;
   }
+
+  .tabSection{
+    flex-direction: column;
+    align-items: center;
+    padding: 20% 0 0 0;
+  }
 }

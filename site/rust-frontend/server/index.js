@@ -63,7 +63,6 @@ passport.use(
     },
     async (identifier, profile, done) => {
       try {
-        // Перевіряємо, чи є користувач у базі даних
         let user = await User.findOne({ steamId: profile.id });
 
         if (!user) {
