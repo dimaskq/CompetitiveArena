@@ -72,11 +72,11 @@ const Header = () => {
         <nav className="header-menu">
           <ul className="menu__list">
             <TabsSection
-              className="header-menu__pc"
               active={activeTab}
               onChange={(current) => setActiveTab(current)}
             />
-            {user ? (
+          </ul>
+          {user ? (
               <div
                 className="user-info"
                 tabIndex={0}
@@ -125,7 +125,6 @@ const Header = () => {
                 LOG IN
               </button>
             )}
-          </ul>
         </nav>
         <div className="burger-menu" ref={node}>
           <Burger open={open} setOpen={setOpen} />
