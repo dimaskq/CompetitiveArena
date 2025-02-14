@@ -59,13 +59,21 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-container container">
-        <Link className="header__logo" to="/">
+        {/* Бургер-меню слева в мобильной версии */}
+        {isMobile && (
+          <button className="burger-menu" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FiX size={30} /> : <FiMenu size={30} />}
+          </button>
+        )}
+
+        {/* Логотип по центру только в мобильной версии */}
+        <Link className={`header__logo ${isMobile ? "center-logo" : ""}`} to="/">
           <img src={logo} alt="logo" />
         </Link>
 
-        {/* Информация о пользователе всегда в хедере */}
+        {/* Информация о пользователе: слева на десктопе, справа на мобильном */}
         {user && (
-          <div className="user-info">
+          <div className={`user-info ${isMobile ? "mobile-user" : ""}`}>
             <div className="avatar-container">
               <img src={user.avatar} alt="Avatar" className="avatar" />
               <div className="user-details">
@@ -79,33 +87,29 @@ const Header = () => {
           </div>
         )}
 
-        {/* Бургер-меню для мобильных устройств */}
-        {isMobile ? (
-          <button className="burger-menu" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <FiX size={30} /> : <FiMenu size={30} />}
-          </button>
-        ) : (
+        {/* Навигация в десктопной версии */}
+        {!isMobile && (
           <nav className="header-menu">
             <ul className="menu__list">
               <TabsSection active={activeTab} onChange={setActiveTab} />
             </ul>
           </nav>
         )}
-
-        {/* Всплывающее мобильное меню (только TabsSection) */}
-        {menuOpen && (
-          <div className="mobile-menu">
-            <TabsSection active={activeTab} onChange={setActiveTab} />
-          </div>
-        )}
-
-        {/* Кнопка логина (если пользователь не залогинен) */}
-        {!user && (
-          <button className="header__person header__person_logIn" onClick={handleLogin}>
-            LOG IN
-          </button>
-        )}
       </div>
+
+      {/* Бургер-меню выплывает справа налево */}
+      {menuOpen && (
+        <div className="mobile-menu slide-in">
+          <TabsSection active={activeTab} onChange={setActiveTab} />
+        </div>
+      )}
+
+      {/* Кнопка логина (если пользователь не залогинен) */}
+      {!user && (
+        <button className="header__person header__person_logIn" onClick={handleLogin}>
+          LOG IN
+        </button>
+      )}
     </header>
   );
 };
