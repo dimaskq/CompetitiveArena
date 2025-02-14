@@ -16,7 +16,7 @@
 .header-container {
   display: flex;
   align-items: center;
-  width: 80%;
+  width: 92%;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -217,12 +217,6 @@
     padding: 20% 0 0 0;
   }
 
-  .button-container{
-    font-family: "Open Sans";
-    font-size: 1.2rem;
-    background-color: #00000000;
-  }
-
   .header__logo{
     margin: 0 0 0 30%;
   }
@@ -234,5 +228,8 @@
 
   .nav-item{
     background-color: #00000000 !important;
+    color: #fff;
+    font-family: "Open Sans";
+    font-size: 1.2rem;
   }
 }
