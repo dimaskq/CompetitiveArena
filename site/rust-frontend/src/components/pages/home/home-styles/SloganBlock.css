@@ -153,6 +153,9 @@
     }
 
     .slogan__box_btn:hover{
+        color: #fff;
+        border: none;
+        background-color: #df1313;
         transition: none;
     }
 
