@@ -107,17 +107,35 @@ app.get("/auth/steam/return", passport.authenticate("steam", { failureRedirect: 
   res.redirect("/");
 });
 
-app.patch("/api/user", ensureAuthenticated, async (req, res) => {
+app.get("/api/user", ensureAuthenticated, async (req, res) => {
   try {
-    const { steamId } = req.user; // Получаем steamId авторизованного пользователя
-    const updateData = req.body; // Данные для обновления
-
-    if (!steamId) {
-      return res.status(400).json({ message: "Missing steamId" });
+    if (!req.user || !req.user.steamId) {
+      return res.status(401).json({ message: "Not authenticated" });
     }
 
+    const user = await User.findOne({ steamId: req.user.steamId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+});
+
+app.patch("/api/user", ensureAuthenticated, async (req, res) => {
+  try {
+    if (!req.user || !req.user.steamId) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const updateData = req.body; // data for update
+
     const updatedUser = await User.findOneAndUpdate(
-      { steamId },
+      { steamId: req.user.steamId },
       { $set: updateData },
       { new: true }
     );
@@ -132,6 +150,7 @@ app.patch("/api/user", ensureAuthenticated, async (req, res) => {
     res.status(500).json({ message: "Error updating user", error });
   }
 });
+
 
 
 app.get("/api/users", async (req, res) => {
