@@ -40,12 +40,12 @@
     }
 
     .footer__block_logo{
-        display: flex;
         gap: 20px;
     }
 
     .footer__block{
         width: 100%;
+        display: flex;
         align-items: center;
         justify-content: center;
     }
