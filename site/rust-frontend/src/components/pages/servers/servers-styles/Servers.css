@@ -129,3 +129,14 @@
 .serversPlans__block:hover .serversPlans__block_price {
     color: white; /* Змінюємо колір ціни на білий при ховері */
 }
+
+@media only screen and (max-width: 768px) {
+    .serversPlans__block{
+        transition: none;
+    }
+
+    .serversPlans__block_btn{
+        transition: none;
+    }
+
+}
