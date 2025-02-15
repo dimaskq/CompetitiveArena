@@ -5,22 +5,22 @@ const SERVERPLANS = [
   {
     title: "Solo",
     price: "$5",
-    info: ["1 user", "300 max visitors", "$500 credit"],
+    info: ["1 user", "300 max visitors", "min $200"],
   },
   {
     title: "Duo",
     price: "$10",
-    info: ["2 users", "400 max visitors", "$600 credit"],
+    info: ["2 users", "400 max visitors", "min 400"],
   },
   {
     title: "Trio",
     price: "$15",
-    info: ["3 users", "450 max visitors", "$700 credit"],
+    info: ["3 users", "450 max visitors", "min $500"],
   },
   {
     title: "Squad",
     price: "$20",
-    info: ["4 users", "500 max visitors", "$800 credit"],
+    info: ["4 users", "500 max visitors", "min $600"],
   },
 ];
 

@@ -7,7 +7,7 @@ import SwiperInvestors from "./SwiperInvestors";
 function HomePage (){
     return <div className="home">
         <SloganBlock />
-        <SwiperInvestors />
+        {/* <SwiperInvestors /> */}
         <AboutBlockHome />
         <ServersPage />
     </div>

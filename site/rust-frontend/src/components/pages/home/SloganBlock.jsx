@@ -14,7 +14,7 @@ function SloganBlock() {
             <div className="slogan__container">
                 <div className="slogan__box">
                     <h2 className="slogan__box_title">Competitive Arena</h2>
-                    <p className="slogan__box_information">Purchase a pass to our exclusive</p>
+                    <p className="slogan__box_information">Play, Enjoy, Win</p>
                     <div className="slogan__btn_container">
                         <a href="/servers" className="slogan__box_btn">Watch Price</a>
                         <a href="https://discord.gg/jf6UAxab" className="slogan__box_btn">Join Discord</a>
