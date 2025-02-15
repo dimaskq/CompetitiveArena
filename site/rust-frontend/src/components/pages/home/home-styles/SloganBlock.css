@@ -97,6 +97,10 @@
     animation: bounce 1.6s ease-in-out infinite;
 }
 
+.slogan__container_about{
+    padding: 0 5%;
+}
+
 @keyframes bounce {
     0% {
         transform: translateY(0) rotate(-45deg); 
@@ -119,10 +123,26 @@
     font-family: "Bokor", system-ui;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 948px) {
     .slogan__arrow_container{
         display: none;
     }
+}
+
+@media only screen and (max-width: 768px) {
+    .videoTag{
+        display: none;
+    }
+
+    .slogan__box_img{
+        display: none;
+    }
+
+    .slogan__container{
+        display: flex;
+        justify-content: center;
+    }
+
 }
 @media only screen and (max-width: 426px) {
     .slogan__btn_container{
@@ -141,5 +161,4 @@
         font-size: 3rem;
     }
 }
-
 
