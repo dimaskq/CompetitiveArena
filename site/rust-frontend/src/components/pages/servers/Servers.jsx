@@ -10,7 +10,7 @@ const SERVERPLANS = [
   {
     title: "Duo",
     price: "$10",
-    info: ["2 users", "400 max visitors", "min 400"],
+    info: ["2 users", "400 max visitors", "min $400"],
   },
   {
     title: "Trio",

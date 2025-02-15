@@ -1,5 +1,5 @@
 import "./footer-styles/Footer.css"
-import logo from "../../../public/logo.png"
+import logo from "../../../public/logo-removebg.png";
 function Footer(){
     return <footer className="footer">
         <div className="footer__container">

@@ -107,12 +107,40 @@ app.get("/auth/steam/return", passport.authenticate("steam", { failureRedirect: 
   res.redirect("/");
 });
 
-app.get("/api/user", ensureAuthenticated, (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Not authenticated" });
+app.patch("/api/user", ensureAuthenticated, async (req, res) => {
+  try {
+    const { solo, duo, trio, squad } = req.body;
+    const userId = req.user.steamId; // Берём ID текущего юзера
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is missing" });
+    }
+
+    // Создаём объект для обновления
+    const updateData = {};
+    if (solo !== undefined) updateData.solo = solo;
+    if (duo !== undefined) updateData.duo = duo;
+    if (trio !== undefined) updateData.trio = trio;
+    if (squad !== undefined) updateData.squad = squad;
+
+    // Обновляем пользователя в базе
+    const updatedUser = await User.findOneAndUpdate(
+      { steamId: userId },
+      { $set: updateData },
+      { new: true } // Вернёт обновлённого юзера
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error", error });
   }
-  return res.json(req.user);
 });
+
 
 app.get("/api/users", async (req, res) => {
   try {

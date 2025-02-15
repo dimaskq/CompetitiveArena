@@ -7,9 +7,10 @@ function ServerPlan({ title, price, info }) {
     <div className="serversPlans__block">
       <ServerPlanHeader title={title} price={price} />
       <ServerPlanInfo info={info} />
-      <ServerPlanButton />
+      <ServerPlanButton title={title} />
     </div>
   );
 }
 
 export default ServerPlan;
+
