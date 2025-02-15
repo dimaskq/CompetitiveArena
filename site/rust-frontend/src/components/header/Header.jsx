@@ -52,9 +52,11 @@ const Header = () => {
   };
 
   const handleLogout = () => {
+    console.log("Logging out...");
     axios
       .get("https://rust-pkqo.onrender.com/logout", { withCredentials: true })
       .then(() => {
+        console.log("Logout successful");
         dispatch(clearUser());
         window.location.href = "https://rust-pkqo.onrender.com";
       })
