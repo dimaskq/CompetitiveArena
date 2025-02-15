@@ -4,8 +4,8 @@ import video from "../../../../public/videoplayback.mp4";
 function SloganBlock() {
     const handleScroll = () => {
         window.scrollBy({
-            top: window.innerHeight, // Прокрутка на высоту окна
-            behavior: "smooth",      // Плавная анимация
+            top: window.innerHeight, 
+            behavior: "smooth",    
         });
     };
 

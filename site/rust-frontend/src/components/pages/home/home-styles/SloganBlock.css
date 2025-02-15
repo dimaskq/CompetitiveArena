@@ -118,3 +118,28 @@
 .slogan{
     font-family: "Bokor", system-ui;
 }
+
+@media only screen and (max-width: 768px) {
+    .slogan__arrow_container{
+        display: none;
+    }
+}
+@media only screen and (max-width: 426px) {
+    .slogan__btn_container{
+        gap: 10px;
+    }
+
+    .slogan__box_btn{
+        width: 150px;
+    }
+
+    .slogan__container{
+        padding: 0 5%;
+    }
+
+    .slogan__box_title{
+        font-size: 3rem;
+    }
+}
+
+
