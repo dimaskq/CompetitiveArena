@@ -163,10 +163,15 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  req.logout(() => {
+  req.logout((err) => {
+    if (err) {
+      console.error("Помилка логауту:", err);
+      return res.status(500).send("Не вдалося вийти");
+    }
     res.redirect("/");
   });
 });
+
 
 app.post('/api/save-users', async (req, res) => {
   try {
