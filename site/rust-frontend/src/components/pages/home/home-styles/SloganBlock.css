@@ -130,6 +130,11 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .slogan{
+        height: auto;
+        margin: 20% 0 0 0;
+    }
+
     .videoTag{
         display: none;
     }
