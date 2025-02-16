@@ -2,6 +2,8 @@ import React from 'react';
 import "./aboutPage-styles/aboutPage.css";
 import img1 from "../../../../public/aboutList-img1.png"
 import img2 from "../../../../public/aboutList-img2.jpeg"
+import Typical from 'react-typical';
+
 function AboutPage() {
     return (
         <div className="about-page">
@@ -10,7 +12,19 @@ function AboutPage() {
             </h1>
             <div className="about__container">
                     <div className="about__text_container">
-                        <p className='about__text_top'>Welcome to Competitive Arena — your portal to the world of the best Rust servers! We offer a unique opportunity to enjoy high-quality game worlds and participate in exciting tournaments.</p>
+                        {/* <p className='about__text_top'>Welcome to Competitive Arena — your portal to the world of the best Rust servers! We offer a unique opportunity to enjoy high-quality game worlds and participate in exciting tournaments.</p> */}
+                        <p className='about__text_top>
+                            <Typical
+                            steps={[
+                                'Welcome to Competitive Arena —', 1500, 
+                                'your portal to the world of the best Rust servers!', 2000, 
+                                'We offer a unique opportunity to enjoy high-quality game worlds', 2000, 
+                                'and participate in exciting tournaments.', 2000
+                            ]}
+                            loop={Infinity}
+                            wrapper="span"
+                            />
+                        </p>
                         <div className="about__info_box">
                             <img src={img1} alt="image for first block of about" />
                             <div className="about__list_container">
