@@ -141,4 +141,16 @@
         transform: translateY(0px);
     }
 
+    .serversPlans__block::before {
+        display: none;
+    }
+
+    .serversPlans__block::before {
+        clip-path: circle(0% at 50% 50%) !important;
+    }
+    
+    .serversPlans__block:hover::before {
+        clip-path: circle(0% at 50% 50%) !important;
+    }
+
 }
