@@ -3,7 +3,6 @@ import "./aboutPage-styles/aboutPage.css";
 import img1 from "../../../../public/aboutList-img1.png"
 import img2 from "../../../../public/aboutList-img2.jpeg"
 import Typewriter from "typewriter-effect";
-import TypewriterComponent from 'typewriter-effect';
 
 function AboutPage() {
     return (
@@ -13,7 +12,21 @@ function AboutPage() {
             </h1>
             <div className="about__container">
                     <div className="about__text_container">
-                        <TypewriterComponent />
+                        <p className="about_text_top">
+                            <Typewriter
+                                options={{
+                                    strings: [
+                                        "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
+                                    ],
+                                    autoStart: true,
+                                    loop: false,
+                                    delay: 10, 
+                                    deleteSpeed: 10,
+                                    pauseFor: 5000,
+                                }}
+                            />
+                        </p>
+
                         <div className="about__info_box">
                             <img src={img1} alt="image for first block of about" />
                             <div className="about__list_container">
