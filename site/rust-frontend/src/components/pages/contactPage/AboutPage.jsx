@@ -15,12 +15,13 @@ function AboutPage() {
                         <p className="about_text_top">
                             <Typewriter
                                 options={{
-                                strings: [
-                                    "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
-                                ],
-                                autoStart: true,
-                                loop: true,
-                                delay: 400, 
+                                    strings: [
+                                        "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
+                                    ],
+                                    autoStart: true,
+                                    loop: true,
+                                    delay: 20, 
+                                    deleteSpeed: 0
                                 }}
                             />
                         </p>
