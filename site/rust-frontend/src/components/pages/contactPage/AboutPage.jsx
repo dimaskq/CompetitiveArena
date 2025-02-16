@@ -12,17 +12,15 @@ function AboutPage() {
             </h1>
             <div className="about__container">
                     <div className="about__text_container">
-                        {/* <p className='about__text_top'>Welcome to Competitive Arena — your portal to the world of the best Rust servers! We offer a unique opportunity to enjoy high-quality game worlds and participate in exciting tournaments.</p> */}
                         <p className="about_text_top">
                             <Typewriter
                                 options={{
                                 strings: [
-                                    "Welcome to Competitive Arena — your portal to the world of the best Rust servers! We offer a unique opportunity to enjoy high-quality game worlds and participate in exciting tournaments."
+                                    "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
                                 ],
                                 autoStart: true,
                                 loop: true,
-                                delay: 100, 
-                                deleteSpeed: 30, 
+                                delay: 400, 
                                 }}
                             />
                         </p>
