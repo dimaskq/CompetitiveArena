@@ -1,27 +1,25 @@
 name: Docker Push to ECR
 
-on:
-  workflow_call:
-    inputs:
-      image_tag:
-        required: true
-        type: string
-      ecr_repository:
-        required: true
-        type: string
-    secrets:
-      aws_access_key_id:
-        required: true
-      aws_secret_access_key:
-        required: true
+inputs:
+  image_tag:
+    required: true
+    type: string
+  ecr_repository:
+    required: true
+    type: string
+secrets:
+  aws_access_key_id:
+    required: true
+  aws_secret_access_key:
+    required: true
 
 env:
   AWS_REGION: us-east-1
 
-jobs:
-  push:
-    runs-on: ubuntu-latest
-    steps:
+
+runs:
+  using: "composite"
+  steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:

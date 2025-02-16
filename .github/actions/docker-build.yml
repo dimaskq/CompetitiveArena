@@ -1,26 +1,23 @@
 name: Docker Build
 
-on:
-  workflow_call:
-    inputs:
-      context:
-        required: true
-        type: string
-      dockerfile:
-        required: true
-        type: string
-      image_tag:
-        required: true
-        type: string
-      build_args:
-        required: false
-        type: string
-        default: ""
+inputs:
+  context:
+    required: true
+    type: string
+  dockerfile:
+    required: true
+    type: string
+  image_tag:
+    required: true
+    type: string
+  build_args:
+    required: false
+    type: string
+    default: ""
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+runs:
+  using: "composite"
+  steps:
     - name: Build Docker image
       run: |
         BUILD_ARGS=""
