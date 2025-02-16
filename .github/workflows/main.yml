@@ -22,8 +22,8 @@ jobs:
     - name: Docker Build
       uses: ./.github/workflows/docker-build.yml
       with:
-        context: ./rust-frontend
-        dockerfile: ./Dockerfile
+        context: site/rust-frontend
+        dockerfile: site/rust-frontend/Dockerfile
         image_tag: ${{ env.ENV }}-${{ github.sha }}
         build_args: |
           NODE_ENV=${{ env.ENV }}
