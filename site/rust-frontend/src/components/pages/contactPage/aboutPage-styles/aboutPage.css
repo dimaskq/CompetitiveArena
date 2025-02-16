@@ -17,11 +17,16 @@
 
 .about__title{
     text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+    font-size: 3rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
                 url('../../../../../public/aboutPageBg.avif') center/cover;
     color: white;
     display: inline-block; 
-    padding: 10px; 
+    padding: 50px 0; 
+    margin: 15% 0 5% 0;
+    -webkit-box-shadow: -1px -1px 40px 9px rgba(199,8,8,0.62);
+    -moz-box-shadow: -1px -1px 40px 9px rgba(199,8,8,0.62);
+    box-shadow: -1px -1px 40px 9px rgba(199,8,8,0.62);
 }
 
 .about__text_container{
