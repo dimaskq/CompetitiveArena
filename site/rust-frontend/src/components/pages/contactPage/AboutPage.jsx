@@ -19,7 +19,7 @@ function AboutPage() {
                                         "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
                                     ],
                                     autoStart: true,
-                                    loop: false,
+                                    loop: true,
                                     delay: 40, 
                                     deleteSpeed: 10,
                                     pauseFor: 5000,
