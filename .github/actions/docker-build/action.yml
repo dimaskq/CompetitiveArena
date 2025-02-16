@@ -27,6 +27,8 @@ runs:
             BUILD_ARGS="$BUILD_ARGS --build-arg $line"
           done <<< "${{ inputs.build_args }}"
         fi
+
+        echo $BUILD_ARGS
         
         docker build \
           $BUILD_ARGS \
