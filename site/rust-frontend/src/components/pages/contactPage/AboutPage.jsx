@@ -16,25 +16,26 @@ function AboutPage() {
                             <div className="about__list_container">
                                 <h2 className='about__text_offer'>What We Offer:</h2>
                                 <ul className='about__text_list'>
-                                    <li className='about__list_item'>Best Game Servers – We meticulously configure our servers to ensure low ping, anti-cheat protection, and smooth gameplay. You don't need to worry about technical issues – just enjoy the game!</li>
-                                    <li className='about__list_item'>Exciting Tournaments – Regular competitions with unique modes, team and solo battles, and valuable prizes for the top players. Every event is an opportunity to showcase your skills and prove your worth!</li>
-                                    <li className='about__list_item'>Fair Play – We maintain fairness and balance by ensuring protection from cheaters. The administration and anti-cheat systems work 24/7 to create a fair environment for all players.</li>
-                                    <li className='about__list_item'>Active Community – Join thousands of players to discuss strategies, find friends and opponents, exchange experiences, and participate in community life. Our Discord server and forum are great places for interaction and tactics exchange.</li>
-                                    <li className='about__list_item'>Player Support – Our team is always ready to assist, whether it’s technical questions, complaints, or suggestions. We value every member of our community and aim to make the game as comfortable as possible.</li>
+                                    <li className='about__list_item'>Best Game Servers – just enjoy the game!</li>
+                                    <li className='about__list_item'>Exciting Tournaments </li>
+                                    <li className='about__list_item'>Fair Play</li>
+                                    <li className='about__list_item'>Active Community</li>
+                                    <li className='about__list_item'>Player Support </li>
                                 </ul>
                             </div> 
                         </div>
                         <div className="about__info_box">
-                            <img src={img2} alt="image for second block of about" />
                             <div className="about__list_container">
+                                <h2 className='about__text_offer'>Why Choose Us?</h2>
                                 <ul className='about__text_list'>
-                                    <li className='about__list_item'>Quality Servers – Enjoy lag-free and uninterrupted gameplay.</li>
-                                    <li className='about__list_item'>Regular Tournaments – Win valuable prizes and prove your expertise.</li>
-                                    <li className='about__list_item'>Security and Fairness – Active battle against cheaters and unfair players.</li>
-                                    <li className='about__list_item'>Strong Community – Players who support each other and create a friendly atmosphere.</li>
-                                    <li className='about__list_item'>Continuous Development – We regularly update our servers with new features and improvements.</li>
+                                    <li className='about__list_item'>Quality Servers</li>
+                                    <li className='about__list_item'>Regular Tournaments</li>
+                                    <li className='about__list_item'>Security and Fairness</li>
+                                    <li className='about__list_item'>Strong Community</li>
+                                    <li className='about__list_item'>Continuous Development</li>
                                 </ul>
                             </div>
+                            <img src={img2} alt="image for second block of about" />
                         </div>
                     </div>
                 <div class="about__join_container">
