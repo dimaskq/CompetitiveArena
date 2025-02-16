@@ -20,7 +20,7 @@ function AboutPage() {
                                     ],
                                     autoStart: true,
                                     loop: false,
-                                    delay: 10, 
+                                    delay: 40, 
                                     deleteSpeed: 10,
                                     pauseFor: 5000,
                                 }}
