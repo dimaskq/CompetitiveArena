@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Docker Build
-      uses: ./.github/actions/docker-build.yml
+      uses: ./.github/actions/docker-build
       with:
         context: site/rust-frontend
         dockerfile: site/rust-frontend/Dockerfile
@@ -30,7 +30,7 @@ jobs:
     
     - name: Docker Push
       if: github.event_name != 'pull_request' 
-      uses: ./.github/actions/docker-push.yml
+      uses: ./.github/actions/docker-push
       with:
         image_tag: ${{ env.ENV }}-${{ github.sha }}
         ecr_repository: ${{ env.ECR_REPOSITORY }}
