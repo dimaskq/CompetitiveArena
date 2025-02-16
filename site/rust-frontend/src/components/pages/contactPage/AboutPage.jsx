@@ -5,8 +5,6 @@ function AboutPage() {
     return (
         <div className="about-page">
             <div className="about__container">
-                <img src={bg} alt="background bg" className='about__title_bg'/>
-                <div className="about__text_absolute">
                     <h1 className="about__title">
                         About Us
                     </h1>
@@ -20,11 +18,10 @@ function AboutPage() {
                             <li className='about__list_item'>Stability and security — no failures, just gaming!</li>
                         </ul>
                     </div>
-                    <div class="about__join_container">
-                        <a className='about__join_btn' href="https://discord.gg/jf6UAxab">Join Discord</a>
-                    </div>
+                <div class="about__join_container">
+                    <a className='about__join_btn' href="https://discord.gg/jf6UAxab">Join Discord</a>
                 </div>
-            </div>
+            </div>    
         </div>
     );
 }

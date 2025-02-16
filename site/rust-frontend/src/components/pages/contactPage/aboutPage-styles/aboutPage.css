@@ -6,52 +6,29 @@
     width: 100vw;
     height: auto;
     color: #fff;
-    position: relative;
 }
 
 .about__container {
-    position: relative;
     max-width: 1280px;
     display: flex;
     flex-direction: column;
-    margin: 15% auto;
-}
-
-.about__title_bg{
-    position: absolute;
-    top: 22%;
-    left: 0;
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    z-index: 1;
-}
-
-.about__title_bg::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-}
-.about__text_absolute{
-    position: absolute;
-    z-index: 2;
-    top: 26%;
-    left: 0;
+    margin: 0 auto;
 }
 
 .about__title{
     text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('../../../../../public/aboutPageBg.avif') center/cover;
+    color: white;
+    display: inline-block; 
+    padding: 10px; 
 }
 
 .about__text_container{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 5% 0;
+    padding: 0 5%;
 }
 
 .about__text_list{
