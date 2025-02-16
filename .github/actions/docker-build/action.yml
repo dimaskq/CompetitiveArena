@@ -10,10 +10,9 @@ inputs:
   image_tag:
     required: true
     type: string
-  build_args:
-    required: false
+  environment:
+    required: true
     type: string
-    default: ""
 
 runs:
   using: "composite"
@@ -21,17 +20,9 @@ runs:
     - name: Build Docker image
       shell: bash
       run: |
-        BUILD_ARGS=""
-        if [ ! -z "${{ inputs.build_args }}" ]; then
-          while IFS= read -r line; do
-            BUILD_ARGS="$BUILD_ARGS --build-arg $line"
-          done <<< "${{ inputs.build_args }}"
-        fi
-
-        echo $BUILD_ARGS
         
         docker build \
-          $BUILD_ARGS \
+          --build-arg NODE_ENV=${{ inputs.environment }} \
           -t ${{ inputs.image_tag }} \
           -f ${{ inputs.dockerfile }} \
           ${{ inputs.context }}
