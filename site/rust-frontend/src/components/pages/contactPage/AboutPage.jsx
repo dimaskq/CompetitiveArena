@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./aboutPage-styles/aboutPage.css";
 import img1 from "../../../../public/aboutList-img1.png"
 import img2 from "../../../../public/aboutList-img2.jpeg"
