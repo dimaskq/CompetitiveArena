@@ -19,6 +19,7 @@ runs:
   using: "composite"
   steps:
     - name: Build Docker image
+      shell: bash
       run: |
         BUILD_ARGS=""
         if [ ! -z "${{ inputs.build_args }}" ]; then
