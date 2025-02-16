@@ -17,14 +17,11 @@ function AboutPage() {
                             <Typewriter
                                 options={{
                                 strings: [
-                                    "Welcome to Competitive Arena -",
-                                    "Your portal to the world of the best Rust servers!",
-                                    "We offer a unique opportunity to enjoy high-quality game worlds.",
-                                    "And participate in exciting tournaments."
+                                    "Welcome to Competitive Arena — your portal to the world of the best Rust servers! We offer a unique opportunity to enjoy high-quality game worlds and participate in exciting tournaments."
                                 ],
                                 autoStart: true,
                                 loop: true,
-                                delay: 50, 
+                                delay: 100, 
                                 deleteSpeed: 30, 
                                 }}
                             />
