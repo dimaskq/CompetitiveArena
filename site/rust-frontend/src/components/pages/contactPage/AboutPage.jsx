@@ -1,7 +1,7 @@
 import React from 'react';
 import "./aboutPage-styles/aboutPage.css";
-import img1 from "../../../../public/abutList-img1.png"
-import img2 from "../../../../public/abutList-img2.jpeg"
+import img1 from "../../../../public/aboutList-img1.png"
+import img2 from "../../../../public/aboutList-img2.jpeg"
 function AboutPage() {
     return (
         <div className="about-page">
