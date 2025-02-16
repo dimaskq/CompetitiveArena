@@ -1,0 +1,53 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main ]
+
+env:
+  ECR_REPOSITORY: c2e-app
+  ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+
+jobs:
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Docker Build
+      uses: ./.github/workflows/docker-build.yml
+      with:
+        context: ./rust-frontend
+        dockerfile: ./Dockerfile
+        image_tag: ${{ env.ENV }}-${{ github.sha }}
+        build_args: |
+          NODE_ENV=${{ env.ENV }}
+    
+    - name: Docker Push
+      if: github.event_name != 'pull_request' 
+      uses: ./.github/workflows/docker-push.yml
+      with:
+        image_tag: ${{ env.ENV }}-${{ github.sha }}
+        ecr_repository: ${{ env.ECR_REPOSITORY }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  deploy-dev:
+    needs: build-and-push
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: dev
+    secrets: inherit
+
+  deploy-prod:
+    needs: build-and-push
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: prod
+    secrets: inherit
