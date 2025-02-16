@@ -19,10 +19,11 @@ function AboutPage() {
                                         "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
                                     ],
                                     autoStart: true,
-                                    loop: true,
-                                    delay: 20, 
+                                    loop: false,
+                                    delay: 10, 
                                     deleteSpeed: 0
                                 }}
+                                style={{ fontSize: '2rem' }}
                             />
                         </p>
 
