@@ -9,17 +9,20 @@ const developers = [
 const AboutDevelopers = () => {
   return (
     <div className="developers">
-      {developers.map((dev) => (
-        <div key={dev.id} className="developers__card">
-          <div className="developers__image">
-            <img src={dev.img} alt={dev.name} />
-          </div>
-          <div className="developers__info">
-            <h3 className="developers__name">{dev.name}</h3>
-            <p className="developers__role">{dev.role}</p>
-          </div>
+        <h2 className="developers__title">Our Team</h2>
+        <div className="developers__container">
+            {developers.map((dev) => (
+                <div key={dev.id} className="developers__card">
+                <div className="developers__image">
+                    <img src={dev.img} alt={dev.name} />
+                </div>
+                <div className="developers__info">
+                    <h3 className="developers__name">{dev.name}</h3>
+                    <p className="developers__role">{dev.role}</p>
+                </div>
+                </div>
+            ))}
         </div>
-      ))}
     </div>
   );
 };

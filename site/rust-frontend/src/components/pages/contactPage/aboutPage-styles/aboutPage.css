@@ -82,17 +82,26 @@
     align-items: center;
 }
 
-.developers {
+.developers__container{
     display: flex;
     gap: 20px;
-  }
-  
+    padding: 0 5%;
+    max-width: 1280px;
+    justify-content: center;
+}
+ 
+.developers__title{
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 8% 0 5% 0;
+}
   .developers__card {
     position: relative;
-    width: 200px;
+    width: 25%;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
   }
   
   .developers__image img {
@@ -111,6 +120,9 @@
     padding: 10px;
     text-align: center;
     transition: bottom 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   
   .developers__card:hover .developers__image img {
@@ -121,3 +133,6 @@
     bottom: 0;
   }
   
+.developers__name{
+    font-size: 1.3rem;
+}
