@@ -12,10 +12,11 @@ function AboutPage() {
     useEffect(() => {
         if (isTypewriterFinished) {
             AOS.init({
-                duration: 1500, // Увеличиваем длительность анимации
-                easing: 'ease-in-out', // Делаем анимацию более плавной
-                once: true, // Запускаем анимацию только один раз
+                duration: 1500,
+                easing: 'ease-in-out',
+                once: true, 
             });
+            AOS.refresh(); // Обновляем AOS после изменения состояния
         }
     }, [isTypewriterFinished]);
 
@@ -33,28 +34,25 @@ function AboutPage() {
                                     "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
                                 ],
                                 autoStart: true,
-                                loop: false, // Отключаем зацикливание
+                                loop: false,
                                 delay: 40, 
                                 deleteSpeed: 10,
                                 pauseFor: 5000,
                             }}
                             onInit={(typewriter) => {
                                 typewriter
-                                    .callFunction(() => {
-                                        console.log("Typewriter started!");
-                                    })
                                     .start()
                                     .callFunction(() => {
                                         console.log("Typewriter finished!");
-                                        setIsTypewriterFinished(true); // После завершения устанавливаем флаг
+                                        setIsTypewriterFinished(true);
                                     });
                             }}
                         />
                     </p>
 
                     <div className="about__info_box">
-                        <img src={img1} alt="image for first block of about" data-aos={isTypewriterFinished ? "fade-right" : ""}/>
-                        <div className="about__list_container" data-aos={isTypewriterFinished ? "fade-left" : ""}>
+                        <img src={img1} alt="image for first block of about" {...(isTypewriterFinished ? { "data-aos": "fade-right" } : {})}/>
+                        <div className="about__list_container" {...(isTypewriterFinished ? { "data-aos": "fade-left" } : {})}>
                             <h2 className='about__text_offer'>What We Offer:</h2>
                             <ul className='about__text_list'>
                                 <li className='about__list_item'>Best Game Servers – just enjoy the game!</li>
@@ -67,7 +65,7 @@ function AboutPage() {
                     </div>
                     
                     <div className="about__info_box">
-                        <div className="about__list_container" data-aos={isTypewriterFinished ? "fade-right" : ""}>
+                        <div className="about__list_container" {...(isTypewriterFinished ? { "data-aos": "fade-right" } : {})}>
                             <h2 className='about__text_offer'>Why Choose Us?</h2>
                             <ul className='about__text_list'>
                                 <li className='about__list_item'>Quality Servers – Powerful and stable servers for smooth gaming experience.</li>
@@ -77,7 +75,7 @@ function AboutPage() {
                                 <li className='about__list_item'>Continuous Development – Constant updates and improvements for a better experience.</li>
                             </ul>
                         </div>
-                        <img src={img2} alt="image for second block of about" data-aos={isTypewriterFinished ? "fade-left" : ""}/>
+                        <img src={img2} alt="image for second block of about" {...(isTypewriterFinished ? { "data-aos": "fade-left" } : {})}/>
                     </div>
                 </div>
 
