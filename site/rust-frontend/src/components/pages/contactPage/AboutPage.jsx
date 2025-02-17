@@ -12,11 +12,15 @@ function AboutPage() {
 
     useEffect(() => {
         AOS.init({
-            duration: 1500,  // Більш плавна анімація
-            easing: "ease-in-out",  // Плавний старт і завершення
-            offset: 200,  // Запуск анімації раніше при прокрутці
-            once: true,  // Анімація відбувається один раз
-        });
+            offset: 200, // Елементи з’являтимуться трохи раніше при прокрутці
+            delay: 200, // Невелика затримка перед стартом анімації
+            duration: 1500, // Збільшено тривалість анімації для плавності
+            easing: 'ease-in-out', // Плавний старт і завершення
+            once: true, // Анімація відбуватиметься лише один раз
+            mirror: false, // Елемент не буде анімуватись повторно при прокрутці назад
+            anchorPlacement: 'top-center', // Запуск анімації, коли верх елемента доходить до центру екрану
+          });
+          
 
         setTimeout(() => {
             setShowFirstBlock(true);
@@ -46,8 +50,8 @@ function AboutPage() {
                     </p>
 
                     {showFirstBlock && (
-                        <div className="about__info_box" data-aos="fade-left" data-aos-duration="2000">
-                            <img src={img1} alt="image for first block of about" />
+                        <div className="about__info_box">
+                            <img src={img1} alt="image for first block of about"data-aos="fade-left"/>
                             <div className="about__list_container" data-aos="fade-right" data-aos-delay="500">
                                 <h2 className='about__text_offer'>What We Offer:</h2>
                                 <ul className='about__text_list'>
@@ -62,7 +66,7 @@ function AboutPage() {
                     )}
 
                     {showSecondBlock && (
-                        <div className="about__info_box" data-aos="zoom-in-up" data-aos-duration="2000">
+                        <div className="about__info_box">
                             <div className="about__list_container" data-aos="fade-left" data-aos-delay="500">
                                 <h2 className='about__text_offer'>Why Choose Us?</h2>
                                 <ul className='about__text_list'>
