@@ -1,17 +1,17 @@
 import React from "react";
-import dmytroIMG from "../../../../public/ya.jpg"
-import serhiyIMG from "../../../../public/Serhiy.jpg"
-import ilarionIMG from "../../../../public/Ilarion.jpg"
+import dmytroIMG from "../../../../public/ya.jpg";
+import serhiyIMG from "../../../../public/Serhiy.jpg";
+import ilarionIMG from "../../../../public/Ilarion.jpg";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 
 const developers = [
-    { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: dmytroIMG, delay: 0 },
-    { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: serhiyIMG, delay: 200 },
-    { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: ilarionIMG, delay: 300 }
+    { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: dmytroIMG, delay: 0, position: "top" },
+    { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: serhiyIMG, delay: 200, position: "center" },
+    { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: ilarionIMG, delay: 300, position: "bottom" }
 ];
   
-  const AboutDevelopers = () => {
+const AboutDevelopers = () => {
     return (
       <div className="developers">
         <h2 className="developers__title">Our Team</h2>
@@ -24,7 +24,11 @@ const developers = [
               data-aos-delay={dev.delay}
             >
               <div className="developers__image">
-                <img src={dev.img} alt={dev.name} />
+                <img 
+                  src={dev.img} 
+                  alt={dev.name} 
+                  style={{ objectFit: "cover", objectPosition: dev.position }}
+                />
               </div>
               <div className="developers__info">
                 <h3 className="developers__name">{dev.name}</h3>
@@ -35,5 +39,6 @@ const developers = [
         </div>
       </div>
     );
-  };
+};
+
 export default AboutDevelopers;

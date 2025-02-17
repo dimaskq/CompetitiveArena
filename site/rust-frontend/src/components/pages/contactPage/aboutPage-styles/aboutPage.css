@@ -99,8 +99,9 @@
   .developers__card {
     position: relative;
     width: 25%;
-    max-height: 290px;
+    height: 290px;
     overflow: hidden;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
@@ -108,8 +109,6 @@
   .developers__image img {
     width: 100%;
     display: block;
-    object-fit: cover;
-    object-position: center;
     transition: all 0.3s ease-in-out;
   }
   
