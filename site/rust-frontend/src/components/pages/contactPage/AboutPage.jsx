@@ -11,16 +11,19 @@ function AboutPage() {
     const [showSecondBlock, setShowSecondBlock] = useState(false);
 
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({
+            duration: 1500,  // Більш плавна анімація
+            easing: "ease-in-out",  // Плавний старт і завершення
+            offset: 200,  // Запуск анімації раніше при прокрутці
+            once: true,  // Анімація відбувається один раз
+        });
 
-        // Чекаємо, поки Typewriter закінчить друкувати (5 секунд)
         setTimeout(() => {
-            setShowFirstBlock(true); // Показуємо перший блок
+            setShowFirstBlock(true);
         }, 5000);
 
-        // Чекаємо ще 2 секунди після першого блоку
         setTimeout(() => {
-            setShowSecondBlock(true); // Показуємо другий блок
+            setShowSecondBlock(true);
         }, 7000);
     }, []);
 
@@ -32,11 +35,9 @@ function AboutPage() {
                     <p className="about_text_top">
                         <Typewriter
                             options={{
-                                strings: [
-                                    "Welcome to Competitive Arena — your portal to the world of the best Rust servers!"
-                                ],
+                                strings: ["Welcome to Competitive Arena — your portal to the world of the best Rust servers!"],
                                 autoStart: true,
-                                loop: false, // Важливо, щоб друкувалося лише один раз!
+                                loop: false,
                                 delay: 40,
                                 deleteSpeed: 10,
                                 pauseFor: 5000,
@@ -44,11 +45,10 @@ function AboutPage() {
                         />
                     </p>
 
-                    {/* Перший блок з анімацією */}
                     {showFirstBlock && (
-                        <div className="about__info_box" data-aos="fade-left">
+                        <div className="about__info_box" data-aos="fade-left" data-aos-duration="2000">
                             <img src={img1} alt="image for first block of about" />
-                            <div className="about__list_container" data-aos="fade-right">
+                            <div className="about__list_container" data-aos="fade-right" data-aos-delay="500">
                                 <h2 className='about__text_offer'>What We Offer:</h2>
                                 <ul className='about__text_list'>
                                     <li className='about__list_item'>Best Game Servers – just enjoy the game!</li>
@@ -61,10 +61,9 @@ function AboutPage() {
                         </div>
                     )}
 
-                    {/* Другий блок з анімацією */}
                     {showSecondBlock && (
-                        <div className="about__info_box" data-aos="fade-right">
-                            <div className="about__list_container" data-aos="fade-left">
+                        <div className="about__info_box" data-aos="zoom-in-up" data-aos-duration="2000">
+                            <div className="about__list_container" data-aos="fade-left" data-aos-delay="500">
                                 <h2 className='about__text_offer'>Why Choose Us?</h2>
                                 <ul className='about__text_list'>
                                     <li className='about__list_item'>Quality Servers – Powerful and stable servers for smooth gaming experience.</li>
@@ -74,7 +73,7 @@ function AboutPage() {
                                     <li className='about__list_item'>Continuous Development – Constant updates and improvements for a better experience.</li>
                                 </ul>
                             </div>
-                            <img src={img2} alt="image for second block of about" />
+                            <img src={img2} alt="image for second block of about" data-aos="fade-right" />
                         </div>
                     )}
                 </div>
