@@ -5,6 +5,7 @@ import img2 from "../../../../public/aboutList-img2.jpeg"
 import Typewriter from "typewriter-effect";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
+import AboutDevelopers from './AboutDevelopers';
 
 function AboutPage() {
 
@@ -64,9 +65,8 @@ function AboutPage() {
                             <img src={img2} alt="image for second block of about" data-aos="fade-left" data-aos-delay="1800"/>
                         </div>
                     </div>
-                <div class="about__join_container">
-                    <a className='about__join_btn' href="https://discord.gg/jf6UAxab">Join Discord</a>
-                </div>
+
+                    <AboutDevelopers />
             </div>    
         </div>
     );
