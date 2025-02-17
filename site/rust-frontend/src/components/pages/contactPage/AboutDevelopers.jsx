@@ -1,9 +1,9 @@
 import React from "react";
-
+import dmytroIMG from "../../../../public/Dmytro.jpg"
 const developers = [
-  { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: "../../../../public/Dmytro.jpg" },
-  { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: "../../../../public/Dmytro.jpg" },
-  { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: "../../../../public/Dmytro.jpg" }
+  { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: dmytroIMG },
+  { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: dmytroIMG },
+  { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: dmytroIMG }
 ];
 
 const AboutDevelopers = () => {
