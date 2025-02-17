@@ -4,9 +4,9 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 
 const developers = [
-    { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: dmytroIMG, delay: 800 },
-    { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: dmytroIMG, delay: 900 },
-    { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: dmytroIMG, delay: 1000 }
+    { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: dmytroIMG, delay: 0 },
+    { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: dmytroIMG, delay: 200 },
+    { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: dmytroIMG, delay: 300 }
 ];
   
   const AboutDevelopers = () => {
