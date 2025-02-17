@@ -67,6 +67,7 @@
 
 .Typewriter__wrapper{
     font-size: 2rem !important;
+    text-align: center;
 }
 
 .about__info_box, .about__list_container{
