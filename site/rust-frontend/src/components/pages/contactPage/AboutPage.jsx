@@ -35,8 +35,8 @@ function AboutPage() {
                         </p>
 
                         <div className="about__info_box">
-                            <img src={img1} alt="image for first block of about" data-aos="fade-right"/>
-                            <div className="about__list_container" data-aos="fade-left">
+                            <img src={img1} alt="image for first block of about" data-aos="fade-right" data-aos-delay="3700"/>
+                            <div className="about__list_container" data-aos="fade-left" data-aos-delay="3700">
                                 <h2 className='about__text_offer'>What We Offer:</h2>
                                 <ul className='about__text_list'>
                                     <li className='about__list_item'>Best Game Servers – just enjoy the game!</li>
@@ -48,7 +48,7 @@ function AboutPage() {
                             </div> 
                         </div>
                         <div className="about__info_box" >
-                            <div className="about__list_container" data-aos="fade-right">
+                            <div className="about__list_container" data-aos="fade-right" data-aos-delay="3800">
                                 <h2 className='about__text_offer'>Why Choose Us?</h2>
                                 <ul className='about__text_list'>
                                     <li className='about__list_item'>Quality Servers – Powerful and stable servers for smooth gaming experience.</li>
@@ -58,7 +58,7 @@ function AboutPage() {
                                     <li className='about__list_item'>Continuous Development – Constant updates and improvements for a better experience.</li>
                                 </ul>
                             </div>
-                            <img src={img2} alt="image for second block of about" data-aos="fade-left"/>
+                            <img src={img2} alt="image for second block of about" data-aos="fade-left" data-aos-delay="3800"/>
                         </div>
                     </div>
                 <div class="about__join_container">
