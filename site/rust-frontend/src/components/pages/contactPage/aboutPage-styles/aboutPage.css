@@ -141,3 +141,15 @@
 .developers__name{
     font-size: 1.3rem;
 }
+
+.developers__container .developers__card:nth-child(1) .developers__image img {
+    object-position: top;
+  }
+  
+  .developers__container .developers__card:nth-child(2) .developers__image img {
+    object-position: center;
+  }
+  
+  .developers__container .developers__card:nth-child(3) .developers__image img {
+    object-position: bottom;
+  }
