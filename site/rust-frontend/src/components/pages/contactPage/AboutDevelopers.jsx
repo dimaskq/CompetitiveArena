@@ -6,7 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 
 const developers = [
-    { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: ya, delay: 0 },
+    { id: 1, name: "Kravchenko Dmytro", role: "Fullstack Developer", img: dmytroIMG, delay: 0 },
     { id: 2, name: "Serhiy Buhtiyarov", role: "Plugin Developer", img: serhiyIMG, delay: 200 },
     { id: 3, name: "Ilarion Parkhomenko", role: "Social Media Manager", img: ilarionIMG, delay: 300 }
 ];
