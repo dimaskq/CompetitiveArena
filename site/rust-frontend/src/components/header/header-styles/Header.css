@@ -11,6 +11,7 @@
   width: 100%;
   z-index: 1000;
   opacity: 1;
+  font-family: "Rust";
 }
 
 .header-container {

@@ -1,5 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 
+@font-face {
+  font-family: 'Rust';
+  src: url('../base-styles/Rust/Rust.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /*======zeroing======*/
 *{
     padding: 0;
@@ -62,7 +68,7 @@ main{
 
 .container{
   max-width: 1280px;
-  font-family: "Arsenal SC", system-ui;
+  font-family: "Exo 2", system-ui;
   color: #fff;
   font-weight: 500;
   font-style: normal;
