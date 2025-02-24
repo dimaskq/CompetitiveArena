@@ -33,6 +33,7 @@ const developers = [
             </div>
           ))}
         </div>
+        
       </div>
     );
   };

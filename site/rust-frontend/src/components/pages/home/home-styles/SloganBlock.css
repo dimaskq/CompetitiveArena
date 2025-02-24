@@ -38,7 +38,7 @@
 }
 
 .slogan__box_information{
-    font-family: "Open Sans";
+    font-family: "Arsenal SC";
     line-height: 140%;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .slogan{
-    font-family: "Bokor", system-ui;
+    font-family: "Arsenal SC", system-ui;
 }
 
 @media only screen and (max-width: 948px) {

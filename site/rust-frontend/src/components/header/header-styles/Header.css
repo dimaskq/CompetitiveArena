@@ -43,7 +43,6 @@
 }
 
 .header-btn {
-  font-family: "Open Sans";
   font-weight: 500;
   font-size: 1.2rem;
   background: #00000000;
@@ -70,7 +69,6 @@
 }
 
 .menu__list .button-container .nav-item {
-  font-family: "Open Sans";
   font-weight: 500;
   font-size: 1.2rem;
   background: #00000000;
@@ -156,7 +154,6 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-family: "Open Sans";
 }
 
 .logout-button:hover {
@@ -229,7 +226,6 @@
   .nav-item{
     background-color: #00000000 !important;
     color: #fff;
-    font-family: "Open Sans";
     font-size: 1.2rem;
   }
 }
