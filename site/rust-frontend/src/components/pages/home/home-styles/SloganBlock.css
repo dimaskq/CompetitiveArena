@@ -61,6 +61,8 @@
     cursor: pointer;
     background-color: #df1313;
     transition: all 0.3s ease-in-out;
+    font-family: "Rust";
+    letter-spacing: 2px;
 }
 
 .slogan__box_btn:hover{
