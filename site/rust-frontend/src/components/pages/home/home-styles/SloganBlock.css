@@ -36,6 +36,7 @@
     display: flex;
     flex-wrap: nowrap;
     font-family: "Rust";
+    letter-spacing: 2px;
 }
 
 .slogan__box_information{

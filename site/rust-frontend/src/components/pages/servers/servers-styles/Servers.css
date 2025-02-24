@@ -10,6 +10,7 @@
 }
 
 .serversPlans__header h1 {
+    letter-spacing: 2px;
     font-family: "Rust";
     font-size: 3rem;
     font-weight: 700;
