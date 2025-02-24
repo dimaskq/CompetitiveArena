@@ -1,11 +1,7 @@
-/* Black, Red, and White Theme */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
 .serversPlans {
     padding: 5% 0;
-    background: #000; /* Pure black background */
+    background: #000; 
     color: white;
-    font-family: 'Poppins', sans-serif;
 }
 
 .serversPlans__header {
@@ -17,12 +13,12 @@
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 15px;
-    color: #ff0000; /* Bright red for titles */
+    color: #ff0000;
 }
 
 .serversPlans__header p {
     font-size: 1.2rem;
-    color: #bbb; /* Light gray for subtle text */
+    color: #bbb; 
 }
 
 .serversPlans__container {
@@ -35,12 +31,12 @@
 .serversPlans__block {
     position: relative;
     width: 280px;
-    background: #1a1a1a; /* Dark gray for card background */
+    background: #1a1a1a; 
     border-radius: 15px;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    border: 2px solid #ff0000; /* Red border for highlights */
+    border: 2px solid #ff0000;
 }
 
 .serversPlans__block:hover {
@@ -55,7 +51,7 @@
     left: 0;
     width: 100%; 
     height: 100%; 
-    background: #ff0000; /* Red overlay */
+    background: #ff0000;
     clip-path: circle(0% at 50% 50%);
     z-index: 0;
     transition: clip-path 0.6s ease;
@@ -112,8 +108,8 @@
     display: inline-block;
     padding: 15px 30px;
     font-size: 1.2rem;
-    color: #ff0000; /* White text */
-    background: #ffffff; /* Bright red button */
+    color: #ff0000; 
+    background: #ffffff; 
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.3s ease;
