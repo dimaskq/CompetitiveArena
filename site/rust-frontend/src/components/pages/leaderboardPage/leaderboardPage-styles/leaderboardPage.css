@@ -1,98 +1,126 @@
-.leaderboard{
-    width: 100%;
-    height: 100%;
+.leaderboard {
+  width: 100%;
+  height: 100%;
 }
 
-.leaderboard__container{
-    max-width: 1280px;
-    margin: 7% auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.leaderboard__container {
+  max-width: 1280px;
+  margin: 7% auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.leaderboard__box{
-    padding: 10px;
+.leaderboard__box {
+  padding: 10px;
 }
 
 .leaderboard__title {
-    color: white;
+  color: white;
 }
 
 .leaderboard__table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    cursor: pointer;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
-.leaderboard__table th, .leaderboard__table td {
-    padding: 10px;
-    border: 1px solid red;
-    text-align: center;
-    cursor: pointer;
+.leaderboard__table th,
+.leaderboard__table td {
+  padding: 10px;
+  border: 1px solid red;
+  text-align: center;
+  cursor: pointer;
 }
 
 .leaderboard__table th {
-    background-color: black;
-    color: red;
-    font-weight: bold;
+  background-color: black;
+  color: red;
+  font-weight: bold;
 }
 
 .leaderboard__table tr:hover {
-    background-color: #444;
+  background-color: #444;
 }
 
 .leaderboard__table_rank {
-    font-weight: bold;
-    color: red;
+  font-weight: bold;
+  color: red;
 }
 
 .leaderboard__table_playerName {
-    font-weight: bold;
-    color: white;
+  font-weight: bold;
+  color: white;
 }
 
 .leaderboard__table th.leaderboard__rank,
 .leaderboard__table td.leaderboard__table_rank {
-    width: 75px;
-    max-width: 75px;
-    text-align: center;
-    white-space: nowrap;
+  width: 75px;
+  max-width: 75px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .skeleton {
-    width: 100%;
-    height: 20px;
-    background-color: #333;
-    margin: 5px 0;
-    animation: skeleton-loading 1.2s infinite ease-in-out;
+  width: 100%;
+  height: 20px;
+  background-color: #333;
+  margin: 5px 0;
+  animation: skeleton-loading 1.2s infinite ease-in-out;
 }
 
 .skeleton__cell {
-    width: 100%;
-    height: 100%;
-    background-color: #555; 
+  width: 100%;
+  height: 100%;
+  background-color: #555;
 }
 
 @keyframes skeleton-loading {
-    0% {
-        background-color: #555; 
-    }
-    50% {
-        background-color: #333;
-    }
-    100% {
-        background-color: #555; 
-    }
+  0% {
+    background-color: #555;
+  }
+  50% {
+    background-color: #333;
+  }
+  100% {
+    background-color: #555;
+  }
 }
 
 .leaderboard__table_playerName {
-    font-weight: bold;
-    color: white;
-    width: 225px;
-    max-width: 225px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  font-weight: bold;
+  color: white;
+  width: 225px;
+  max-width: 225px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* .loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+.game-in-progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  page-break-inside: 10px;
+}
+
+.game-in-progress__title {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.game-in-progress__text {
+  font-size: 1rem;
+  color: #ffffffb0;
 }

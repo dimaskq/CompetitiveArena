@@ -44,14 +44,22 @@ function LeaderboardPage() {
   const isGameStillRunning = users.every((user) => user.resourceScore === 0);
 
   if (loading) {
-    return <div className="loading">Завантаження...</div>;
+    return <FadeLoader color="#ffffff" />;
   }
 
   return (
     <div className="leaderboard">
       <div className="leaderboard__container">
         {isGameStillRunning ? (
-          <div className="game-in-progress">Гра ще триває</div>
+          <div className="game-in-progress">
+            <div className="game-in-progress__title">
+              The game is still in progress.
+            </div>
+            <p className="game-in-progress__text">
+              The game is still in progress. The leaderboard will only be
+              available after the game is over.
+            </p>
+          </div>
         ) : (
           <>
             <LeaderboardTable
