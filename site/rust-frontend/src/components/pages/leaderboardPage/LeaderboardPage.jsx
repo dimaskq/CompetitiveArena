@@ -14,21 +14,32 @@ function LeaderboardPage() {
       .then((data) => {
         const W = 1.5;
 
-        const processedUsers = data.map((user) => {
-          const kd = user.kill - user.death * W;
+        // Фільтруємо тільки дані по "solo" режиму
+        const processedUsers = data
+          .map((user) => {
+            const soloServer = user.servers.find(
+              (server) => server.mode === "solo"
+            );
 
-          const resourceScore =
-            user.wood * 0.01 +
-            user.stone * 0.01 +
-            user.metal * 0.1 +
-            user.scrap * 0.3 +
-            user.sulfur * 0.5 +
-            user.hqm * 1;
+            if (soloServer) {
+              const kd = soloServer.kills - soloServer.deaths * W;
 
-          const totalScore = kd + resourceScore * 0.01;
+              const resourceScore =
+                soloServer.resources.wood * 0.01 +
+                soloServer.resources.stone * 0.01 +
+                soloServer.resources.metal * 0.1 +
+                soloServer.resources.scrap * 0.3 +
+                soloServer.resources.sulfur * 0.5 +
+                soloServer.resources.hqm * 1;
 
-          return { ...user, kd, resourceScore, totalScore };
-        });
+              const totalScore = kd + resourceScore * 0.01;
+
+              return { ...user, kd, resourceScore, totalScore };
+            }
+
+            return null;
+          })
+          .filter((user) => user !== null); // Видаляємо користувачів без "solo" сервера
 
         setUsers(processedUsers);
         setLoading(false);
@@ -46,7 +57,7 @@ function LeaderboardPage() {
   if (loading) {
     return (
       <div className="loader">
-        <FadeLoader color="#ffffff" />
+        <FadeLoader color="#ffffff" margin={1} />
       </div>
     );
   }
