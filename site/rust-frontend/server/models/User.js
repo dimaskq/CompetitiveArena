@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const ServerSchema = new mongoose.Schema({
-  mode: { type: String, required: true },
+  solo: { type: Number },
+  duo: { type: Number },
+  trio: { type: Number },
+  squad: { type: Number },
   kills: { type: Number, default: 0 },
   deaths: { type: Number, default: 0 },
   resources: {
@@ -23,28 +26,28 @@ const UserSchema = new mongoose.Schema({
     type: [ServerSchema],
     default: [
       {
-        mode: "solo",
+        solo: 0,
         kills: 0,
         deaths: 0,
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
         kd: 0,
       },
       {
-        mode: "duo",
+        duo: 0,
         kills: 0,
         deaths: 0,
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
         kd: 0,
       },
       {
-        mode: "trio",
+        trio: 0,
         kills: 0,
         deaths: 0,
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
         kd: 0,
       },
       {
-        mode: "squad",
+        squad: 0,
         kills: 0,
         deaths: 0,
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
