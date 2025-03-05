@@ -44,7 +44,11 @@ function LeaderboardPage() {
   const isGameStillRunning = users.every((user) => user.resourceScore === 0);
 
   if (loading) {
-    return <FadeLoader color="#ffffff" />;
+    return (
+      <div className="loader">
+        <FadeLoader color="#ffffff" />
+      </div>
+    );
   }
 
   return (

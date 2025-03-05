@@ -98,13 +98,6 @@
   white-space: nowrap;
 }
 
-/* .loading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-} */
-
 .game-in-progress {
   position: absolute;
   top: 50%;
@@ -116,11 +109,19 @@
 }
 
 .game-in-progress__title {
-  font-size: 1.5rem;
+  font-size: 2re;
   color: #fff;
+  text-align: center;
 }
 
 .game-in-progress__text {
   font-size: 1rem;
-  color: #ffffffb0;
+  color: #ffffff78;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
