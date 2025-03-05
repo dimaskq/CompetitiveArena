@@ -14,11 +14,10 @@ function LeaderboardPage() {
       .then((data) => {
         const W = 1.5;
 
-        // Фільтруємо тільки дані по "solo" режиму
         const processedUsers = data
           .map((user) => {
             const soloServer = user.servers.find(
-              (server) => server.mode === "solo"
+              (server) => server.solo !== undefined
             );
 
             if (soloServer) {
@@ -39,7 +38,7 @@ function LeaderboardPage() {
 
             return null;
           })
-          .filter((user) => user !== null); // Видаляємо користувачів без "solo" сервера
+          .filter((user) => user !== null);
 
         setUsers(processedUsers);
         setLoading(false);
