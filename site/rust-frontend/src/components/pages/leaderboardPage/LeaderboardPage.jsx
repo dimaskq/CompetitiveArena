@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LeaderboardTable from "./LeaderboardTable";
-
 import "./leaderboardPage-styles/leaderboardPage.css";
+import { FadeLoader } from "react-spinners";
 
 function LeaderboardPage() {
   const [users, setUsers] = useState([]);
