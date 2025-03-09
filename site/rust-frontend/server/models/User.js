@@ -19,7 +19,7 @@ const ServerSchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
-  steamId: { type: Number, required: true, unique: true },
+  steamId: { type: String, required: true, unique: true },
   displayName: { type: String, required: true },
   avatar: { type: String },
   servers: {
