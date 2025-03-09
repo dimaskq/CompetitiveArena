@@ -14,8 +14,7 @@ const app = express();
 
 const { DB_URI, SESSION_SECRET, STEAM_API_KEY, STEAM_RETURN_URL, STEAM_REALM } =
   process.env;
-const allowedIp1 = "87.120.167.110:32128";
-const allowedIp2 = "87.120.167.110:32129";
+
 mongoose
   .connect(DB_URI)
   .then(() => {
@@ -187,6 +186,21 @@ app.get("/logout", (req, res) => {
 
 app.post("/api/save-users", async (req, res) => {
   try {
+    const requestIp = req.ip || req.connection.remoteAddress;
+
+    if (
+      !(
+        requestIp.includes("87.120.167.110:32128") ||
+        requestIp.includes("87.120.167.110:32129")
+      )
+    ) {
+      return res
+        .status(403)
+        .json({
+          message: "Forbidden: Invalid IP address. You are not серьожа!!!!",
+        });
+    }
+
     const users = req.body;
 
     if (!Array.isArray(users) || users.length === 0) {
