@@ -186,19 +186,19 @@ app.get("/logout", (req, res) => {
 
 app.post("/api/save-users", async (req, res) => {
   try {
-    const requestIp = req.ip || req.connection.remoteAddress;
+    const requestHost = req.get("host"); // Получаем IP с портом (например, "87.120.167.110:32128")
 
     if (
       !(
-        requestIp.includes("87.120.167.110:32128") ||
-        requestIp.includes("87.120.167.110:32129")
+        requestHost === "87.120.167.110:32128" ||
+        requestHost === "87.120.167.110:32129" ||
+        requestHost === "87.120.167.110:31275" ||
+        requestHost === "87.120.167.110:32195"
       )
     ) {
-      return res
-        .status(403)
-        .json({
-          message: "Forbidden: Invalid IP address. You are not серьожа!!!!",
-        });
+      return res.status(403).json({
+        message: "Forbidden: Invalid IP address. You are not серьожа!!!!",
+      });
     }
 
     const users = req.body;
