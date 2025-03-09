@@ -187,13 +187,6 @@ app.get("/logout", (req, res) => {
 
 app.post("/api/save-users", async (req, res) => {
   try {
-    const requestIp = req.ip || req.connection.remoteAddress;
-    if (!(requestIp.includes(allowedIp1) || requestIp.includes(allowedIp2))) {
-      return res
-        .status(403)
-        .json({ message: "Forbidden: Invalid IP address." });
-    }
-
     const users = req.body;
 
     if (!Array.isArray(users) || users.length === 0) {
