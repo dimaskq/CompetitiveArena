@@ -48,8 +48,10 @@ app.use(
     origin: (origin, callback) => {
       if (
         !origin ||
-        origin === "http://87.120.167.110:31275" ||
-        origin === "https://87.120.167.110:31275" ||
+        origin === "http://87.120.167.110:32128" ||
+        origin === "http://87.120.167.110:32129" ||
+        origin === "https://87.120.167.110:32128" ||
+        origin === "https://87.120.167.110:32129" ||
         origin === "https://rust-pkqo.onrender.com"
       ) {
         return callback(null, true);
