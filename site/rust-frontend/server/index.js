@@ -199,38 +199,100 @@ app.post("/api/save-users", async (req, res) => {
         .json({ message: "Invalid data format. Expected an array of users." });
     }
 
-    const operations = users.map((user) => ({
-      updateOne: {
-        filter: { steamId: user.steamId },
-        update: {
-          $set: {
-            displayName: user.displayName,
-            avatar: user.avatar,
-            servers: user.servers.map((server) => ({
-              solo: server.solo || 0,
-              duo: server.duo || 0,
-              trio: server.trio || 0,
-              squad: server.squad || 0,
-              kills: server.kills || 0,
-              deaths: server.deaths || 0,
-              kd:
-                server.deaths > 0
-                  ? (server.kills - server.deaths * 1.5).toFixed(2)
-                  : server.kills,
-              resources: {
-                wood: server.resources?.wood || 0,
-                stone: server.resources?.stone || 0,
-                metal: server.resources?.metal || 0,
-                sulfur: server.resources?.sulfur || 0,
-                scrap: server.resources?.scrap || 0,
-                hqm: server.resources?.hqm || 0,
-              },
-            })),
+    const operations = users.map((user) => {
+      const updatedServers = [
+        {
+          solo: user.servers?.[0]?.solo || 0,
+          kills: user.servers?.[0]?.kills || 0,
+          deaths: user.servers?.[0]?.deaths || 0,
+          kd:
+            user.servers?.[0]?.deaths > 0
+              ? (user.servers?.[0]?.kills / user.servers?.[0]?.deaths).toFixed(
+                  2
+                )
+              : user.servers?.[0]?.kills,
+          resources: {
+            wood: user.servers?.[0]?.resources?.wood || 0,
+            stone: user.servers?.[0]?.resources?.stone || 0,
+            metal: user.servers?.[0]?.resources?.metal || 0,
+            sulfur: user.servers?.[0]?.resources?.sulfur || 0,
+            scrap: user.servers?.[0]?.resources?.scrap || 0,
+            hqm: user.servers?.[0]?.resources?.hqm || 0,
           },
         },
-        upsert: true,
-      },
-    }));
+        {
+          duo: user.servers?.[1]?.duo || 0,
+          kills: user.servers?.[1]?.kills || 0,
+          deaths: user.servers?.[1]?.deaths || 0,
+          kd:
+            user.servers?.[1]?.deaths > 0
+              ? (user.servers?.[1]?.kills / user.servers?.[1]?.deaths).toFixed(
+                  2
+                )
+              : user.servers?.[1]?.kills,
+          resources: {
+            wood: user.servers?.[1]?.resources?.wood || 0,
+            stone: user.servers?.[1]?.resources?.stone || 0,
+            metal: user.servers?.[1]?.resources?.metal || 0,
+            sulfur: user.servers?.[1]?.resources?.sulfur || 0,
+            scrap: user.servers?.[1]?.resources?.scrap || 0,
+            hqm: user.servers?.[1]?.resources?.hqm || 0,
+          },
+        },
+        {
+          trio: user.servers?.[2]?.trio || 0,
+          kills: user.servers?.[2]?.kills || 0,
+          deaths: user.servers?.[2]?.deaths || 0,
+          kd:
+            user.servers?.[2]?.deaths > 0
+              ? (user.servers?.[2]?.kills / user.servers?.[2]?.deaths).toFixed(
+                  2
+                )
+              : user.servers?.[2]?.kills,
+          resources: {
+            wood: user.servers?.[2]?.resources?.wood || 0,
+            stone: user.servers?.[2]?.resources?.stone || 0,
+            metal: user.servers?.[2]?.resources?.metal || 0,
+            sulfur: user.servers?.[2]?.resources?.sulfur || 0,
+            scrap: user.servers?.[2]?.resources?.scrap || 0,
+            hqm: user.servers?.[2]?.resources?.hqm || 0,
+          },
+        },
+        {
+          squad: user.servers?.[3]?.squad || 0,
+          kills: user.servers?.[3]?.kills || 0,
+          deaths: user.servers?.[3]?.deaths || 0,
+          kd:
+            user.servers?.[3]?.deaths > 0
+              ? (user.servers?.[3]?.kills / user.servers?.[3]?.deaths).toFixed(
+                  2
+                )
+              : user.servers?.[3]?.kills,
+          resources: {
+            wood: user.servers?.[3]?.resources?.wood || 0,
+            stone: user.servers?.[3]?.resources?.stone || 0,
+            metal: user.servers?.[3]?.resources?.metal || 0,
+            sulfur: user.servers?.[3]?.resources?.sulfur || 0,
+            scrap: user.servers?.[3]?.resources?.scrap || 0,
+            hqm: user.servers?.[3]?.resources?.hqm || 0,
+          },
+        },
+      ];
+
+      return {
+        updateOne: {
+          filter: { steamId: user.steamId },
+          update: {
+            $set: {
+              displayName: user.displayName,
+              avatar: user.avatar,
+              servers: updatedServers,
+            },
+          },
+          upsert: true,
+        },
+      };
+    });
 
     const result = await User.bulkWrite(operations);
 
