@@ -197,7 +197,9 @@ app.post("/api/save-users", async (req, res) => {
       "185.21.52.186",
     ];
 
-    if (!allowedIps.includes(requestIp)) {
+    const clientIp = requestIp.getClientIp(req);
+
+    if (!allowedIps.includes(clientIp)) {
       return res.status(403).json({
         message: "Forbidden: Invalid IP address. You are not серьожа!!!!",
       });
