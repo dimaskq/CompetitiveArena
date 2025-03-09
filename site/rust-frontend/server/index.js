@@ -1,42 +1,44 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-const mongoose = require('mongoose');
-const User = require('./models/User');
+const mongoose = require("mongoose");
+const User = require("./models/User");
 
 const app = express();
 
-const { DB_URI, SESSION_SECRET, STEAM_API_KEY, STEAM_RETURN_URL, STEAM_REALM } = process.env;
-const allowedIp = '87.120.167.110';
-mongoose.connect(DB_URI)
-.then(() => {
-  console.log('MongoDB connected');
-})
-.catch((error) => {
-  console.error('MongoDB connection error:', error);
-});
+const { DB_URI, SESSION_SECRET, STEAM_API_KEY, STEAM_RETURN_URL, STEAM_REALM } =
+  process.env;
+const allowedIp = "87.120.167.110";
+mongoose
+  .connect(DB_URI)
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
 
 app.use(
   session({
-    name: 'session.id',
+    name: "session.id",
     secret: SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: DB_URI,
-      ttl: 14 * 24 * 60 * 60, 
+      ttl: 14 * 24 * 60 * 60,
     }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: false, 
+      secure: false,
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: "lax",
     },
   })
 );
@@ -44,15 +46,19 @@ app.use(
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || origin === "http://87.120.167.110:31275" || origin === "https://87.120.167.110:31275" || origin === "https://rust-pkqo.onrender.com") {
-        return callback(null, true); 
+      if (
+        !origin ||
+        origin === "http://87.120.167.110:31275" ||
+        origin === "https://87.120.167.110:31275" ||
+        origin === "https://rust-pkqo.onrender.com"
+      ) {
+        return callback(null, true);
       }
-      return callback(new Error("CORS not allowed from this origin"), false); 
+      return callback(new Error("CORS not allowed from this origin"), false);
     },
-    credentials: true, 
+    credentials: true,
   })
 );
-
 
 passport.use(
   new SteamStrategy(
@@ -95,17 +101,23 @@ passport.deserializeUser(async (steamId, done) => {
   }
 });
 
-
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 
-app.get("/auth/steam", passport.authenticate("steam", { failureRedirect: "/" }));
+app.get(
+  "/auth/steam",
+  passport.authenticate("steam", { failureRedirect: "/" })
+);
 
-app.get("/auth/steam/return", passport.authenticate("steam", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("/");
-});
+app.get(
+  "/auth/steam/return",
+  passport.authenticate("steam", { failureRedirect: "/" }),
+  (req, res) => {
+    res.redirect("/");
+  }
+);
 
 app.get("/api/user", ensureAuthenticated, async (req, res) => {
   try {
@@ -151,8 +163,6 @@ app.patch("/api/user", ensureAuthenticated, async (req, res) => {
   }
 });
 
-
-
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find({});
@@ -172,49 +182,56 @@ app.get("/logout", (req, res) => {
   });
 });
 
-
-app.post('/api/save-users', async (req, res) => {
+app.post("/api/save-users", async (req, res) => {
   try {
     const requestIp = req.ip || req.connection.remoteAddress;
     if (!requestIp.includes(allowedIp)) {
-      return res.status(403).json({ message: "Forbidden: Invalid IP address." });
+      return res
+        .status(403)
+        .json({ message: "Forbidden: Invalid IP address." });
     }
 
-    const users = req.body; // Array of users
+    const users = req.body;
 
-    // is Arr?
     if (!Array.isArray(users) || users.length === 0) {
-      return res.status(400).json({ message: "Invalid data format. Expected an array of users." });
+      return res
+        .status(400)
+        .json({ message: "Invalid data format. Expected an array of users." });
     }
 
-    // Array for bulkWrite operations
-    const operations = users.map(user => ({
+    const operations = users.map((user) => ({
       updateOne: {
-        filter: { steamId: user.steamId }, // Filter to search user by steamId
+        filter: { steamId: user.steamId },
         update: {
           $set: {
             displayName: user.displayName,
             avatar: user.avatar,
-            wood: user.wood,
-            stone: user.stone,
-            methal: user.methal,
-            sulfur: user.sulfur,
-            scrap: user.scrap,
-            hqm: user.hqm,
-            kd: user.kd,
-            kill: user.kill,
-            death: user.death,
-            solo: user.solo,
-            duo: user.duo,
-            trio: user.trio,
-            squad: user.squad, // Corrected typo (was skuad)
+            servers: user.servers.map((server) => ({
+              solo: server.solo || 0,
+              duo: server.duo || 0,
+              trio: server.trio || 0,
+              squad: server.squad || 0,
+              kills: server.kills || 0,
+              deaths: server.deaths || 0,
+              kd:
+                server.deaths > 0
+                  ? (server.kills - server.deaths * 1.5).toFixed(2)
+                  : server.kills,
+              resources: {
+                wood: server.resources?.wood || 0,
+                stone: server.resources?.stone || 0,
+                metal: server.resources?.metal || 0,
+                sulfur: server.resources?.sulfur || 0,
+                scrap: server.resources?.scrap || 0,
+                hqm: server.resources?.hqm || 0,
+              },
+            })),
           },
         },
-        upsert: true, // If the user does not exist, it will be created.
+        upsert: true,
       },
     }));
 
-    // Performing bulkWrite
     const result = await User.bulkWrite(operations);
 
     res.status(200).json({
@@ -222,14 +239,15 @@ app.post('/api/save-users', async (req, res) => {
       data: result,
     });
   } catch (error) {
-    console.error('Error saving users:', error);
+    console.error("Error saving users:", error);
     res.status(500).json({ message: "Error saving users", error });
   }
 });
 
-
 const PORT = 5173;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
