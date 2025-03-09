@@ -193,7 +193,8 @@ app.post("/api/save-users", async (req, res) => {
         requestHost === "87.120.167.110:32128" ||
         requestHost === "87.120.167.110:32129" ||
         requestHost === "87.120.167.110:31275" ||
-        requestHost === "87.120.167.110:32195"
+        requestHost === "87.120.167.110:32195" ||
+        requestIp.includes("54.86.50.139"))
       )
     ) {
       return res.status(403).json({
