@@ -99,23 +99,19 @@
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
   border: none;
 }
 
 .serversPlans__block_btn:hover {
-  box-shadow: 0px 10px 25px rgba(255, 0, 0, 0.7);
   transform: translateY(-5px);
 }
 
 @media only screen and (max-width: 768px) {
   .serversPlans__block:hover {
     transform: translateY(0px);
-    box-shadow: 0px 0px 0px rgba(255, 0, 0, 0);
   }
 
   .serversPlans__block_btn:hover {
-    box-shadow: 0px 0px 0px rgba(255, 0, 0, 0);
     transform: translateY(0px);
   }
 

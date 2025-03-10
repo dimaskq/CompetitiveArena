@@ -10,14 +10,28 @@ function ServerPlanButton({ title }) {
     }
 
     try {
+      // Знаходимо потрібний сервер у масиві
+      const serverIndex = user.servers.findIndex(
+        (server) => server[title.toLowerCase()] !== undefined
+      );
+
+      if (serverIndex === -1) {
+        alert("Server mode not found!");
+        return;
+      }
+
+      const updatedServers = [...user.servers];
+      updatedServers[serverIndex] = {
+        ...updatedServers[serverIndex],
+        [title.toLowerCase()]: 1, // Встановлюємо режим у 1
+      };
+
       const response = await fetch(`https://rust-pkqo.onrender.com/api/user`, {
-        method: "PATCH", 
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          [title.toLowerCase()]: 1, 
-        }),
+        body: JSON.stringify({ servers: updatedServers }),
       });
 
       if (!response.ok) {
