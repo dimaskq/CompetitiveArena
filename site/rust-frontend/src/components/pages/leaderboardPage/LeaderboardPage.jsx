@@ -76,6 +76,9 @@ function LeaderboardPage() {
     );
   }
 
+  const isGameStillRunning =
+    users.length === 0 || users.every((user) => user.totalScore === 0);
+
   return (
     <div className="leaderboard">
       <div className="leaderboard__controls">
@@ -93,21 +96,34 @@ function LeaderboardPage() {
       </div>
 
       <div className="leaderboard__container">
-        <LeaderboardTable
-          title={`Overall Rankings - ${selectedMode.toUpperCase()}`}
-          data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
-          type="total"
-        />
-        <LeaderboardTable
-          title={`KD Leaderboard - ${selectedMode.toUpperCase()}`}
-          data={[...users].sort((a, b) => b.kd - a.kd)}
-          type="kd"
-        />
-        <LeaderboardTable
-          title={`Farm Leaderboard - ${selectedMode.toUpperCase()}`}
-          data={[...users].sort((a, b) => b.resourceScore - a.resourceScore)}
-          type="resource"
-        />
+        {isGameStillRunning ? (
+          <div className="game-in-progress">
+            <p className="game-in-progress__text">
+              The game is still in progress. The leaderboard will only be
+              available after the game is over.
+            </p>
+          </div>
+        ) : (
+          <>
+            <LeaderboardTable
+              title={`Overall Rankings - ${selectedMode.toUpperCase()}`}
+              data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
+              type="total"
+            />
+            <LeaderboardTable
+              title={`KD Leaderboard - ${selectedMode.toUpperCase()}`}
+              data={[...users].sort((a, b) => b.kd - a.kd)}
+              type="kd"
+            />
+            <LeaderboardTable
+              title={`Farm Leaderboard - ${selectedMode.toUpperCase()}`}
+              data={[...users].sort(
+                (a, b) => b.resourceScore - a.resourceScore
+              )}
+              type="resource"
+            />
+          </>
+        )}
       </div>
     </div>
   );

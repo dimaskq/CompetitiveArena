@@ -127,5 +127,21 @@
 }
 
 .leaderboard__controls {
+  display: flex;
+  gap: 20px;
   margin: 8% 0 0 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaderboard__controls button {
+  background-color: #181717;
+  color: #fff;
+  padding: 10px 15px;
+  border: 1px solid #bdbdbd;
+  font-size: 1rem;
+}
+
+.leaderboard__controls button:hover {
+  background-color: #444040;
 }
