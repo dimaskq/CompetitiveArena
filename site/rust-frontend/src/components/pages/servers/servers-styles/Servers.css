@@ -1,154 +1,133 @@
 .serversPlans {
-    padding: 8% 0;
-    background: #000; 
-    color: white;
+  padding: 8% 0;
+  background: #000;
+  color: white;
 }
 
 .serversPlans__header {
-    text-align: center;
-    margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .serversPlans__header h1 {
-    letter-spacing: 2px;
-    font-family: "Rust";
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #ff0000;
+  letter-spacing: 2px;
+  font-family: "Rust";
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #ff0000;
 }
 
 .serversPlans__header p {
-    font-size: 1.2rem;
-    color: #bbb; 
+  font-size: 1.2rem;
+  color: #bbb;
 }
 
 .serversPlans__container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
 }
 
 .serversPlans__block {
-    position: relative;
-    width: 280px;
-    background: #1a1a1a; 
-    border-radius: 15px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    border: 2px solid #ff0000;
+  position: relative;
+  width: 280px;
+  background: #1a1a1a;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  border: 2px solid #ffffff;
 }
 
 .serversPlans__block:hover {
-    transform: translateY(-10px);
-    box-shadow: 0px 15px 40px rgba(255, 0, 0, 0.7);
-}
-
-.serversPlans__block::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    background: #ff0000;
-    clip-path: circle(0% at 50% 50%);
-    z-index: 0;
-    transition: clip-path 0.6s ease;
-}
-
-.serversPlans__block:hover::before {
-    clip-path: circle(150% at 50% 50%);
+  transform: translateY(-10px);
+  box-shadow: 0px 15px 40px rgba(255, 0, 0, 0.7);
+  border: 2px solid #ff0000;
 }
 
 .serversPlans__block_title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-align: center;
-    padding: 20px 0;
-    color: white;
-    z-index: 2;
-    position: relative;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 20px 0;
+  color: white;
+  z-index: 2;
+  position: relative;
 }
 
 .serversPlans__block_price {
-    font-size: 2rem;
-    text-align: center;
-    margin: -10px 0 20px 0;
-    color: #ff0000;
-    z-index: 2;
-    position: relative;
+  font-size: 2rem;
+  text-align: center;
+  margin: -10px 0 20px 0;
+  color: #ff0000;
+  z-index: 2;
+  position: relative;
 }
 
 .serversPlans__block_info {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 2;
-    position: relative;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+  position: relative;
 }
 
 .serversPlans__info_item {
-    font-size: 1rem;
-    color: #ddd;
-    text-align: center;
-    border-bottom: 1px solid #444;
-    padding-bottom: 10px;
+  font-size: 1rem;
+  color: #ddd;
+  text-align: center;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
 }
 
 .serversPlans__btn_block {
-    text-align: center;
-    margin: 20px 0;
-    z-index: 2;
-    position: relative;
+  text-align: center;
+  margin: 20px 0;
+  z-index: 2;
+  position: relative;
 }
 
 .serversPlans__block_btn {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    color: #ff0000; 
-    background: #ffffff; 
-    border-radius: 50px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
-    border: none;
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  color: #ff0000;
+  background: #ffffff;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+  border: none;
 }
 
 .serversPlans__block_btn:hover {
-    box-shadow: 0px 10px 25px rgba(255, 0, 0, 0.7);
-    transform: translateY(-5px);
-}
-
-.serversPlans__block:hover .serversPlans__block_price {
-    color: white;
+  box-shadow: 0px 10px 25px rgba(255, 0, 0, 0.7);
+  transform: translateY(-5px);
 }
 
 @media only screen and (max-width: 768px) {
-    .serversPlans__block:hover {
-        transform: translateY(0px);
-        box-shadow: 0px 0px 0px rgba(255, 0, 0, 0);
-    }
+  .serversPlans__block:hover {
+    transform: translateY(0px);
+    box-shadow: 0px 0px 0px rgba(255, 0, 0, 0);
+  }
 
-    .serversPlans__block_btn:hover{
-        box-shadow: 0px 0px 0px rgba(255, 0, 0, 0);
-        transform: translateY(0px);
-    }
+  .serversPlans__block_btn:hover {
+    box-shadow: 0px 0px 0px rgba(255, 0, 0, 0);
+    transform: translateY(0px);
+  }
 
-    .serversPlans__block::before {
-        display: none;
-    }
+  .serversPlans__block::before {
+    display: none;
+  }
 
-    .serversPlans__block::before {
-        clip-path: circle(0% at 50% 50%) !important;
-    }
-    
-    .serversPlans__block:hover::before {
-        clip-path: circle(0% at 50% 50%) !important;
-    }
+  .serversPlans__block::before {
+    clip-path: circle(0% at 50% 50%) !important;
+  }
 
+  .serversPlans__block:hover::before {
+    clip-path: circle(0% at 50% 50%) !important;
+  }
 }
