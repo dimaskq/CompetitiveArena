@@ -106,17 +106,17 @@ function LeaderboardPage() {
         ) : (
           <>
             <LeaderboardTable
-              title={`Overall Rankings - ${selectedMode.toUpperCase()}`}
+              title={"Overall Rankings"}
               data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
               type="total"
             />
             <LeaderboardTable
-              title={`KD Leaderboard - ${selectedMode.toUpperCase()}`}
+              title={"KD Leaderboard"}
               data={[...users].sort((a, b) => b.kd - a.kd)}
               type="kd"
             />
             <LeaderboardTable
-              title={`Farm Leaderboard - ${selectedMode.toUpperCase()}`}
+              title={"Farm Leaderboard"}
               data={[...users].sort(
                 (a, b) => b.resourceScore - a.resourceScore
               )}
