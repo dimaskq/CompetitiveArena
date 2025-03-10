@@ -3,39 +3,56 @@ import LeaderboardTable from "./LeaderboardTable";
 import "./leaderboardPage-styles/leaderboardPage.css";
 import { FadeLoader } from "react-spinners";
 
+const MODES = [
+  "solo",
+  "duo",
+  "trio",
+  "squad",
+  "solo2days",
+  "duo2days",
+  "trio2days",
+  "squad2days",
+];
+
 function LeaderboardPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedMode, setSelectedMode] = useState("solo");
 
   useEffect(() => {
     fetch("https://rust-pkqo.onrender.com/api/users")
       .then((response) => response.json())
       .then((data) => {
         const W = 1.5;
-
         const processedUsers = data
           .map((user) => {
-            const soloServer = user.servers.find(
-              (server) => server.solo !== undefined
+            const serverData = user.servers.find(
+              (server) => server[selectedMode] !== undefined
             );
 
-            if (soloServer) {
-              const kd = soloServer.kills - soloServer.deaths * W;
-
+            if (serverData) {
+              const kd = serverData.kills - serverData.deaths * W;
               const resourceScore =
-                soloServer.resources.wood * 0.01 +
-                soloServer.resources.stone * 0.01 +
-                soloServer.resources.metal * 0.1 +
-                soloServer.resources.scrap * 0.3 +
-                soloServer.resources.sulfur * 0.5 +
-                soloServer.resources.hqm * 1;
+                (serverData.resources?.wood || 0) * 0.01 +
+                (serverData.resources?.stone || 0) * 0.01 +
+                (serverData.resources?.metal || 0) * 0.1 +
+                (serverData.resources?.scrap || 0) * 0.3 +
+                (serverData.resources?.sulfur || 0) * 0.5 +
+                (serverData.resources?.hqm || 0) * 1;
 
               const totalScore = kd + resourceScore * 0.01;
 
-              return { ...user, kd, resourceScore, totalScore };
+              return {
+                ...user,
+                kd,
+                resourceScore,
+                totalScore,
+                kills: serverData.kills,
+                deaths: serverData.deaths,
+                ...serverData.resources,
+              };
             }
-
             return null;
           })
           .filter((user) => user !== null);
@@ -43,15 +60,13 @@ function LeaderboardPage() {
         setUsers(processedUsers);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setError("Failed to load leaderboard");
         setLoading(false);
       });
-  }, []);
+  }, [selectedMode]);
 
   if (error) return <div className="error">{error}</div>;
-
-  const isGameStillRunning = users.every((user) => user.resourceScore === 0);
 
   if (loading) {
     return (
@@ -63,38 +78,34 @@ function LeaderboardPage() {
 
   return (
     <div className="leaderboard">
+      <div className="leaderboard__controls">
+        {MODES.map((mode) => (
+          <button
+            key={mode}
+            className={selectedMode === mode ? "active" : ""}
+            onClick={() => setSelectedMode(mode)}
+          >
+            {mode.toUpperCase()}
+          </button>
+        ))}
+      </div>
+
       <div className="leaderboard__container">
-        {isGameStillRunning ? (
-          <div className="game-in-progress">
-            <div className="game-in-progress__title">
-              The game is still in progress.
-            </div>
-            <p className="game-in-progress__text">
-              The game is still in progress. The leaderboard will only be
-              available after the game is over.
-            </p>
-          </div>
-        ) : (
-          <>
-            <LeaderboardTable
-              title="Overall Rankings"
-              data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
-              type="total"
-            />
-            <LeaderboardTable
-              title="KD Leaderboard"
-              data={[...users].sort((a, b) => b.kd - a.kd)}
-              type="kd"
-            />
-            <LeaderboardTable
-              title="Farm Leaderboard"
-              data={[...users].sort(
-                (a, b) => b.resourceScore - a.resourceScore
-              )}
-              type="resource"
-            />
-          </>
-        )}
+        <LeaderboardTable
+          title={`Overall Rankings - ${selectedMode.toUpperCase()}`}
+          data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
+          type="total"
+        />
+        <LeaderboardTable
+          title={`KD Leaderboard - ${selectedMode.toUpperCase()}`}
+          data={[...users].sort((a, b) => b.kd - a.kd)}
+          type="kd"
+        />
+        <LeaderboardTable
+          title={`Farm Leaderboard - ${selectedMode.toUpperCase()}`}
+          data={[...users].sort((a, b) => b.resourceScore - a.resourceScore)}
+          type="resource"
+        />
       </div>
     </div>
   );
