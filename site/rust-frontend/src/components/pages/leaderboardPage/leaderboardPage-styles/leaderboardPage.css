@@ -125,3 +125,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.leaderboard__controls {
+  margin: 8% 0 0 0;
+}

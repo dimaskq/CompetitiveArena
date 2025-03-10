@@ -53,8 +53,8 @@ const LeaderboardTable = ({ title, data, type, loading }) => {
               )}
               {type === "kd" && (
                 <>
-                  <td>{user.kill}</td>
-                  <td>{user.death}</td>
+                  <td>{user.kills}</td>
+                  <td>{user.deaths}</td>
                   <td>{user.kd.toFixed(2)}</td>
                 </>
               )}

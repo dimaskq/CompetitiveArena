@@ -82,7 +82,9 @@ function LeaderboardPage() {
         {MODES.map((mode) => (
           <button
             key={mode}
-            className={selectedMode === mode ? "active" : ""}
+            className={`leaderboard__button ${
+              selectedMode === mode ? "active" : ""
+            }`}
             onClick={() => setSelectedMode(mode)}
           >
             {mode.toUpperCase()}
