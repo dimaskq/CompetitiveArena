@@ -17,6 +17,7 @@
 
 .leaderboard__title {
   color: white;
+  font-size: 2rem;
 }
 
 .leaderboard__table {
@@ -46,7 +47,7 @@
 
 .leaderboard__table_rank {
   font-weight: bold;
-  color: red;
+  color: rgb(255, 255, 255);
 }
 
 .leaderboard__table_playerName {
