@@ -29,19 +29,19 @@
 .leaderboard__table th,
 .leaderboard__table td {
   padding: 10px;
-  border: 1px solid red;
+  border: 1px solid #bdbdbd;
   text-align: center;
   cursor: pointer;
 }
 
 .leaderboard__table th {
-  background-color: black;
-  color: red;
+  background-color: #181717;
+  color: rgb(255, 255, 255);
   font-weight: bold;
 }
 
 .leaderboard__table tr:hover {
-  background-color: #444;
+  background-color: #444040;
 }
 
 .leaderboard__table_rank {
