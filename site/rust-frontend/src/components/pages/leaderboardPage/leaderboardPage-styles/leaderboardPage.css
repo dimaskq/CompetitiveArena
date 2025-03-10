@@ -42,7 +42,7 @@
 }
 
 .leaderboard__table tr:hover {
-  background-color: #9e5151;
+  background-color: #df1313;
 }
 
 .leaderboard__table_rank {
@@ -144,5 +144,5 @@
 }
 
 .leaderboard__controls button:hover {
-  background-color: #9e5151;
+  background-color: #df1313;
 }
