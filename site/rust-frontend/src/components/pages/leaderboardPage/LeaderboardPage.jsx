@@ -19,8 +19,10 @@ function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedMode, setSelectedMode] = useState("solo");
+  const [tableLoading, setTableLoading] = useState(false);
 
   useEffect(() => {
+    setTableLoading(true);
     fetch("https://rust-pkqo.onrender.com/api/users")
       .then((response) => response.json())
       .then((data) => {
@@ -59,10 +61,12 @@ function LeaderboardPage() {
 
         setUsers(processedUsers);
         setLoading(false);
+        setTableLoading(false);
       })
       .catch(() => {
         setError("Failed to load leaderboard");
         setLoading(false);
+        setTableLoading(false);
       });
   }, [selectedMode]);
 
@@ -105,23 +109,31 @@ function LeaderboardPage() {
           </div>
         ) : (
           <>
-            <LeaderboardTable
-              title={"Overall Rankings"}
-              data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
-              type="total"
-            />
-            <LeaderboardTable
-              title={"KD Leaderboard"}
-              data={[...users].sort((a, b) => b.kd - a.kd)}
-              type="kd"
-            />
-            <LeaderboardTable
-              title={"Farm Leaderboard"}
-              data={[...users].sort(
-                (a, b) => b.resourceScore - a.resourceScore
-              )}
-              type="resource"
-            />
+            {tableLoading ? (
+              <div className="loader">
+                <FadeLoader color="#ffffff" margin={1} />
+              </div>
+            ) : (
+              <>
+                <LeaderboardTable
+                  title={"Overall Rankings"}
+                  data={[...users].sort((a, b) => b.totalScore - a.totalScore)}
+                  type="total"
+                />
+                <LeaderboardTable
+                  title={"KD Leaderboard"}
+                  data={[...users].sort((a, b) => b.kd - a.kd)}
+                  type="kd"
+                />
+                <LeaderboardTable
+                  title={"Farm Leaderboard"}
+                  data={[...users].sort(
+                    (a, b) => b.resourceScore - a.resourceScore
+                  )}
+                  type="resource"
+                />
+              </>
+            )}
           </>
         )}
       </div>
