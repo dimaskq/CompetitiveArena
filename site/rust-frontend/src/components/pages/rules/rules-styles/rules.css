@@ -55,8 +55,10 @@
   cursor: pointer;
   font-size: 1.5rem;
   color: #ffffff;
+  transition: 0.3s all ease;
 }
 
 .rules__languageBtn button.active {
   background: rgba(39, 39, 39, 0.777);
+  transition: 0.3s all ease;
 }
