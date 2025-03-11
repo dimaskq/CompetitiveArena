@@ -75,40 +75,13 @@
   font-size: 1.5rem;
   color: #ffffff;
   position: relative;
-}
-
-.rules__languageBtn button.active {
-  z-index: 1; /* щоб активна кнопка була поверх інших */
+  transition: all 0.3s ease;
 }
 
 .rules__languageBtn__indicator {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 0;
   height: 3px;
   background-color: red;
   transition: left 0.3s ease, width 0.3s ease;
-}
-
-.rules__languageBtn button.active + .rules__languageBtn__indicator {
-  width: 100%;
-}
-
-.rules__languageBtn
-  button:nth-child(1).active
-  ~ .rules__languageBtn__indicator {
-  left: 0;
-}
-
-.rules__languageBtn
-  button:nth-child(2).active
-  ~ .rules__languageBtn__indicator {
-  left: 33.33%; /* для послідовних кнопок, коригуй відстань */
-}
-
-.rules__languageBtn
-  button:nth-child(3).active
-  ~ .rules__languageBtn__indicator {
-  left: 66.66%; /* для китайської кнопки */
 }
