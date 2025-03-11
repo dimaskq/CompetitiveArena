@@ -21,14 +21,24 @@
 
 .rules__kd_title {
   margin: 0 0 15px 0;
+  font-weight: 600;
 }
 
-.rules__kd_formula code {
-  padding: 0 20px 15px 0;
+.rules__rs_title {
+  margin: 15px 0;
+}
+
+.rules__kd_formula {
+  padding: 10px 20px 0 0;
 }
 
 .rules__kd_list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 15px 0;
+}
+
+.rules__general {
+  margin: 20px 0;
 }
