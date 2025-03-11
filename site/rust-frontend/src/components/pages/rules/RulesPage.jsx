@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 import "./rules-styles/rules.css";
 
 const LanguageContext = createContext("en");
@@ -598,36 +598,6 @@ function RulesPage() {
     }
   };
 
-  const LanguageSwitcher = () => {
-    const [language, setLanguage] = useState("en");
-    const [indicatorStyle, setIndicatorStyle] = useState({});
-    
-    const enRef = useRef(null);
-    const ukRef = useRef(null);
-    const zhRef = useRef(null);
-    const indicatorRef = useRef(null);
-  
-    useEffect(() => {
-      let button = enRef.current;
-      let position = button.offsetLeft;
-      let width = button.offsetWidth;
-  
-      if (language === "uk") {
-        button = ukRef.current;
-        position = button.offsetLeft;
-        width = button.offsetWidth;
-      } else if (language === "zh") {
-        button = zhRef.current;
-        position = button.offsetLeft;
-        width = button.offsetWidth;
-      }
-  
-      setIndicatorStyle({
-        left: `${position}px`,
-        width: `${width}px`,
-      });
-    }, [language]);
-  
   return (
     <div className="rules">
       <h2 className="rules__title about__title">Rules</h2>
@@ -635,31 +605,22 @@ function RulesPage() {
         <button
           className={language === "en" ? "active" : ""}
           onClick={() => setLanguage("en")}
-          ref={(button) => {
-            if (button) button.en = button;
-          }}
         >
           English
         </button>
         <button
           className={language === "uk" ? "active" : ""}
           onClick={() => setLanguage("uk")}
-          ref={(button) => {
-            if (button) button.uk = button;
-          }}
         >
           Українська
         </button>
         <button
           className={language === "zh" ? "active" : ""}
           onClick={() => setLanguage("zh")}
-          ref={(button) => {
-            if (button) button.zh = button;
-          }}
         >
           中文
         </button>
-        <div className="rules__languageBtn__indicator"></div> {/* Для лінії */}
+        <div className="rules__languageBtn__indicator"></div>
       </div>
       {renderRulesContainer()}
     </div>
