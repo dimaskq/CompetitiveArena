@@ -620,7 +620,6 @@ function RulesPage() {
         >
           中文
         </button>
-        <div className="rules__languageBtn__indicator"></div>
       </div>
       {renderRulesContainer()}
     </div>
