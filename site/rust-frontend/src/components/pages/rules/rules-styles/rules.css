@@ -47,6 +47,8 @@
   display: flex;
   background: #1a1a1a;
   justify-content: center;
+  width: 60%;
+  margin: 0 auto;
 }
 
 .rules__languageBtn button {
