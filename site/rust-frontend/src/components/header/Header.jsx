@@ -82,7 +82,11 @@ const Header = () => {
             <div
               className="user-info"
               tabIndex={0}
-              onBlur={() => setDropdownOpen(false)}
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) {
+                  setDropdownOpen(false);
+                }
+              }}
             >
               <div
                 className="avatar-container"
