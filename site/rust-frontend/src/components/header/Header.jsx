@@ -98,7 +98,9 @@ const Header = () => {
                 <div
                   className="dropdown-menu"
                   onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
+                  onMouseLeave={() => {
+                    setTimeout(() => setDropdownOpen(false), 300);
+                  }}
                 >
                   <Link
                     to="/api/user"
