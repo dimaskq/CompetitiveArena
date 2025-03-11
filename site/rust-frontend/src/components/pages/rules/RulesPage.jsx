@@ -60,9 +60,9 @@ function RulesPage() {
                     Високоякісний метал (mvk) — <code>1x</code>
                   </li>
                 </ul>
-                <h3 className="rules__rs_title rules__kd_title">
-                  1.3 Формула обчислення ресурсного рахунку:
-                </h3>
+                <h4 className="rules__rs_formulaTitle">
+                  Формула обчислення ресурсного рахунку:
+                </h4>
                 <p className="rules__rs_formula rules__kd_formula">
                   <code>
                     Ресурсний рахунок = (wood * 0.01) + (stone * 0.01) + (metal
@@ -73,7 +73,7 @@ function RulesPage() {
             </div>
             <div className="rules__totalScore">
               <h3 className="rules__totalScore_title rules__kd_title">
-                1.4 Загальний результат
+                1.3 Загальний результат
               </h3>
               <p>Для визначення переможця застосовується фінальна формула:</p>
               <p className="rules__totalScore_formula rules__kd_formula">
@@ -90,7 +90,7 @@ function RulesPage() {
               <ul className="rules__general_list rules__kd_list">
                 <li>2.1.1 Використовувати лише дозволені ігрові механіки.</li>
                 <li>2.1.2 Образи, токсична поведінка та расизм заборонені.</li>
-                <li>2.1.3 Не допомагати напарнику.</li>
+                <li>2.1.3 Не допомагати противнику.</li>
                 <li>2.1.4 Заборонено класти лут в бази інших гравців.</li>
                 <li>
                   2.1.5 Чити, макроси та будь-яке програмне забезпечення, яке
@@ -144,8 +144,7 @@ function RulesPage() {
                   у PvP.
                 </li>
                 <li>
-                  2.2.7 Гравці, які потрапили в командну гру, отримають бан або
-                  вайп акаунту.
+                  2.2.7 Гравці, які потрапили в командну гру, отримають бан.
                 </li>
               </ul>
               <p className="rules__solo_title rules__kd_title">
@@ -188,11 +187,11 @@ function RulesPage() {
                 <li>2.4.5 Будь-яка кооперація між різними тріо заборонена.</li>
                 <li>
                   2.4.6 Гравці, які перевищують ліміт в 3 гравці, будуть
-                  забанені або отримає вайп акаунту.
+                  забанені.
                 </li>
               </ul>
               <p className="rules__trio_title rules__kd_title">
-                2.5 Правила для квадро-режиму
+                2.5 Правила для сквад-режиму
               </p>
               <ul className="rules__squad_list rules__kd_list">
                 <li>2.5.1 Максимальний розмір команди - 4 гравці.</li>
@@ -267,9 +266,7 @@ function RulesPage() {
                     高品质金属（mvk） — <code>1x</code>
                   </li>
                 </ul>
-                <h3 className="rules__rs_title rules__kd_title">
-                  1.3 资源分数计算公式：
-                </h3>
+                <h4 className="rules__rs_formulaTitle">资源分数计算公式：</h4>
                 <p className="rules__rs_formula rules__kd_formula">
                   <code>
                     资源分数 = (wood * 0.01) + (stone * 0.01) + (metal * 0.1) +
@@ -280,7 +277,7 @@ function RulesPage() {
             </div>
             <div className="rules__totalScore">
               <h3 className="rules__totalScore_title rules__kd_title">
-                1.4 总分
+                1.3 总分
               </h3>
               <p>为了确定胜者，使用最终公式：</p>
               <p className="rules__totalScore_formula rules__kd_formula">
@@ -353,7 +350,7 @@ function RulesPage() {
                 </li>
                 <li>2.4.4 只能有3名玩家住在同一个基地。</li>
                 <li>2.4.5 禁止不同三人组之间的合作行为。</li>
-                <li>2.4.6 超过三人限制的玩家将被禁止或清除账号。</li>
+                <li>2.4.6 超過3名玩家限制的玩家將被禁止。</li>
               </ul>
               <p className="rules__trio_title rules__kd_title">
                 2.5 小队模式规则
@@ -425,9 +422,9 @@ function RulesPage() {
                     Metal High Quality (mvk) — <code>1x</code>
                   </li>
                 </ul>
-                <h3 className="rules__rs_title rules__kd_title">
-                  1.3 Resource Score calculation formula:
-                </h3>
+                <p className="rules__rs_formulaTitle">
+                  1. Resource Score calculation formula:
+                </p>
                 <p className="rules__rs_formula rules__kd_formula">
                   <code>
                     Resource Score = (wood * 0.01) + (stone * 0.01) + (metal *
@@ -516,10 +513,7 @@ function RulesPage() {
                   2.2.6 It is forbidden to camp monuments together and help
                   someone in PvP.
                 </li>
-                <li>
-                  2.2.7 Players caught in a team game will receive a ban or
-                  account wipe.
-                </li>
+                <li>2.2.7 Players caught in a team game will receive a ban.</li>
               </ul>
               <p className="rules__solo_title rules__kd_title">
                 2.3 Rules for duo mode
@@ -564,8 +558,7 @@ function RulesPage() {
                   prohibited.{" "}
                 </li>
                 <li>
-                  2.4.6 Players who exceed the 3-person limit will be banned or
-                  have their account wiped.
+                  2.4.6 Players who exceed the 3-person limit will be banned.
                 </li>
               </ul>
               <p className="rules__trio_title rules__kd_title">
