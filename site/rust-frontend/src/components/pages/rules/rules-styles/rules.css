@@ -4,7 +4,7 @@
 
 .rules__container {
   background: #1a1a1a;
-  max-width: 70%;
+  max-width: 60%;
   padding: 20px;
   margin: 2% auto;
 }
@@ -28,8 +28,8 @@
   margin: 15px 0;
 }
 
-.rules__kd_formula {
-  padding: 10px 20px 0 0;
+.rules__kd_formula code {
+  margin: 10px 20px 0 20px;
 }
 
 .rules__kd_list {
