@@ -99,7 +99,7 @@ const Header = () => {
                   className="dropdown-menu"
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => {
-                    setTimeout(() => setDropdownOpen(false), 300);
+                    setTimeout(() => setDropdownOpen(false), 5000);
                   }}
                 >
                   <Link
@@ -109,15 +109,13 @@ const Header = () => {
                   >
                     Profile
                   </Link>
-                  <button
+                  <a
                     className="dropdown-item logout-button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      handleLogout();
-                    }}
+                    href="https://rust-pkqo.onrender.com/logout"
+                    onClick={(event) => event.stopPropagation()}
                   >
                     Logout
-                  </button>
+                  </a>
                 </div>
               )}
             </div>
