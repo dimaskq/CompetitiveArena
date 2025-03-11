@@ -4,7 +4,8 @@ import "./rules-styles/rules.css";
 const LanguageContext = createContext("en");
 
 function RulesPage() {
-  const language = useContext(LanguageContext);
+  const [language, setLanguage] = useState("en");
+
   const renderRulesContainer = () => {
     switch (language) {
       case "uk":
@@ -355,6 +356,11 @@ function RulesPage() {
   return (
     <div className="rules">
       <h2 className="about__title">Rules</h2>
+      <div>
+        <button onClick={() => setLanguage("en")}>English</button>
+        <button onClick={() => setLanguage("uk")}>Українська</button>
+        <button onClick={() => setLanguage("zh")}>中文</button>
+      </div>
       {renderRulesContainer()}
     </div>
   );
