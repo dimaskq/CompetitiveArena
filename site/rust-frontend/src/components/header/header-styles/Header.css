@@ -25,7 +25,7 @@
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   position: relative;
 }
 
@@ -132,7 +132,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 10px;
   width: 200px;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .dropdown-item {
@@ -149,6 +149,8 @@
 }
 
 .logout-button {
+  position: relative;
+  z-index: 1001;
   background: none;
   border: none;
   color: white;
@@ -161,66 +163,66 @@
   background: #a00;
 }
 
-.header__person_logIn{
+.header__person_logIn {
   background-color: #00000000;
   color: #fff;
   font-size: 1rem;
 }
 
-.header__person_logIn:hover{
+.header__person_logIn:hover {
   text-decoration: underline;
   transition: 0.3s all ease;
 }
 
-.user-details{
+.user-details {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.userid{
-    font-size: 0.7rem;
+.userid {
+  font-size: 0.7rem;
 }
 
-.header-menu__pc{
+.header-menu__pc {
   display: none;
 }
 
-.burger-menu{
+.burger-menu {
   display: none;
 }
 @media only screen and (max-width: 967px) {
-  .tabSection{
+  .tabSection {
     gap: 20px;
   }
 }
 
 @media only screen and (max-width: 885px) {
-  .burger-menu{
+  .burger-menu {
     display: block;
   }
 
-  .menu__list{
+  .menu__list {
     display: none;
   }
-  
-  .tabSection{
+
+  .tabSection {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     padding: 20% 0 0 0;
   }
 
-  .header__logo{
+  .header__logo {
     margin: 0 0 0 30%;
   }
 
-  .header-menu{
+  .header-menu {
     flex-grow: 1;
     justify-content: flex-end;
   }
 
-  .nav-item{
+  .nav-item {
     background-color: #00000000 !important;
     color: #fff;
     font-size: 1.2rem;

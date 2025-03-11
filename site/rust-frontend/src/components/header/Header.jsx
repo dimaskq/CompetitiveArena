@@ -58,7 +58,7 @@ const Header = () => {
       .then(() => {
         console.log("Logout successful");
         dispatch(clearUser());
-        window.location.href = "https://rust-pkqo.onrender.com";
+        window.location.replace("https://rust-pkqo.onrender.com");
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -79,58 +79,63 @@ const Header = () => {
             />
           </ul>
           {user ? (
+            <div
+              className="user-info"
+              tabIndex={0}
+              onBlur={() => setDropdownOpen(false)}
+            >
               <div
-                className="user-info"
-                tabIndex={0}
-                onBlur={() => setDropdownOpen(false)}
+                className="avatar-container"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                <div
-                  className="avatar-container"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                >
-                  <img src={user.avatar} alt="Avatar" className="avatar" />
-                  <div className="user-details">
-                    <span className="username">{user.displayName}</span>
-                    <span className="userid">ID: {user.steamId}</span>
-                  </div>
+                <img src={user.avatar} alt="Avatar" className="avatar" />
+                <div className="user-details">
+                  <span className="username">{user.displayName}</span>
+                  <span className="userid">ID: {user.steamId}</span>
                 </div>
-                {dropdownOpen && (
-                  <div
-                    className="dropdown-menu"
-                    onMouseEnter={() => setDropdownOpen(true)}
-                    onMouseLeave={() => setDropdownOpen(false)}
-                  >
-                    <Link
-                      to="/api/user"
-                      className="dropdown-item"
-                      onClick={(event) => event.stopPropagation()}
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      className="dropdown-item logout-button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleLogout();
-                      }}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
               </div>
-            ) : (
-              <button
-                className="header__person header__person_logIn"
-                onClick={handleLogin}
-              >
-                LOG IN
-              </button>
-            )}
+              {dropdownOpen && (
+                <div
+                  className="dropdown-menu"
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <Link
+                    to="/api/user"
+                    className="dropdown-item"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    className="dropdown-item logout-button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              className="header__person header__person_logIn"
+              onClick={handleLogin}
+            >
+              LOG IN
+            </button>
+          )}
         </nav>
         <div className="burger-menu" ref={node}>
           <Burger open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Menu
+            open={open}
+            setOpen={setOpen}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
       </div>
     </header>
