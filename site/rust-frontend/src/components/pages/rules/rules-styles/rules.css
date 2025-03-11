@@ -46,7 +46,6 @@
   display: flex;
   background: #1a1a1a;
   justify-content: center;
-  color: #ffffff;
 }
 
 .rules__languageBtn button {
@@ -54,6 +53,7 @@
   padding: 15px 40px;
   cursor: pointer;
   font-size: 1.5rem;
+  color: #ffffff;
 }
 
 .rules__languageBtn button.active {

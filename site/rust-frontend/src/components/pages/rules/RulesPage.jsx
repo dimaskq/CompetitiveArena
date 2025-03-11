@@ -357,9 +357,24 @@ function RulesPage() {
     <div className="rules">
       <h2 className="rules__title about__title">Rules</h2>
       <div className="rules__languageBtn">
-        <button onClick={() => setLanguage("en")}>English</button>
-        <button onClick={() => setLanguage("uk")}>Українська</button>
-        <button onClick={() => setLanguage("zh")}>中文</button>
+        <button
+          className={language === "en" ? "active" : ""}
+          onClick={() => setLanguage("en")}
+        >
+          English
+        </button>
+        <button
+          className={language === "uk" ? "active" : ""}
+          onClick={() => setLanguage("uk")}
+        >
+          Українська
+        </button>
+        <button
+          className={language === "zh" ? "active" : ""}
+          onClick={() => setLanguage("zh")}
+        >
+          中文
+        </button>
       </div>
       {renderRulesContainer()}
     </div>
