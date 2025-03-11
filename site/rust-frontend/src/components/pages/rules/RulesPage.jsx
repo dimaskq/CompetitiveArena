@@ -355,8 +355,8 @@ function RulesPage() {
 
   return (
     <div className="rules">
-      <h2 className="about__title">Rules</h2>
-      <div>
+      <h2 className="rules__title about__title">Rules</h2>
+      <div className="rules__languageBtn">
         <button onClick={() => setLanguage("en")}>English</button>
         <button onClick={() => setLanguage("uk")}>Українська</button>
         <button onClick={() => setLanguage("zh")}>中文</button>

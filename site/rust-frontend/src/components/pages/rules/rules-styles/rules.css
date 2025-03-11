@@ -41,3 +41,20 @@
 .rules__general {
   margin: 20px 0;
 }
+
+.rules__languageBtn {
+  display: flex;
+  background: #1a1a1a;
+  justify-content: center;
+  height: 100px;
+}
+
+.rules__languageBtn button {
+  background-color: #ffffff;
+  padding: 15px 40px;
+  cursor: pointer;
+}
+
+.rules__languageBtn button:hover {
+  border-bottom: 3px solid red;
+}
