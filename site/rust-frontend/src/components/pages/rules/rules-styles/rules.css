@@ -43,45 +43,34 @@
   margin: 20px 0;
 }
 
-/* .rules__languageBtn {
-  display: flex;
-  background: #1a1a1a;
-  justify-content: center;
-}
-
-.rules__languageBtn button {
-  background-color: #00000000;
-  padding: 15px 40px;
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: #ffffff;
-}
-
-.rules__languageBtn button.active {
-  border-bottom: 3px solid red;
-} */
-
 .rules__languageBtn {
   display: flex;
   background: #1a1a1a;
   justify-content: center;
   position: relative;
+  padding-bottom: 15px; /* для місця під індикатор */
 }
 
 .rules__languageBtn button {
-  background-color: #00000000;
+  background-color: transparent;
   padding: 15px 40px;
   cursor: pointer;
   font-size: 1.5rem;
   color: #ffffff;
-  position: relative;
-  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.rules__languageBtn button.active {
+  border-bottom: 3px solid red;
 }
 
 .rules__languageBtn__indicator {
   position: absolute;
   bottom: 0;
+  left: 0;
+  width: 40%;
   height: 3px;
   background-color: red;
-  transition: left 0.3s ease, width 0.3s ease;
+  transition: transform 0.3s ease;
 }
