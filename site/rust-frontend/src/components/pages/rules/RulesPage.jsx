@@ -1,3 +1,5 @@
+import "./rules-styles/rules.css";
+
 function RulesPage() {
   return (
     <div className="rules">
