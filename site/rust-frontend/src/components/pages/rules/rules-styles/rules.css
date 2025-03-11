@@ -1,6 +1,11 @@
+.rules {
+  width: 100vw;
+  height: 100vh;
+}
+
 .rules__container {
-  background-color: 181717;
+  background: #1a1a1a;
   max-width: 70%;
   padding: 20px;
-  margin: 7% 0 0 0;
+  margin: 7% auto;
 }
