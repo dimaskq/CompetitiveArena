@@ -6,12 +6,13 @@ function RulesPage() {
       <h2 className="about__title">Rules</h2>
       <div className="rules__container">
         <div className="rules__info">
+          <h2 className="rules__win">1.RULES FOR WINNING</h2>
           <div className="rules__kd">
-            <h2 className="rules__kd_title">KD розраховується за формулою:</h2>
-            <p>
+            <h3 className="rules__kd_title">KD розраховується за формулою:</h3>
+            <p className="rules__kd_formula">
               <code>KD = Murders - (Deaths * W)</code>
             </p>
-            <ul>
+            <ul className="rules__kd_list">
               <li>
                 <span>Murders</span> – загальна кількість убивств
               </li>
@@ -24,12 +25,14 @@ function RulesPage() {
             </ul>
           </div>
           <div className="rules__rs">
-            <h3>3. Resource Score (Фермерські бали)</h3>
-            <p>
+            <h3 className="rules__rs_titile rules__kd_title">
+              Resource Score (Фермерські бали)
+            </h3>
+            <p className="rules__rs_info">
               Гравці можуть отримувати бали за збір ресурсів. Коефіцієнти за
               кожен ресурс:
             </p>
-            <ul>
+            <ul className="rules__rs_list rules__kd_list">
               <li>
                 <strong>Wood (wood)</strong> — <code>0.01x</code>
               </li>
@@ -52,7 +55,7 @@ function RulesPage() {
             <p>
               <strong>Формула розрахунку Resource Score:</strong>
             </p>
-            <p>
+            <p className="rules__rs_formula rules__kd_formula">
               <code>
                 Resource Score = (wood * 0.01) + (stone * 0.01) + (metal * 0.1)
                 + (scrap * 0.3) + (sera * 0.5) + mvk
@@ -61,13 +64,15 @@ function RulesPage() {
           </div>
         </div>
         <div className="rules__totalScore">
-          <h3>Загальний підсумок (визначення переможця)</h3>
+          <h3 className="rules__totalScore_title rules__kd_title">
+            Загальний підсумок (визначення переможця)
+          </h3>
           <p>Щоб визначити переможця, застосовується остаточна формула:</p>
-          <p>
+          <p className="rules__totalScore_formula rules__kd_formula">
             <code>TotalScore = KD + (ResourceScore * 0.01)</code>
           </p>
         </div>
-        <div className="rules__explanation"></div>
+        <div className="rules__explanation">2.WHAT CAN'T BE DONE</div>
       </div>
     </div>
   );
