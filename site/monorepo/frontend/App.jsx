@@ -1,5 +1,5 @@
-import HomePage from "./components/pages/home/HomePage.jsx";
-import AboutPage from "./components/pages/contactPage/AboutPage.jsx";
+import HomePage from "./pages/home/HomePage.jsx";
+import AboutPage from "./pages/contactPage/AboutPage.jsx";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,11 +7,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
-import ServersPage from "./components/pages/servers/Servers.jsx";
+import ServersPage from "./pages/servers/Servers.jsx";
 import Footer from "./components/footer/Footer.jsx";
-import RulesPage from "./components/pages/rules/RulesPage.jsx";
+import RulesPage from "./pages/rules/RulesPage.jsx";
 import "./base-styles/reset.css";
-import LeaderboardPage from "./components/pages/leaderboardPage/LeaderboardPage.jsx";
+import LeaderboardPage from "./pages/leaderboardPage/LeaderboardPage.jsx";
 function App() {
   return (
     <Router>
