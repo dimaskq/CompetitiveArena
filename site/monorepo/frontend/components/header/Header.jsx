@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, clearUser } from "../../store/userSlice";
 import { Link } from "react-router-dom";
-import logo from "../../../public/logo-removebg.png";
+import logo from "../../assets/logo-removebg.png";
 import axios from "axios";
 import "./header-styles/Header.css";
 import TabsSection from "./TabSections";

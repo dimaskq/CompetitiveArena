@@ -1,5 +1,5 @@
 import "./home-styles/SloganBlock.css";
-import bg from "../../../public/aboutBg.jpg";
+import bg from "../../assets/aboutBg.jpg";
 
 function AboutBlockHome() {
   return (

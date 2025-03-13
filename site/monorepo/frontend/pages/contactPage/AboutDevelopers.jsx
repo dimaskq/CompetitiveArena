@@ -1,7 +1,7 @@
 import React from "react";
-import dmytroIMG from "../../../public/ya.jpg";
-import serhiyIMG from "../../../public/Serhiy.jpg";
-import ilarionIMG from "../../../public/Ilarion.jpg";
+import dmytroIMG from "../../assets/ya.jpg";
+import serhiyIMG from "../../assets/Serhiy.jpg";
+import ilarionIMG from "../../assets/Ilarion.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 

@@ -1,5 +1,5 @@
 import "./home-styles/SloganBlock.css";
-import video from "../../../public/videoplayback.mp4";
+import video from "../../assets/videoplayback.mp4";
 
 function SloganBlock() {
   const handleScroll = () => {
