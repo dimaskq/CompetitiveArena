@@ -1,4 +1,41 @@
 const LeaderboardTable = ({ title, data, type, loading }) => {
+  const columns = {
+    total: ["Total Score", "Resource Score", "KD"],
+    kd: ["Kills", "Deaths", "KD"],
+    resource: [
+      "Wood",
+      "Stone",
+      "Metal",
+      "Sulfur",
+      "Scrap",
+      "HQM",
+      "Resource Score",
+    ],
+  };
+
+  const getColumnData = (user) => {
+    switch (type) {
+      case "total":
+        return [user.totalScore, user.resourceScore, user.kd];
+      case "kd":
+        return [user.kills, user.deaths, user.kd];
+      case "resource":
+        return [
+          user.wood,
+          user.stone,
+          user.metal,
+          user.sulfur,
+          user.scrap,
+          user.hqm,
+          user.resourceScore,
+        ];
+      default:
+        return [];
+    }
+  };
+
+  if (loading) return <div className="loading">Loading...</div>;
+
   return (
     <div className="leaderboard__box">
       <h2 className="leaderboard__title">{title}</h2>
@@ -7,31 +44,9 @@ const LeaderboardTable = ({ title, data, type, loading }) => {
           <tr>
             <th className="leaderboard__rank">Rank</th>
             <th className="leaderboard__table_playerName">Name</th>
-            {type === "total" && (
-              <>
-                <th>Total Score</th>
-                <th>Resource Score</th>
-                <th>KD</th>
-              </>
-            )}
-            {type === "kd" && (
-              <>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>KD</th>
-              </>
-            )}
-            {type === "resource" && (
-              <>
-                <th>Wood</th>
-                <th>Stone</th>
-                <th>Metal</th>
-                <th>Sulfur</th>
-                <th>Scrap</th>
-                <th>HQM</th>
-                <th>Resource Score</th>
-              </>
-            )}
+            {columns[type]?.map((col) => (
+              <th key={col}>{col}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -45,37 +60,21 @@ const LeaderboardTable = ({ title, data, type, loading }) => {
                 <div className="player-info">
                   <img
                     src={user.avatar || "default-avatar.png"}
-                    alt={`${user.displayName}'s avatar`}
+                    alt={
+                      user.displayName
+                        ? `${user.displayName}'s avatar`
+                        : "User avatar"
+                    }
                     className="player-avatar"
                   />
                   <span>{user.displayName}</span>
                 </div>
               </td>
-              {type === "total" && (
-                <>
-                  <td>{user.kd.toFixed(2)}</td>
-                  <td>{user.resourceScore.toFixed(2)}</td>
-                  <td>{user.totalScore.toFixed(2)}</td>
-                </>
-              )}
-              {type === "kd" && (
-                <>
-                  <td>{user.kills}</td>
-                  <td>{user.deaths}</td>
-                  <td>{user.kd.toFixed(2)}</td>
-                </>
-              )}
-              {type === "resource" && (
-                <>
-                  <td>{user.wood}</td>
-                  <td>{user.stone}</td>
-                  <td>{user.metal}</td>
-                  <td>{user.sulfur}</td>
-                  <td>{user.scrap}</td>
-                  <td>{user.hqm}</td>
-                  <td>{user.resourceScore.toFixed(2)}</td>
-                </>
-              )}
+              {getColumnData(user).map((value, i) => (
+                <td key={i}>
+                  {typeof value === "number" ? value.toFixed(2) : value}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
