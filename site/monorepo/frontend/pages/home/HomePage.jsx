@@ -11,12 +11,11 @@ function HomePage() {
     <div className="home">
       <SloganBlock />
 
-      {/* Лейзі лоад для AboutBlockHome та ServersPage */}
-      <Suspense fallback={<div>Loading AboutBlockHome...</div>}>
+      <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
         <AboutBlockHome />
       </Suspense>
 
-      <Suspense fallback={<div>Loading ServersPage...</div>}>
+      <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
         <ServersPage />
       </Suspense>
     </div>

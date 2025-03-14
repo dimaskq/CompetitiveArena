@@ -27,9 +27,13 @@ function SloganBlock() {
         <div className="slogan__arrow_container" onClick={handleScroll}>
           <div className="slogan__arrow"></div>
         </div>
-        <video className="videoTag" autoPlay loop muted>
-          <source src={video} type="video/mp4" />
-        </video>
+
+        <div className="slogan__video-container">
+          <video className="videoTag" autoPlay loop muted>
+            <source src={video} type="video/mp4" />
+            Ваш браузер не підтримує відео тег.
+          </video>
+        </div>
       </div>
     </section>
   );
