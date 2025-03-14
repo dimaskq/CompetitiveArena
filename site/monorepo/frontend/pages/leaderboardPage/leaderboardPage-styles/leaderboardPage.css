@@ -120,3 +120,16 @@
 .leaderboard__controls button:hover {
   background-color: #df1313;
 }
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  object-fit: cover;
+}

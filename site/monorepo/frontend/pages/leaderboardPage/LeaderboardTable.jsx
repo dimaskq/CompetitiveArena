@@ -42,7 +42,14 @@ const LeaderboardTable = ({ title, data, type, loading }) => {
             >
               <td className="leaderboard__table_rank">{index + 1}</td>
               <td className="leaderboard__table_playerName">
-                {user.displayName}
+                <div className="player-info">
+                  <img
+                    src={user.avatar || "default-avatar.png"}
+                    alt={`${user.displayName}'s avatar`}
+                    className="player-avatar"
+                  />
+                  <span>{user.displayName}</span>
+                </div>
               </td>
               {type === "total" && (
                 <>
