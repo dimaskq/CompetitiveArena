@@ -27,18 +27,13 @@ const SERVERPLANS = [
 function ServersPage() {
   return (
     <section className="serversPlans">
-      <div className="serversPlans__header">
+      <header className="serversPlans__header">
         <h1>Choose Your Perfect Server Plan</h1>
         <p>Flexible and affordable plans for every team size.</p>
-      </div>
+      </header>
       <div className="serversPlans__container container">
-        {SERVERPLANS.map((plan, index) => (
-          <ServerPlan
-            key={index}
-            title={plan.title}
-            price={plan.price}
-            info={plan.info}
-          />
+        {SERVERPLANS.map(({ title, price, info }) => (
+          <ServerPlan key={title} title={title} price={price} info={info} />
         ))}
       </div>
     </section>
