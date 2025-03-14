@@ -12,6 +12,7 @@ import Footer from "./components/footer/Footer.jsx";
 import RulesPage from "./pages/rules/RulesPage.jsx";
 import "./base-styles/reset.css";
 import LeaderboardPage from "./pages/leaderboardPage/LeaderboardPage.jsx";
+
 function App() {
   return (
     <Router>

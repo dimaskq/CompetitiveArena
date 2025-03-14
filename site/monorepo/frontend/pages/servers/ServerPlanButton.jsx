@@ -2,9 +2,10 @@ import { useSelector } from "react-redux";
 
 function ServerPlanButton({ title }) {
   const user = useSelector((state) => state.user.user);
+  const isSolo = title === "Solo";
 
   const handleChooseServer = async () => {
-    if (title !== "Solo") return; // Дозволяємо лише для Solo
+    if (!isSolo) return; // Дозволяємо лише Solo
 
     if (!user) {
       alert("User not found!");
@@ -24,7 +25,7 @@ function ServerPlanButton({ title }) {
       const updatedServers = [...user.servers];
       updatedServers[serverIndex] = {
         ...updatedServers[serverIndex],
-        [title.toLowerCase()]: 1, // Встановлюємо режим у 1
+        [title.toLowerCase()]: 1,
       };
 
       const response = await fetch(`https://rust-pkqo.onrender.com/api/user`, {
@@ -49,13 +50,11 @@ function ServerPlanButton({ title }) {
   return (
     <div className="serversPlans__btn_block">
       <button
-        className={`serversPlans__block_btn ${
-          title !== "Solo" ? "disabled" : ""
-        }`}
+        className={`serversPlans__block_btn ${!isSolo ? "disabled" : ""}`}
         onClick={handleChooseServer}
-        disabled={title !== "Solo"}
+        disabled={!isSolo}
       >
-        Choose Server
+        {isSolo ? "Choose Server" : "Soon"}
       </button>
     </div>
   );
