@@ -47,10 +47,6 @@ const Header = () => {
       });
   }, [dispatch]);
 
-  const handleLogin = () => {
-    window.location.href = "https://rust-pkqo.onrender.com/auth/steam";
-  };
-
   const handleLogout = () => {
     console.log("Logging out...");
     axios
@@ -121,11 +117,8 @@ const Header = () => {
               )}
             </div>
           ) : (
-            <button
-              className="header__person header__person_logIn"
-              onClick={handleLogin}
-            >
-              LOG IN
+            <button className="header__person header__person_logIn">
+              <a href="https://rust-pkqo.onrender.com/auth/steam"> LOG IN</a>
             </button>
           )}
         </nav>
