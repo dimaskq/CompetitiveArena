@@ -1,55 +1,11 @@
-import React, { useEffect } from "react";
 import "./aboutPage-styles/aboutPage.css";
 import img1 from "../../assets/aboutList-img1.png";
 import img2 from "../../assets/aboutList-img2.jpeg";
 import Typewriter from "typewriter-effect";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import AboutDevelopers from "./AboutDevelopers";
-
-const OfferSection = ({ title, items, imgSrc, imgAlt, imgPosition }) => (
-  <div className="about__info_box">
-    {imgPosition === "left" && (
-      <img
-        src={imgSrc}
-        alt={imgAlt}
-        data-aos="fade-right"
-        data-aos-delay="300"
-        loading="lazy"
-      />
-    )}
-    <div
-      className="about__list_container"
-      data-aos="fade-left"
-      data-aos-delay="300"
-    >
-      <h2 className="about__text_offer">{title}</h2>
-      <ul className="about__text_list">
-        {items.map((item, index) => (
-          <li key={index} className="about__list_item">
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-    {imgPosition === "right" && (
-      <img
-        src={imgSrc}
-        alt={imgAlt}
-        data-aos="fade-left"
-        data-aos-delay="500"
-        loading="lazy"
-      />
-    )}
-  </div>
-);
+import OfferSection from "./OfferSection";
 
 function AboutPage() {
-  useEffect(() => {
-    AOS.init({ duration: 1500, once: true });
-    return () => AOS.refreshHard(); // Очищення ефекту
-  }, []);
-
   const typewriterText = (
     <Typewriter
       options={{
