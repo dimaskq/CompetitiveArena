@@ -54,7 +54,7 @@ function ServerPlanButton({ title }) {
         onClick={handleChooseServer}
         disabled={!isSolo}
       >
-        {isSolo ? "Choose Server" : "Soon"}
+        {isSolo ? "Choose Server" : "Soon..."}
       </button>
     </div>
   );
