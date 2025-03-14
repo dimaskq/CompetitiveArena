@@ -6,7 +6,7 @@ const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background:rgb(42, 42, 42);
+  background: rgb(42, 42, 42);
   transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
   height: 100vh;
   text-align: left;
@@ -22,10 +22,6 @@ const StyledMenu = styled.nav`
 `;
 
 const Menu = ({ open, activeTab, setActiveTab, setOpen }) => {
-    const handleMenuClick = (tab, path) => {
-        setActiveTab(tab);
-        setOpen(false);
-      };
   return (
     <StyledMenu open={open}>
       <TabsSection
