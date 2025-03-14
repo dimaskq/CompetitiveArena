@@ -17,7 +17,12 @@ function AboutBlockHome() {
           </a>
         </div>
         <div className="slogan__box_img">
-          <img src={bg} alt="slogan bg" className="sloganBg" />
+          <img
+            src={bg}
+            alt="Background image for About Us section"
+            className="sloganBg"
+            loading="lazy"
+          />
         </div>
       </div>
     </section>
