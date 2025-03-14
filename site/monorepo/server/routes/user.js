@@ -22,29 +22,29 @@ router.get("/", ensureAuthenticated, async (req, res) => {
   }
 });
 
-router.patch("/", ensureAuthenticated, async (req, res) => {
-  try {
-    if (!req.user || !req.user.steamId) {
-      return res.status(401).json({ message: "Not authenticated" });
-    }
+// router.patch("/", ensureAuthenticated, async (req, res) => {
+//   try {
+//     if (!req.user || !req.user.steamId) {
+//       return res.status(401).json({ message: "Not authenticated" });
+//     }
 
-    const updateData = req.body;
+//     const updateData = req.body;
 
-    const updatedUser = await User.findOneAndUpdate(
-      { steamId: req.user.steamId },
-      { $set: updateData },
-      { new: true }
-    );
+//     const updatedUser = await User.findOneAndUpdate(
+//       { steamId: req.user.steamId },
+//       { $set: updateData },
+//       { new: true }
+//     );
 
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
+//     if (!updatedUser) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
 
-    res.json({ message: "User updated successfully", user: updatedUser });
-  } catch (error) {
-    console.error("Error updating user:", error);
-    res.status(500).json({ message: "Error updating user", error });
-  }
-});
+//     res.json({ message: "User updated successfully", user: updatedUser });
+//   } catch (error) {
+//     console.error("Error updating user:", error);
+//     res.status(500).json({ message: "Error updating user", error });
+//   }
+// });
 
 module.exports = router;
