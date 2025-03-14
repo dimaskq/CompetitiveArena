@@ -21,11 +21,14 @@ function LeaderboardPage() {
   const [selectedMode, setSelectedMode] = useState("solo");
 
   useEffect(() => {
-    setLoading(true);
-    setUsers([]);
-    fetch("https://rust-pkqo.onrender.com/api/users")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://rust-pkqo.onrender.com/api/users"
+        );
+        const data = await response.json();
+
         const W = 1.5;
         const processedUsers = data
           .map((user) => {
@@ -60,12 +63,14 @@ function LeaderboardPage() {
           .filter((user) => user !== null);
 
         setUsers(processedUsers);
-        setLoading(false);
-      })
-      .catch(() => {
+      } catch (err) {
         setError("Failed to load leaderboard");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [selectedMode]);
 
   if (error) return <div className="error">{error}</div>;
