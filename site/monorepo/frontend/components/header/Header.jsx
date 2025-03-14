@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, clearUser } from "../../store/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo-removebg.png";
 import axios from "axios";
 import "./header-styles/Header.css";
@@ -30,13 +30,13 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [open, setOpen] = React.useState(false);
   const node = React.useRef();
+  const navigate = useNavigate();
+
   useOnClickOutside(node, () => setOpen(false));
 
   useEffect(() => {
     axios
-      .get("https://rust-pkqo.onrender.com/api/user", {
-        withCredentials: true,
-      })
+      .get("https://rust-pkqo.onrender.com/api/user", { withCredentials: true })
       .then((response) => {
         if (response.data) {
           dispatch(setUser(response.data));
@@ -48,7 +48,7 @@ const Header = () => {
   }, [dispatch]);
 
   const handleLogin = () => {
-    window.location.href = "https://rust-pkqo.onrender.com/auth/steam";
+    navigate("https://rust-pkqo.onrender.com/auth/steam");
   };
 
   const handleLogout = () => {
@@ -58,7 +58,7 @@ const Header = () => {
       .then(() => {
         console.log("Logout successful");
         dispatch(clearUser());
-        window.location.replace("https://rust-pkqo.onrender.com");
+        navigate("/");
       })
       .catch((error) => {
         console.error("Logout error:", error);
@@ -69,7 +69,7 @@ const Header = () => {
     <header className="header">
       <div className="header-container container">
         <Link className="header__logo" to="/">
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="Company logo" />
         </Link>
         <nav className="header-menu">
           <ul className="menu__list">
@@ -99,13 +99,7 @@ const Header = () => {
                 </div>
               </div>
               {dropdownOpen && (
-                <div
-                  className="dropdown-menu"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => {
-                    setTimeout(() => setDropdownOpen(false), 5000);
-                  }}
-                >
+                <div className="dropdown-menu">
                   <Link
                     to="/api/user"
                     className="dropdown-item"
@@ -116,7 +110,10 @@ const Header = () => {
                   <a
                     className="dropdown-item logout-button"
                     href="https://rust-pkqo.onrender.com/logout"
-                    onClick={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleLogout();
+                    }}
                   >
                     Logout
                   </a>
