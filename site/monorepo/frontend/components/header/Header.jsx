@@ -48,7 +48,7 @@ const Header = () => {
   }, [dispatch]);
 
   const handleLogin = () => {
-    navigate("/auth/steam");
+    window.location.href = "https://rust-pkqo.onrender.com/auth/steam";
   };
 
   const handleLogout = () => {
