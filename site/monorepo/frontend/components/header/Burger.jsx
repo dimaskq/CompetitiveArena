@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledBurger = styled.button`
-  position: fixed;
+  position: absolute;
   top: 30%;
   left: 2rem;
   display: flex;
@@ -19,40 +19,41 @@ const StyledBurger = styled.button`
   &:focus {
     outline: none;
   }
-`;
 
-const StyledBurgerLine = styled.div`
-  width: 2rem;
-  height: 0.25rem;
-  background: #effffa;
-  border-radius: 10px;
-  transition: all 0.3s linear;
-  transform-origin: 1px;
+  div {
+    width: 2rem;
+    height: 0.25rem;
+    background: #effffa !important;
+    border-radius: 10px;
+    transition: all 0.3s linear !important;
+    position: relative;
+    transform-origin: 1px;
 
-  ${({ open }) =>
-    open &&
-    `
-    &:first-child {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    &:nth-child(2) {
-      opacity: 0;
-      transform: translateX(20px);
-    }
+    ${({ open }) =>
+      open &&
+      `
+      :first-child {
+        transform: rotate(45deg) translate(5px, 5px) !important;
+      }
+      
+      :nth-child(2) {
+        opacity: 0 !important;
+        transform: translateX(20px) !important;
+      }
 
-    &:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-  `}
+      :nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px) !important;
+      }
+    `}
+  }
 `;
 
 const Burger = ({ open, setOpen }) => {
   return (
-    <StyledBurger onClick={() => setOpen((prev) => !prev)}>
-      <StyledBurgerLine open={open} />
-      <StyledBurgerLine open={open} />
-      <StyledBurgerLine open={open} />
+    <StyledBurger open={open} onClick={() => setOpen(!open)}>
+      <div />
+      <div />
+      <div />
     </StyledBurger>
   );
 };
