@@ -1,7 +1,5 @@
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import "./rules-styles/rules.css";
-
-const LanguageContext = createContext("en");
 
 function RulesPage() {
   const [language, setLanguage] = useState("en");
