@@ -4,13 +4,14 @@ function ServerPlanButton({ title }) {
   const user = useSelector((state) => state.user.user);
 
   const handleChooseServer = async () => {
+    if (title !== "Solo") return; // Дозволяємо лише для Solo
+
     if (!user) {
       alert("User not found!");
       return;
     }
 
     try {
-      // Знаходимо потрібний сервер у масиві
       const serverIndex = user.servers.findIndex(
         (server) => server[title.toLowerCase()] !== undefined
       );
@@ -47,7 +48,13 @@ function ServerPlanButton({ title }) {
 
   return (
     <div className="serversPlans__btn_block">
-      <button className="serversPlans__block_btn" onClick={handleChooseServer}>
+      <button
+        className={`serversPlans__block_btn ${
+          title !== "Solo" ? "disabled" : ""
+        }`}
+        onClick={handleChooseServer}
+        disabled={title !== "Solo"}
+      >
         Choose Server
       </button>
     </div>

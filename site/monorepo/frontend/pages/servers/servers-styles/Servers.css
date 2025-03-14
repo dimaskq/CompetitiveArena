@@ -127,3 +127,9 @@
     clip-path: circle(0% at 50% 50%) !important;
   }
 }
+
+.serversPlans__block_btn.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
