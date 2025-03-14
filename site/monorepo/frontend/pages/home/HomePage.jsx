@@ -1,14 +1,24 @@
+import React, { Suspense, lazy } from "react";
 import "../../base-styles/reset.css";
-import ServersPage from "../servers/Servers";
-import AboutBlockHome from "./AboutBlockHome";
+
+// Лейзі лоад для компонентів
+const AboutBlockHome = lazy(() => import("./AboutBlockHome"));
+const ServersPage = lazy(() => import("../servers/Servers"));
 import SloganBlock from "./SloganBlock";
 
 function HomePage() {
   return (
     <div className="home">
       <SloganBlock />
-      <AboutBlockHome />
-      <ServersPage />
+
+      {/* Лейзі лоад для AboutBlockHome та ServersPage */}
+      <Suspense fallback={<div>Loading AboutBlockHome...</div>}>
+        <AboutBlockHome />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading ServersPage...</div>}>
+        <ServersPage />
+      </Suspense>
     </div>
   );
 }
