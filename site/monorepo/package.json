@@ -7,7 +7,7 @@
     "deploy": "npm run install-all && npm run build",
     "install-all": "npm install && cd server && npm install",
     "build": "vite build",
-    "start-server": "cd server && node index.js",
+    "start-server": "cd server && node server.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
