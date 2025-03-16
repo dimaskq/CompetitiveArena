@@ -9,25 +9,18 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const mongoose = require("mongoose");
 const User = require("./models/User");
+const connectDB = require("./config/db");
+const saveUsersRouter = require("./routes/saveUsers");
+const logoutRouter = require("./routes/logout");
+const usersRouter = require("./routes/users");
+const userRouter = require("./routes/user");
 
 const { DB_URI, SESSION_SECRET, STEAM_API_KEY, STEAM_RETURN_URL, STEAM_REALM } =
   process.env;
 
 const app = express();
 
-const saveUsersRouter = require("./routes/saveUsers");
-const logoutRouter = require("./routes/logout");
-const usersRouter = require("./routes/users");
-const userRouter = require("./routes/user");
-
-mongoose
-  .connect(DB_URI)
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
+connectDB();
 
 app.use(
   session({
