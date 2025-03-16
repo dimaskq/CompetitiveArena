@@ -20,11 +20,6 @@ const logoutRouter = require("./routes/logout");
 const usersRouter = require("./routes/users");
 const userRouter = require("./routes/user");
 
-app.use("/api/save-users", saveUsersRouter);
-app.use("/logout", logoutRouter);
-app.use("/api/users", usersRouter);
-app.use("/api/user", userRouter);
-
 mongoose
   .connect(DB_URI)
   .then(() => {
@@ -130,6 +125,11 @@ app.get(
     res.redirect("/");
   }
 );
+
+app.use("/api/save-users", saveUsersRouter);
+app.use("/logout", logoutRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/user", userRouter);
 
 const PORT = 5173;
 app.listen(PORT, () =>
