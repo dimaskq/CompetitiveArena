@@ -6,15 +6,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const connectDB = require("./config/db");
-// const saveUsersRouter = require("./routes/saveUsers");
-// const logoutRouter = require("./routes/logout");
-// const usersRouter = require("./routes/users");
-// const userRouter = require("./routes/user");
 const passport = require("./config/passport");
 const routes = require("./routes");
 
-const { DB_URI, SESSION_SECRET, STEAM_API_KEY, STEAM_RETURN_URL, STEAM_REALM } =
-  process.env;
+const { DB_URI, SESSION_SECRET } = process.env;
 
 const app = express();
 
