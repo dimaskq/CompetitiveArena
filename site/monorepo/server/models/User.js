@@ -27,31 +27,59 @@ const UserSchema = new mongoose.Schema({
     default: [
       {
         solo: 0,
-        kills: 0,
-        deaths: 0,
+        pvp: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
+        pve: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
-        kd: 0,
       },
       {
         duo: 0,
-        kills: 0,
-        deaths: 0,
+        pvp: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
+        pve: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
-        kd: 0,
       },
       {
         trio: 0,
-        kills: 0,
-        deaths: 0,
+        pvp: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
+        pve: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
-        kd: 0,
       },
       {
         squad: 0,
-        kills: 0,
-        deaths: 0,
+        pvp: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
+        pve: {
+          kills: 0,
+          deaths: 0,
+          kd: 0,
+        },
         resources: { wood: 0, stone: 0, metal: 0, sulfur: 0, scrap: 0, hqm: 0 },
-        kd: 0,
       },
     ],
   },
