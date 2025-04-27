@@ -5,8 +5,6 @@ const ServerSchema = new mongoose.Schema({
   duo: { type: Number },
   trio: { type: Number },
   squad: { type: Number },
-  kills: { type: Number, default: 0 },
-  deaths: { type: Number, default: 0 },
   resources: {
     wood: { type: Number, default: 0 },
     stone: { type: Number, default: 0 },
@@ -15,7 +13,16 @@ const ServerSchema = new mongoose.Schema({
     scrap: { type: Number, default: 0 },
     hqm: { type: Number, default: 0 },
   },
-  kd: { type: Number, default: 0 },
+  pvp: {
+    kd: { type: Number, default: 0 },
+    deaths: { type: Number, default: 0 },
+    kills: { type: Number, default: 0 },
+  },
+  pve: {
+    kd: { type: Number, default: 0 },
+    deaths: { type: Number, default: 0 },
+    kills: { type: Number, default: 0 },
+  },
 });
 
 const UserSchema = new mongoose.Schema({
