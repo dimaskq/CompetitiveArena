@@ -1,0 +1,16 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm --prefix site/frontend run dev\" \"npm --prefix site/server start\"",
+    "build": "npm --prefix site/frontend install && npm --prefix site/frontend run build && npm --prefix site/server install",
+    "start": "npm --prefix site/server start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
