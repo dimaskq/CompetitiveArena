@@ -1,0 +1,16 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm --prefix rust-frontend run dev\" \"npm --prefix rust-backend start\"",
+    "build": "npm --prefix rust-frontend install && npm --prefix rust-frontend run build && npm --prefix rust-backend install",
+    "start": "npm --prefix rust-backend start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}

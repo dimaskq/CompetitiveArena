@@ -1,0 +1,82 @@
+.rules {
+  width: 100vw;
+}
+
+.rules__container {
+  background: #1a1a1a;
+  max-width: 60%;
+  padding: 20px;
+  margin: 2% auto;
+}
+
+.rules__info {
+  font-size: 1rem;
+}
+
+.rules__win {
+  font-size: 1.5rem;
+  margin: 0 0 20px 0;
+}
+
+.rules__kd_title {
+  margin: 0 0 15px 0;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.rules__rs_title {
+  margin: 15px 0;
+}
+
+.rules__kd_formula code {
+  margin: 10px 20px;
+}
+
+.rules__kd_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.rules__general {
+  margin: 20px 0;
+}
+
+.rules__languageBtn {
+  display: flex;
+  background: #1a1a1a;
+  justify-content: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.rules__languageBtn button {
+  background-color: #00000000;
+  padding: 15px 40px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #ffffff;
+  transition: 0.3s all ease;
+}
+
+.rules__languageBtn button.active {
+  background: rgba(39, 39, 39, 0.777);
+  transition: 0.3s all ease;
+}
+
+@media only screen and (max-width: 768px) {
+  .rules__languageBtn {
+    width: 100%;
+  }
+
+  .rules__languageBtn button {
+    width: 33%;
+    padding: 15px 0;
+    text-algin: center;
+  }
+
+  .rules__container {
+    max-width: 100%;
+  }
+}
