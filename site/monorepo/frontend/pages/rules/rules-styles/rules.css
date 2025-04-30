@@ -64,3 +64,19 @@
   background: rgba(39, 39, 39, 0.777);
   transition: 0.3s all ease;
 }
+
+@media only screen and (max-width: 768px) {
+  .rules__languageBtn {
+    width: 100%;
+  }
+
+  .rules__languageBtn button {
+    width: 33%;
+    padding: 15px 0;
+    text-algin: center;
+  }
+
+  .rules__container {
+    max-width: 100%;
+  }
+}
