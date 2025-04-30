@@ -1,9 +1,8 @@
 import React, { Suspense, lazy } from "react";
 import "../../base-styles/reset.css";
 
-// Лейзі лоад для компонентів
 const AboutBlockHome = lazy(() => import("./AboutBlockHome"));
-const ServersPage = lazy(() => import("../servers/Servers"));
+// const ServersPage = lazy(() => import("../servers/Servers"));
 import SloganBlock from "./SloganBlock";
 
 function HomePage() {
@@ -15,9 +14,9 @@ function HomePage() {
         <AboutBlockHome />
       </Suspense>
 
-      <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
+      {/* <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
         <ServersPage />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 }
