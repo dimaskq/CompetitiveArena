@@ -25,7 +25,7 @@ function AboutPage() {
       <div className="about__container">
         <div className="about__text_container">
           <p className="about_text_top">{typewriterText}</p>
-
+          <p className="about_text_topPH">Welcome to Competitive Arena!</p>
           <OfferSection
             title="What We Offer:"
             items={[

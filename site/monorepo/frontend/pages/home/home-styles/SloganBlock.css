@@ -178,4 +178,8 @@
   .slogan__box_title {
     font-size: 3rem;
   }
+
+  .about_text_top {
+    display: none;
+  }
 }
