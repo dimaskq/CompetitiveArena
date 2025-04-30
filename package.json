@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm --prefix site/monorepo/rust-frontend run dev\" \"npm --prefix site/monorepo/rust-backend start\"",
-    "build": "npm --prefix site/frontend install && npm --prefix site/monorepo/rust-frontend run build && npm --prefix site/monorepo/rust-backend install",
+    "build": "npm --prefix site/frontend install && npm --prefix site/frontend install run build && npm --prefix site/server install",
     "start": "npm --prefix site/server start"
   },
   "devDependencies": {
