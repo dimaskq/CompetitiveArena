@@ -159,3 +159,13 @@
 .developers__container .developers__card:nth-child(3) .developers__image img {
   object-position: bottom;
 }
+
+@media only screen and (max-width: 768px) {
+  .about__info_box {
+    flex-direction: column;
+  }
+
+  .developers__container {
+    flex-direction: column;
+  }
+}
