@@ -82,6 +82,7 @@
   font-size: 1.5rem;
   font-family: "Rust";
   letter-spacing: 2px;
+  text-align: center;
 }
 
 .about__list_container {

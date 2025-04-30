@@ -166,8 +166,7 @@
     transition: none;
   }
 
-  .about_text_top,
-  .about__text_offer {
+  .about_text_top {
     display: none;
   }
 }
