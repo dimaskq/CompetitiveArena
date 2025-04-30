@@ -141,6 +141,13 @@
     text-align: center;
   }
 
+  .slogan__box_title2 {
+    font-size: 2.4rem;
+  }
+  .videoTag {
+    display: none;
+  }
+
   .slogan__box_img {
     display: none;
   }
