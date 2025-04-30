@@ -41,7 +41,7 @@
 
 .slogan__box_information {
   line-height: 140%;
-  color: #aaa3a3 !important;
+  color: rgb(255, 255, 255) !important;
   font-size: 1.2rem;
 }
 
@@ -139,10 +139,6 @@
   }
   .slogan__btn_container a {
     text-align: center;
-  }
-
-  .videoTag {
-    display: none;
   }
 
   .slogan__box_img {
