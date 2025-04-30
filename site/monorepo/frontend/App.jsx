@@ -24,7 +24,7 @@ function App() {
             <Route path="/contact" element={<AboutPage />} />
             {/* <Route path="/servers" element={<ServersPage />} /> */}
             <Route path="/rules" element={<RulesPage />} />
-            <Route path="/leaderboard" element={<LeaderboardPage />} />
+            {/* <Route path="/leaderboard" element={<LeaderboardPage />} /> */}
           </Routes>
         </main>
         <Footer />
