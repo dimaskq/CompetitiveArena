@@ -154,6 +154,10 @@
     justify-content: center;
   }
 
+  .slogan__box_title {
+    margin: 15% 0 0 0;
+  }
+
   .slogan__box_title,
   .slogan__box_information {
     text-align: center;

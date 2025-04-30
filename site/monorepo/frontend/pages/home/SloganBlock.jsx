@@ -29,7 +29,14 @@ function SloganBlock() {
         </div>
 
         <div className="slogan__video-container">
-          <video className="videoTag" autoPlay loop muted playsInline>
+          <video
+            className="videoTag"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          >
             <source src={video} type="video/mp4" />
             Ваш браузер не підтримує відео тег.
           </video>
