@@ -1,5 +1,5 @@
 import React from "react";
-import dmytroIMG from "../../assets/ya.jpg";
+import dmytroIMG from "../../assets/Dmytro.jpg";
 import serhiyIMG from "../../assets/Serhiy.jpg";
 import ilarionIMG from "../../assets/Ilarion.jpg";
 import AOS from "aos";

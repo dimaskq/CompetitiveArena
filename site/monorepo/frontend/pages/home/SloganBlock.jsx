@@ -16,8 +16,8 @@ function SloganBlock() {
           <h2 className="slogan__box_title">Competitive Arena</h2>
           <p className="slogan__box_information">Only skill matters here!</p>
           <div className="slogan__btn_container">
-            <a href="/servers" className="slogan__box_btn">
-              Watch Price
+            <a href="/contact" className="slogan__box_btn">
+              About Us
             </a>
             <a href="https://discord.gg/wtxWjyf6" className="slogan__box_btn">
               Join Discord

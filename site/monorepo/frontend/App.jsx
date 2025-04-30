@@ -7,11 +7,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
-import ServersPage from "./pages/servers/Servers.jsx";
+// import ServersPage from "./pages/servers/Servers.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import RulesPage from "./pages/rules/RulesPage.jsx";
 import "./base-styles/reset.css";
-import LeaderboardPage from "./pages/leaderboardPage/LeaderboardPage.jsx";
+// import LeaderboardPage from "./pages/leaderboardPage/LeaderboardPage.jsx";
 
 function App() {
   return (
