@@ -2,11 +2,11 @@
   "name": "site",
   "version": "1.0.0",
   "private": true,
-"scripts": {
-  "dev": "concurrently \"npm --prefix site/monorepo/rust-frontend run dev\" \"npm --prefix site/monorepo/rust-backend start\"",
-  "build": "npm --prefix site/monorepo/rust-frontend install && npm --prefix site/monorepo/rust-frontend run build && npm --prefix site/monorepo/rust-backend install",
-  "start": "npm --prefix site/monorepo/rust-backend start"
-},
+  "scripts": {
+    "dev": "concurrently \"npm --prefix site/monorepo/rust-frontend run dev\" \"npm --prefix site/monorepo/rust-backend start\"",
+    "build": "npm --prefix site/frontend install && npm --prefix site/monorepo/rust-frontend run build && npm --prefix site/monorepo/rust-backend install",
+    "start": "npm --prefix site/server start"
+  },
   "devDependencies": {
     "concurrently": "^9.1.0"
   },
