@@ -165,6 +165,11 @@
     background-color: #df1313;
     transition: none;
   }
+
+  .about_text_top,
+  .about__text_offer {
+    display: none;
+  }
 }
 @media only screen and (max-width: 426px) {
   .slogan__btn_container {
@@ -177,9 +182,5 @@
 
   .slogan__box_title {
     font-size: 3rem;
-  }
-
-  .about_text_top {
-    display: none;
   }
 }
