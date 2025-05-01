@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm --prefix site/frontend run dev\" \"npm --prefix site/server start\"",
-    "build": "npm --prefix site/frontend install && npm --prefix site/frontend run build && npm --prefix site/server install",
+    "dev": "concurrently \"npm --prefix site run dev\" \"npm --prefix site/server start\"",
+    "build": "npm --prefix site install && npm --prefix site run build && npm --prefix site/server install",
     "start": "npm --prefix site/server start"
   },
   "devDependencies": {
