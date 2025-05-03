@@ -35,6 +35,18 @@ const Header = () => {
   useOnClickOutside(node, () => setOpen(false));
 
   useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [open]);
+
+  useEffect(() => {
     axios
       .get("https://competitivearena.up.railway.app/api/user", {
         withCredentials: true,
