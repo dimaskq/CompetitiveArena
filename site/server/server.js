@@ -46,7 +46,7 @@ app.use(
         origin === "http://87.120.167.110:32129" ||
         origin === "https://87.120.167.110:32128" ||
         origin === "https://87.120.167.110:32129" ||
-        origin === "https://rust-pkqo.onrender.com"
+        origin === "https://striking-smile-production.up.railway.app"
       ) {
         return callback(null, true);
       }
