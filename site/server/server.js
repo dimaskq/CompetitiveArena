@@ -57,9 +57,8 @@ app.use(
 );
 
 app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../dist")));
 
 app.get(
   "/auth/steam",
@@ -76,13 +75,11 @@ app.get(
 
 app.use(routes);
 
-const PORT = 5173;
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
-
-app.use(express.static(path.join(__dirname, "../dist")));
-
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist", "index.html"));
 });
+
+const PORT = process.env.PORT || 5173;
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
