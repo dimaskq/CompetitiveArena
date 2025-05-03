@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dmytroIMG from "../../assets/Dmytro.jpg";
 import serhiyIMG from "../../assets/Serhiy.jpg";
 import ilarionIMG from "../../assets/Ilarion.jpg";
@@ -30,6 +30,20 @@ const developers = [
 ];
 
 const AboutDevelopers = () => {
+  useEffect(() => {
+    if (window.matchMedia("(min-width: 769px)").matches) {
+      AOS.init({
+        duration: 1500,
+        once: true,
+        offset: 100,
+        easing: "ease-in-out",
+        mirror: false,
+        anchorPlacement: "top-bottom",
+      });
+    }
+    return () => AOS.refreshHard();
+  }, []);
+
   return (
     <div className="developers">
       <h2 className="developers__title">Our Team</h2>
@@ -38,7 +52,9 @@ const AboutDevelopers = () => {
           <div
             key={dev.id}
             className="developers__card"
-            data-aos="flip-left"
+            data-aos={
+              window.matchMedia("(min-width: 769px)").matches ? "flip-left" : ""
+            }
             data-aos-delay={dev.delay}
           >
             <div className="developers__image">
@@ -54,4 +70,5 @@ const AboutDevelopers = () => {
     </div>
   );
 };
+
 export default AboutDevelopers;
