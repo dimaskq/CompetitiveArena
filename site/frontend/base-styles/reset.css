@@ -95,6 +95,7 @@ body {
 
 body {
   background: #000000;
+  overflow-x: hidden;
 }
 #root {
   height: 100%;
