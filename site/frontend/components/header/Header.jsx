@@ -36,7 +36,7 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get("https://striking-smile-production.up.railway.app/api/user", {
+      .get("https://competitivearena.up.railway.app/api/user", {
         withCredentials: true,
       })
       .then((response) => {
@@ -52,7 +52,7 @@ const Header = () => {
   const handleLogout = () => {
     console.log("Logging out...");
     axios
-      .get("https://striking-smile-production.up.railway.app/logout", {
+      .get("https://competitivearena.up.railway.app/logout", {
         withCredentials: true,
       })
       .then(() => {
@@ -109,7 +109,7 @@ const Header = () => {
                   </Link>
                   <a
                     className="dropdown-item logout-button"
-                    href="https://striking-smile-production.up.railway.app/logout"
+                    href="https://competitivearena.up.railway.app/logout"
                     onClick={(event) => {
                       event.stopPropagation();
                       handleLogout();
@@ -122,7 +122,7 @@ const Header = () => {
             </div>
           ) : (
             <button className="header__person header__person_logIn">
-              <a href="https://striking-smile-production.up.railway.app/auth/steam">
+              <a href="https://competitivearena.up.railway.app/auth/steam">
                 {" "}
                 LOG IN
               </a>

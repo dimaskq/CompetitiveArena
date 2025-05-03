@@ -29,7 +29,7 @@ function ServerPlanButton({ title }) {
       };
 
       const response = await fetch(
-        `https://striking-smile-production.up.railway.app/api/user`,
+        `https://competitivearena.up.railway.app/api/user`,
         {
           method: "PATCH",
           headers: {

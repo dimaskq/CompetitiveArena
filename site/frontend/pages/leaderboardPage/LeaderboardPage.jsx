@@ -25,7 +25,7 @@ function LeaderboardPage() {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://striking-smile-production.up.railway.app/api/users"
+          "https://competitivearena.up.railway.app/api/users"
         );
         const data = await response.json();
 
