@@ -195,3 +195,13 @@
     width: 100%;
   }
 }
+
+@media (max-width: 768px) {
+  .about-page * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .about_text_top {
+    display: inline-block;
+  }
+}
