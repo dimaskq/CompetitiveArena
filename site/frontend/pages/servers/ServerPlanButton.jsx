@@ -28,13 +28,16 @@ function ServerPlanButton({ title }) {
         [title.toLowerCase()]: 1,
       };
 
-      const response = await fetch(`https://rust-pkqo.onrender.com/api/user`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ servers: updatedServers }),
-      });
+      const response = await fetch(
+        `https://striking-smile-production.up.railway.app/api/user`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ servers: updatedServers }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update user");

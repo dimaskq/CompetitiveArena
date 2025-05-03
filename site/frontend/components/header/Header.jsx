@@ -36,7 +36,9 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get("https://rust-pkqo.onrender.com/api/user", { withCredentials: true })
+      .get("https://striking-smile-production.up.railway.app/api/user", {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data) {
           dispatch(setUser(response.data));
@@ -50,7 +52,9 @@ const Header = () => {
   const handleLogout = () => {
     console.log("Logging out...");
     axios
-      .get("https://rust-pkqo.onrender.com/logout", { withCredentials: true })
+      .get("https://striking-smile-production.up.railway.app/logout", {
+        withCredentials: true,
+      })
       .then(() => {
         console.log("Logout successful");
         dispatch(clearUser());
@@ -105,7 +109,7 @@ const Header = () => {
                   </Link>
                   <a
                     className="dropdown-item logout-button"
-                    href="https://rust-pkqo.onrender.com/logout"
+                    href="https://striking-smile-production.up.railway.app/logout"
                     onClick={(event) => {
                       event.stopPropagation();
                       handleLogout();
@@ -118,7 +122,10 @@ const Header = () => {
             </div>
           ) : (
             <button className="header__person header__person_logIn">
-              <a href="https://rust-pkqo.onrender.com/auth/steam"> LOG IN</a>
+              <a href="https://striking-smile-production.up.railway.app/auth/steam">
+                {" "}
+                LOG IN
+              </a>
             </button>
           )}
         </nav>

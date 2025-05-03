@@ -25,7 +25,7 @@ function LeaderboardPage() {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://rust-pkqo.onrender.com/api/users"
+          "https://striking-smile-production.up.railway.app/api/users"
         );
         const data = await response.json();
 
