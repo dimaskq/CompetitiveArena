@@ -1,7 +1,11 @@
 const express = require("express");
+const csurf = require("csurf"); // Підключаємо csurf
 const router = express.Router();
 const User = require("../models/User");
 const { ensureAuthenticated } = require("../middleware/auth");
+
+// Налаштовуємо CSRF захист
+const csrfProtection = csurf({ cookie: true });
 
 router.get("/", ensureAuthenticated, async (req, res) => {
   try {
@@ -22,7 +26,8 @@ router.get("/", ensureAuthenticated, async (req, res) => {
   }
 });
 
-router.patch("/", ensureAuthenticated, async (req, res) => {
+// Застосовуємо CSRF захист на PATCH запит
+router.patch("/", ensureAuthenticated, csrfProtection, async (req, res) => {
   try {
     if (!req.user || !req.user.steamId) {
       return res.status(401).json({ message: "Not authenticated" });

@@ -11,6 +11,7 @@ const routes = require("./routes");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const slowDown = require("express-slow-down");
+const csurf = require("csurf");
 
 const { DB_URI, SESSION_SECRET } = process.env;
 
@@ -69,6 +70,7 @@ app.use(
   })
 );
 
+const csrfProtection = csurf({ cookie: true });
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -94,6 +96,10 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../dist")));
+
+app.get("/api/csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
 app.get(
   "/auth/steam",
