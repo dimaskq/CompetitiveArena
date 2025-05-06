@@ -14,9 +14,9 @@ function HomePage() {
         <AboutBlockHome />
       </Suspense>
 
-      {/* <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
+      <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
         <ServersPage />
-      </Suspense> */}
+      </Suspense>
     </div>
   );
 }
