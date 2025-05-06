@@ -8,12 +8,33 @@ const path = require("path");
 const connectDB = require("./config/db");
 const passport = require("./config/passport");
 const routes = require("./routes");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const slowDown = require("express-slow-down");
 
 const { DB_URI, SESSION_SECRET } = process.env;
 
 const app = express();
 
 connectDB();
+
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Забагато запитів з цього IP. Спробуйте пізніше.",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
+const speedLimiter = slowDown({
+  windowMs: 15 * 60 * 1000,
+  delayAfter: 50,
+  delayMs: 500,
+});
+app.use(speedLimiter);
 
 app.use(
   session({
