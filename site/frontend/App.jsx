@@ -23,6 +23,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/contact" element={<AboutPage />} />
             {/* <Route path="/servers" element={<ServersPage />} /> */}
+            <Route path="/beta-tester" element={<BetaTesterForm />} />
             <Route path="/rules" element={<RulesPage />} />
             {/* <Route path="/leaderboard" element={<LeaderboardPage />} /> */}
           </Routes>

@@ -115,6 +115,16 @@ app.get(
   }
 );
 
+app.post("/api/beta-testers", async (req, res) => {
+  const { email } = req.body;
+  try {
+    console.log("New beta tester:", email);
+    res.status(200).json({ message: "Registered successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error registering" });
+  }
+});
+
 app.use(routes);
 
 app.get("*", (req, res) => {
