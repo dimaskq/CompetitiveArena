@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Particles from "@tsparticles/react"; // Обновлённый импорт
 import { loadFull } from "tsparticles";
 import "../../base-styles/reset.css";
-import "./HomePage.css";
+import "./home-styles/HomePage.css";
 
 const AboutBlockHome = lazy(() => import("./AboutBlockHome"));
 import SloganBlock from "./SloganBlock";
