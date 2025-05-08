@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Импортируем useNavigate
 import axios from "axios";
 import "./BetaTesterForm.css";
 
@@ -6,6 +7,7 @@ const BetaTesterForm = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate(); // Инициализируем хук для навигации
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,8 +19,14 @@ const BetaTesterForm = () => {
         "https://competitivearena.up.railway.app/api/beta-testers",
         { email }
       );
-      setMessage("Спасибо за регистрацию! Мы свяжемся с вами скоро.");
+      setMessage(
+        "Спасибо за регистрацию! Вы будете перенаправлены на главную страницу через 5 секунд."
+      );
       setEmail("");
+      // Устанавливаем таймер на 5 секунд для перенаправления
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
     } catch (error) {
       setMessage("Ошибка при регистрации. Попробуйте снова.");
       console.error("Error submitting form:", error);
