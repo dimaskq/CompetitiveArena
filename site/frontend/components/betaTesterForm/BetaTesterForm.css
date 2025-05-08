@@ -8,7 +8,7 @@
 }
 .beta-tester-form-container {
   max-width: 500px;
-  margin: 100px auto;
+  margin: 200px auto 100px auto;
   padding: 20px;
   text-align: center;
   background: linear-gradient(135deg, #1e1e2f, #2a2a4a);
@@ -16,6 +16,9 @@
   color: white;
 }
 
+.beta-tester__title span {
+  color: #df1313;
+}
 .beta-tester-form {
   display: flex;
   flex-direction: column;

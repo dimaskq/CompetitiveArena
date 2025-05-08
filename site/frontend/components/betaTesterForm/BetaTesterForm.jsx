@@ -37,7 +37,9 @@ const BetaTesterForm = () => {
   return (
     <div className="beta-tester">
       <div className="beta-tester-form-container">
-        <h2 className="beta-tester__title">Become a beta tester</h2>
+        <h2 className="beta-tester__title">
+          Become <span>a</span> beta tester
+        </h2>
         <form onSubmit={handleSubmit} className="beta-tester-form">
           <label htmlFor="email">Enter Your Email:</label>
           <input
