@@ -12,6 +12,7 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const slowDown = require("express-slow-down");
 const csurf = require("csurf");
+const BetaTester = require("./models/BetaTester");
 
 const { DB_URI, SESSION_SECRET } = process.env;
 
@@ -48,7 +49,7 @@ app.use(limiter);
 const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000,
   delayAfter: 50,
-  delayMs: 500,
+  delayMs: () => 500,
 });
 app.use(speedLimiter);
 
@@ -117,10 +118,26 @@ app.get(
 
 app.post("/api/beta-testers", async (req, res) => {
   const { email } = req.body;
+
   try {
-    console.log("New beta tester:", email);
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+    const existingTester = await BetaTester.findOne({ email });
+    if (existingTester) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    const newBetaTester = new BetaTester({ email });
+    await newBetaTester.save();
+
+    console.log("New beta tester registered:", email);
     res.status(200).json({ message: "Registered successfully" });
   } catch (error) {
+    console.error("Error registering beta tester:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
     res.status(500).json({ message: "Error registering" });
   }
 });
