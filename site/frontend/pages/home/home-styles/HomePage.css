@@ -26,22 +26,28 @@
 }
 
 .beta-tester-button {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  color: white;
-  background: linear-gradient(45deg, #ff6f61, #de3e44);
+  padding: 0 10px;
+  width: 200px;
+  margin: 3% 1% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  color: #fff;
+  font-size: 1.5rem;
   border: none;
-  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.5s ease;
-  position: relative;
-  overflow: hidden;
+  background-color: #df1313;
+  transition: all 0.3s ease-in-out;
+  font-family: "Rust";
+  letter-spacing: 2px;
+  text-align: center;
 }
 
 .beta-tester-button:hover {
-  background: linear-gradient(45deg, #6b7280, #1e1e2f);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  color: #df1313;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
 }
 
 #tsparticles {

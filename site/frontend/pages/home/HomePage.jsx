@@ -16,10 +16,6 @@ function HomePage() {
   return (
     <div className="home">
       <SloganBlock />
-      <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
-        <AboutBlockHome />
-      </Suspense>
-
       <section className="beta-tester-section">
         <Particles
           id="tsparticles"
@@ -87,13 +83,16 @@ function HomePage() {
           }}
         />
         <div className="beta-tester-content">
-          <h2>Присоединяйся к бета-тестированию!</h2>
-          <p>Стань частью нашего сообщества и помоги сделать проект лучше.</p>
+          <h2>Join the beta testing!</h2>
+          <p>Become part of our community and help make the project better.</p>
           <Link to="/beta-tester">
-            <button className="beta-tester-button">Стать бета-тестером</button>
+            <button className="beta-tester-button">Become a beta tester</button>
           </Link>
         </div>
       </section>
+      <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
+        <AboutBlockHome />
+      </Suspense>
     </div>
   );
 }

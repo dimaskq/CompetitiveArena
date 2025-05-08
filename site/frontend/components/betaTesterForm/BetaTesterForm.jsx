@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Импортируем useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./BetaTesterForm.css";
 
@@ -7,7 +7,7 @@ const BetaTesterForm = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate(); // Инициализируем хук для навигации
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,15 +20,14 @@ const BetaTesterForm = () => {
         { email }
       );
       setMessage(
-        "Спасибо за регистрацию! Вы будете перенаправлены на главную страницу через 5 секунд."
+        "Thanks for registering! You will be redirected to the main page in 5 seconds."
       );
       setEmail("");
-      // Устанавливаем таймер на 5 секунд для перенаправления
       setTimeout(() => {
         navigate("/");
       }, 5000);
     } catch (error) {
-      setMessage("Ошибка при регистрации. Попробуйте снова.");
+      setMessage("Registration error. Try again.");
       console.error("Error submitting form:", error);
     } finally {
       setIsSubmitting(false);
@@ -37,9 +36,9 @@ const BetaTesterForm = () => {
 
   return (
     <div className="beta-tester-form-container">
-      <h2>Стать бета-тестером</h2>
+      <h2>Become a beta tester</h2>
       <form onSubmit={handleSubmit} className="beta-tester-form">
-        <label htmlFor="email">Ваш email:</label>
+        <label htmlFor="email">Your Email:</label>
         <input
           type="email"
           id="email"
@@ -49,7 +48,7 @@ const BetaTesterForm = () => {
           placeholder="example@email.com"
         />
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Отправка..." : "Зарегистрироваться"}
+          {isSubmitting ? "Sending..." : "Register"}
         </button>
       </form>
       {message && <p className="form-message">{message}</p>}
