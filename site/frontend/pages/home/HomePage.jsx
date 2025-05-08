@@ -1,11 +1,10 @@
 import React, { Suspense, lazy } from "react";
-import "../../base-styles/reset.css";
-import { loadFull } from "tsparticles";
-import SloganBlock from "./SloganBlock";
 import { Link } from "react-router-dom";
-import Particles from "react-tsparticles";
+import Particles from "@tsparticles/react"; // Обновлённый импорт
 import { loadFull } from "tsparticles";
-import "./home-styles/HomePage.css";
+import "../../base-styles/reset.css";
+import "./HomePage.css";
+
 const AboutBlockHome = lazy(() => import("./AboutBlockHome"));
 import SloganBlock from "./SloganBlock";
 
@@ -95,10 +94,6 @@ function HomePage() {
           </Link>
         </div>
       </section>
-
-      {/* <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
-        <ServersPage />
-      </Suspense> */}
     </div>
   );
 }
