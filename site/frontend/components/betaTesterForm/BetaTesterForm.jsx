@@ -35,23 +35,28 @@ const BetaTesterForm = () => {
   };
 
   return (
-    <div className="beta-tester-form-container">
-      <h2>Become a beta tester</h2>
-      <form onSubmit={handleSubmit} className="beta-tester-form">
-        <label htmlFor="email">Your Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="example@email.com"
-        />
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Sending..." : "Register"}
-        </button>
-      </form>
-      {message && <p className="form-message">{message}</p>}
+    <div className="beta-tester-form">
+      <div className="beta-tester-form-container">
+        <h2 className="beta-tester__title">Become a beta tester</h2>
+        <form onSubmit={handleSubmit} className="beta-tester-form">
+          <label htmlFor="email">Enter Your Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="example@email.com"
+          />
+          <p className="betatester__formDown">
+            We will contact you via this email.
+          </p>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Register"}
+          </button>
+        </form>
+        {message && <p className="form-message">{message}</p>}
+      </div>
     </div>
   );
 };
