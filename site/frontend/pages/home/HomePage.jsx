@@ -1,15 +1,22 @@
 import React, { Suspense, lazy } from "react";
 import "../../base-styles/reset.css";
-
+import { loadFull } from "tsparticles";
+import SloganBlock from "./SloganBlock";
+import { Link } from "react-router-dom";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import "./home-styles/HomePage.css";
 const AboutBlockHome = lazy(() => import("./AboutBlockHome"));
-// const ServersPage = lazy(() => import("../servers/Servers"));
 import SloganBlock from "./SloganBlock";
 
 function HomePage() {
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
+
   return (
     <div className="home">
       <SloganBlock />
-
       <Suspense fallback={<div className="lazy-loader">Loading...</div>}>
         <AboutBlockHome />
       </Suspense>
