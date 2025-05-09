@@ -55,7 +55,7 @@ app.use(
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 500,
-  message: "Забагато запитів з цього IP. Спробуйте пізніше.",
+  message: "Too many requests from this IP. Please try again later.",
   standardHeaders: true,
   legacyHeaders: false,
   trustProxy: true,
@@ -129,7 +129,7 @@ app.get(
   }
 );
 
-app.post("/api/beta-testers", async (req, res) => {
+app.post("/api/beta-testers", csrfProtection, async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -163,18 +163,18 @@ app.get("*", (req, res) => {
 
 const PORT = process.env.PORT || 5173;
 
-process.on("SIGTERM", () => {
-  console.log("Received SIGTERM. Shutting down gracefully...");
-  server.close(() => {
-    console.log("Server closed.");
-    process.exit(0);
-  });
-});
-
 const server = app.listen(PORT, () =>
-  console.log(
+  logger.info(
     `Server running on port ${PORT}, STEAM_REALM: ${STEAM_REALM}, CORS_ORIGINS: ${
       CORS_ORIGINS || "default"
     }`
   )
 );
+
+process.on("SIGTERM", () => {
+  logger.info("Received SIGTERM. Shutting down gracefully...");
+  server.close(() => {
+    logger.info("Server closed.");
+    process.exit(0);
+  });
+});

@@ -15,18 +15,29 @@ const BetaTesterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      setMessage("Please enter a valid email address.");
+      return;
+    }
     setIsSubmitting(true);
     setMessage("");
 
     try {
-      await axios.post("/api/beta-testers", { email });
+      const { data } = await axios.get("/api/csrf-token");
+      await axios.post(
+        "/api/beta-testers",
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "CSRF-Token": data.csrfToken,
+          },
+        }
+      );
       setMessage(
         "Thanks for registering! You will be redirected to the main page in 5 seconds."
       );
       setEmail("");
-      setTimeout(() => {
-        navigate("/");
-      }, 5000);
     } catch (error) {
       setMessage("Registration error. Try again.");
       console.error("Error submitting form:", error);
