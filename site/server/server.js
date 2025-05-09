@@ -12,6 +12,7 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const slowDown = require("express-slow-down");
 const csurf = require("csurf");
+const BetaTester = require("./models/BetaTester");
 
 const {
   DB_URI,
@@ -89,7 +90,6 @@ app.use(
 
 app.use(cookieParser());
 
-// Initialize csurf, but without global application
 const csrfProtection = csurf({ cookie: true });
 
 app.use(passport.initialize());
