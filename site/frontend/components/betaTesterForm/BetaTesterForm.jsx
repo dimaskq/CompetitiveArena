@@ -13,7 +13,6 @@ const BetaTesterForm = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Email validation function
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -61,7 +60,7 @@ const BetaTesterForm = () => {
         <form onSubmit={handleSubmit} className="beta-tester-form">
           <label htmlFor="email">Enter Your Email:</label>
           <input
-            type="email"
+            type="email	winow"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
