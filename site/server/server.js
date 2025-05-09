@@ -170,11 +170,3 @@ const server = app.listen(PORT, () =>
     }`
   )
 );
-
-process.on("SIGTERM", () => {
-  logger.info("Received SIGTERM. Shutting down gracefully...");
-  server.close(() => {
-    logger.info("Server closed.");
-    process.exit(0);
-  });
-});
