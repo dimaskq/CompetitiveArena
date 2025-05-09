@@ -12,6 +12,15 @@
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: overlay;
 }
+
+@media (max-width: 768px) {
+  .beta-tester {
+    background-image: none;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a4a);
+    background-color: initial;
+    background-blend-mode: normal;
+  }
+}
 .beta-tester-form-container {
   max-width: 500px;
   margin: 100px auto 0 auto;
