@@ -19,10 +19,7 @@ const BetaTesterForm = () => {
     setMessage("");
 
     try {
-      await axios.post(
-        "https://competitivearena.up.railway.app/api/beta-testers",
-        { email }
-      );
+      await axios.post("/api/beta-testers", { email });
       setMessage(
         "Thanks for registering! You will be redirected to the main page in 5 seconds."
       );
