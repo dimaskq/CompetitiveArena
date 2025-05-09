@@ -5,6 +5,11 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  background-image: url("../../assets/formBG.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(50%);
 }
 .beta-tester-form-container {
   max-width: 500px;
