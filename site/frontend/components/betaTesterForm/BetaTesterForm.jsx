@@ -43,6 +43,9 @@ const BetaTesterForm = () => {
         "Thanks for registering! You will be redirected to the main page in 5 seconds."
       );
       setEmail("");
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
     } catch (error) {
       setMessage("Registration error. Try again.");
       console.error("Error submitting form:", error);
