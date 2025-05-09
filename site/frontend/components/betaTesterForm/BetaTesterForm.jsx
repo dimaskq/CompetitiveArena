@@ -60,7 +60,7 @@ const BetaTesterForm = () => {
         <form onSubmit={handleSubmit} className="beta-tester-form">
           <label htmlFor="email">Enter Your Email:</label>
           <input
-            type="email	winow"
+            type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

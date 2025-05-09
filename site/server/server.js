@@ -58,7 +58,6 @@ const limiter = rateLimit({
   message: "Too many requests from this IP. Please try again later.",
   standardHeaders: true,
   legacyHeaders: false,
-  trustProxy: true,
 });
 app.use(limiter);
 
@@ -66,7 +65,6 @@ const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000,
   delayAfter: 50,
   delayMs: () => 500,
-  trustProxy: true,
 });
 app.use(speedLimiter);
 
@@ -113,7 +111,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, `../${STATIC_DIR}`)));
 
 app.get("/api/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
+  try {
+    const token = req.csrfToken();
+    console.log("CSRF token generated:", token);
+    res.json({ csrfToken: token });
+  } catch (error) {
+    console.error("Error generating CSRF token:", error);
+    res.status(500).json({ message: "Error generating CSRF token" });
+  }
 });
 
 app.get(
