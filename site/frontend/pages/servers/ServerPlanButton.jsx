@@ -33,17 +33,14 @@ function ServerPlanButton({ title }) {
         .find((row) => row.startsWith("csrfToken="))
         .split("=")[1]; // Отримуємо CSRF токен з cookie
 
-      const response = await fetch(
-        `https://competitivearena.up.railway.app/api/user`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "CSRF-Token": csrfToken, // Передаємо CSRF токен
-          },
-          body: JSON.stringify({ servers: updatedServers }),
-        }
-      );
+      const response = await fetch(`/api/user`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "CSRF-Token": csrfToken, // Передаємо CSRF токен
+        },
+        body: JSON.stringify({ servers: updatedServers }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to update user");

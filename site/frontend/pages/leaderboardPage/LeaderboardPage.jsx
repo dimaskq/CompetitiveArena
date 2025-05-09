@@ -24,9 +24,7 @@ function LeaderboardPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          "https://competitivearena.up.railway.app/api/users"
-        );
+        const response = await fetch("/api/users");
         const data = await response.json();
 
         const W = 1.5;
