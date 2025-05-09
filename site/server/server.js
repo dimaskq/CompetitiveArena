@@ -163,8 +163,16 @@ app.get("*", (req, res) => {
 
 const PORT = process.env.PORT || 5173;
 
+process.on("SIGTERM", () => {
+  console.log("Received SIGTERM. Shutting down gracefully...");
+  server.close(() => {
+    console.log("Server closed.");
+    process.exit(0);
+  });
+});
+
 const server = app.listen(PORT, () =>
-  logger.info(
+  console.log(
     `Server running on port ${PORT}, STEAM_REALM: ${STEAM_REALM}, CORS_ORIGINS: ${
       CORS_ORIGINS || "default"
     }`
