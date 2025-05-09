@@ -1,4 +1,4 @@
-# Competitive Arena
+# Competitive Arena - [competitivearena.up.railway.app](competitivearena.up.railway.app)
 
 Welcome to **Competitive Arena**, an electrifying platform designed to host competitive servers for the iconic survival game _Rust_. Dive into a thrilling world where players engage in intense, high-stakes battles, fighting for exclusive prizes and ultimate bragging rights. Whether you're a seasoned survivor or a new adventurer, this application empowers you to effortlessly set up and manage your own _Rust_ server, delivering unforgettable gaming experiences. Get ready to deploy your server and ignite the competition!
 
@@ -29,3 +29,5 @@ We welcome contributions from the community! To contribute:
 For questions, suggestions, or support, reach out to dmtro.kravchenko@gmail.com or open an issue on this repository.
 
 Let’s build the ultimate _Competitive Arena_ server experience together!
+
+
