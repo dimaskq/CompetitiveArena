@@ -13,7 +13,21 @@ const helmet = require("helmet");
 const slowDown = require("express-slow-down");
 const csurf = require("csurf");
 
-const { DB_URI, SESSION_SECRET } = process.env;
+const {
+  DB_URI,
+  SESSION_SECRET,
+  STEAM_REALM,
+  CORS_ORIGINS,
+  STATIC_DIR = "dist",
+  NODE_ENV = "development",
+} = process.env;
+
+if (!DB_URI || !SESSION_SECRET || !STEAM_REALM) {
+  console.error(
+    "Missing required environment variables: DB_URI, SESSION_SECRET, or STEAM_REALM"
+  );
+  process.exit(1);
+}
 
 const app = express();
 
@@ -28,9 +42,9 @@ app.use(
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         imgSrc: ["'self'", "data:", "https://avatars.steamstatic.com"],
-        connectSrc: ["'self'", "https://competitivearena.up.railway.app"],
+        connectSrc: ["'self'", STEAM_REALM],
         objectSrc: ["'none'"],
-        upgradeInsecureRequests: [],
+        upgradeInsecureRequests: NODE_ENV === "production" ? [] : null,
       },
     },
   })
@@ -38,7 +52,7 @@ app.use(
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 500,
   message: "Забагато запитів з цього IP. Спробуйте пізніше.",
   standardHeaders: true,
   legacyHeaders: false,
@@ -48,7 +62,7 @@ app.use(limiter);
 const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000,
   delayAfter: 50,
-  delayMs: 500,
+  delayMs: () => 500,
 });
 app.use(speedLimiter);
 
@@ -64,7 +78,7 @@ app.use(
     }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: false,
+      secure: NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",
     },
@@ -75,17 +89,13 @@ const csrfProtection = csurf({ cookie: true });
 app.use(passport.initialize());
 app.use(passport.session());
 
+const allowedOrigins = CORS_ORIGINS
+  ? CORS_ORIGINS.split(",")
+  : [STEAM_REALM, "http://localhost:5173"];
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (
-        !origin ||
-        origin === "http://87.120.167.110:32128" ||
-        origin === "http://87.120.167.110:32129" ||
-        origin === "https://87.120.167.110:32128" ||
-        origin === "https://87.120.167.110:32129" ||
-        origin === "https://competitivearena.up.railway.app"
-      ) {
+      if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
       return callback(new Error("CORS not allowed from this origin"), false);
@@ -96,7 +106,7 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../dist")));
+app.use(express.static(path.join(__dirname, `../${STATIC_DIR}`)));
 
 app.get("/api/csrf-token", (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
@@ -118,10 +128,8 @@ app.get(
 app.use(routes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist", "index.html"));
+  res.sendFile(path.join(__dirname, `../${STATIC_DIR}`, "index.html"));
 });
 
 const PORT = process.env.PORT || 5173;
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
