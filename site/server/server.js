@@ -129,6 +129,32 @@ app.get(
   }
 );
 
+app.post("/api/beta-testers", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+    const existingTester = await BetaTester.findOne({ email });
+    if (existingTester) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    const newBetaTester = new BetaTester({ email });
+    await newBetaTester.save();
+
+    console.log("New beta tester registered:", email);
+    res.status(200).json({ message: "Registered successfully" });
+  } catch (error) {
+    console.error("Error registering beta tester:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+    res.status(500).json({ message: "Error registering" });
+  }
+});
+
 app.use(routes);
 
 app.get("*", (req, res) => {

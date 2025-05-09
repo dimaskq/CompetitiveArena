@@ -1,0 +1,66 @@
+.beta-tester-section {
+  position: relative;
+  padding: 60px 20px;
+  text-align: center;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.beta-tester-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.beta-tester__title {
+  font-family: "Rust";
+  font-size: 2.4rem;
+  margin: 0 0 20px 0;
+}
+
+.beta-tester-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.beta-tester-button {
+  padding: 0 10px;
+  margin: 3% 1% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  color: #fff;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  background-color: #df1313;
+  transition: all 0.3s ease-in-out;
+  font-family: "Rust";
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.beta-tester-button:hover {
+  color: #df1313;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.beta-tester-button__container {
+  display: flex;
+  justify-content: center;
+}
+
+#tsparticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
