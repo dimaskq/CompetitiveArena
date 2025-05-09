@@ -58,6 +58,7 @@ const limiter = rateLimit({
   message: "Забагато запитів з цього IP. Спробуйте пізніше.",
   standardHeaders: true,
   legacyHeaders: false,
+  trustProxy: true,
 });
 app.use(limiter);
 
@@ -65,6 +66,7 @@ const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000,
   delayAfter: 50,
   delayMs: () => 500,
+  trustProxy: true,
 });
 app.use(speedLimiter);
 
@@ -134,4 +136,19 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5173;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+process.on("SIGTERM", () => {
+  console.log("Received SIGTERM. Shutting down gracefully...");
+  server.close(() => {
+    console.log("Server closed.");
+    process.exit(0);
+  });
+});
+
+const server = app.listen(PORT, () =>
+  console.log(
+    `Server running on port ${PORT}, STEAM_REALM: ${STEAM_REALM}, CORS_ORIGINS: ${
+      CORS_ORIGINS || "default"
+    }`
+  )
+);
