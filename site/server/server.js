@@ -87,7 +87,11 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+
+// Initialize csurf, but without global application
 const csrfProtection = csurf({ cookie: true });
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -100,21 +104,24 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      return callback(new Error("CORS not allowed from this origin"), false);
+      return callback(new Error("CORS not allowed for this origin"), false);
     },
     credentials: true,
   })
 );
 
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, `../${STATIC_DIR}`)));
 
+// Route for generating CSRF token (without CSRF protection)
 app.get("/api/csrf-token", (req, res) => {
   try {
-    const token = req.csrfToken();
-    console.log("CSRF token generated:", token);
-    res.json({ csrfToken: token });
+    // Manually invoke csurf for this request
+    csrfProtection(req, res, () => {
+      const token = req.csrfToken();
+      console.log("Generated CSRF token:", token);
+      res.json({ csrfToken: token });
+    });
   } catch (error) {
     console.error("Error generating CSRF token:", error);
     res.status(500).json({ message: "Error generating CSRF token" });
@@ -134,29 +141,33 @@ app.get(
   }
 );
 
+// Apply csrfProtection only to the POST request
 app.post("/api/beta-testers", csrfProtection, async (req, res) => {
   const { email } = req.body;
 
   try {
     if (!email) {
+      console.log("Error: Email not provided");
       return res.status(400).json({ message: "Email is required" });
     }
+    console.log("Checking email:", email);
     const existingTester = await BetaTester.findOne({ email });
     if (existingTester) {
+      console.log("Email already registered:", email);
       return res.status(400).json({ message: "Email already registered" });
     }
 
     const newBetaTester = new BetaTester({ email });
     await newBetaTester.save();
+    console.log("New beta tester saved:", email);
 
-    console.log("New beta tester registered:", email);
-    res.status(200).json({ message: "Registered successfully" });
+    res.status(200).json({ message: "Successfully registered" });
   } catch (error) {
     console.error("Error registering beta tester:", error);
     if (error.code === 11000) {
       return res.status(400).json({ message: "Email already registered" });
     }
-    res.status(500).json({ message: "Error registering" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -169,7 +180,7 @@ app.get("*", (req, res) => {
 const PORT = process.env.PORT || 5173;
 
 process.on("SIGTERM", () => {
-  console.log("Received SIGTERM. Shutting down gracefully...");
+  console.log("Received SIGTERM. Shutting down...");
   server.close(() => {
     console.log("Server closed.");
     process.exit(0);
