@@ -13,6 +13,12 @@ const BetaTesterForm = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Email validation function
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
