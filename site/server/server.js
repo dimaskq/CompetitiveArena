@@ -31,6 +31,8 @@ if (!DB_URI || !SESSION_SECRET || !STEAM_REALM) {
 
 const app = express();
 
+app.set("trust proxy", true);
+
 connectDB();
 
 app.use(
