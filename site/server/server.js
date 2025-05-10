@@ -19,6 +19,7 @@ const {
   SESSION_SECRET,
   STEAM_REALM,
   CORS_ORIGINS,
+  SECOND_DOMAIN,
   STATIC_DIR = "dist",
   NODE_ENV = "development",
 } = process.env;
@@ -98,6 +99,10 @@ app.use(passport.session());
 const allowedOrigins = CORS_ORIGINS
   ? CORS_ORIGINS.split(",")
   : [STEAM_REALM, "http://localhost:5173"];
+
+if (SECOND_DOMAIN) {
+  allowedOrigins.push(SECOND_DOMAIN);
+}
 app.use(
   cors({
     origin: (origin, callback) => {
