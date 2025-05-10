@@ -10,7 +10,7 @@ function AboutPage() {
           <ul className="about-page__menu_list">
             <li>
               <Link to="arena" className="about-page__menu_link">
-                About Competitive Arena
+                About ARENA
               </Link>
             </li>
             <li>
@@ -19,13 +19,13 @@ function AboutPage() {
               </Link>
             </li>
             <li>
-              <Link to="help" className="about-page__menu_link">
-                Help
+              <Link to="terms" className="about-page__menu_link">
+                Terms & Conditions
               </Link>
             </li>
             <li>
-              <Link to="terms" className="about-page__menu_link">
-                Terms & Conditions
+              <Link to="help" className="about-page__menu_link">
+                Help*
               </Link>
             </li>
           </ul>

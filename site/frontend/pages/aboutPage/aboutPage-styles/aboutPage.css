@@ -1,3 +1,14 @@
+.about-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.about-page__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .about__title {
   text-align: center;
   font-size: 3rem;
