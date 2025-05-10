@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import "./aboutPage-styles/aboutPage.css";
 
 function AboutPage() {
@@ -8,26 +8,60 @@ function AboutPage() {
       <div className="about-page__container">
         <aside className="about-page__menu">
           <ul className="about-page__menu_list">
-            <li>
-              <Link to="arena" className="about-page__menu_link">
-                About ARENA
-              </Link>
-            </li>
-            <li>
-              <Link to="team" className="about-page__menu_link">
-                Our Team
-              </Link>
-            </li>
-            <li>
-              <Link to="terms" className="about-page__menu_link">
-                Terms & Conditions
-              </Link>
-            </li>
-            <li>
-              <Link to="help" className="about-page__menu_link">
-                Help*
-              </Link>
-            </li>
+            <NavLink
+              to="arena"
+              end
+              className={({ isActive }) =>
+                isActive
+                  ? "about-page__menu_item active-link"
+                  : "about-page__menu_item"
+              }
+            >
+              <li>
+                <span className="about-page__menu_link">About ARENA</span>
+              </li>
+            </NavLink>
+
+            <NavLink
+              to="team"
+              className={({ isActive }) =>
+                isActive
+                  ? "about-page__menu_item active-link"
+                  : "about-page__menu_item"
+              }
+            >
+              <li>
+                <span className="about-page__menu_link">Our Team</span>
+              </li>
+            </NavLink>
+
+            <NavLink
+              to="terms"
+              className={({ isActive }) =>
+                isActive
+                  ? "about-page__menu_item active-link"
+                  : "about-page__menu_item"
+              }
+            >
+              <li>
+                <span className="about-page__menu_link">
+                  Terms & Conditions
+                </span>
+              </li>
+            </NavLink>
+
+            <NavLink
+              to="help"
+              className={({ isActive }) =>
+                isActive
+                  ? "about-page__menu_item active-link"
+                  : "about-page__menu_item"
+              }
+            >
+              <li>
+                <span className="about-page__menu_link">Help*</span>
+              </li>
+            </NavLink>
           </ul>
         </aside>
 

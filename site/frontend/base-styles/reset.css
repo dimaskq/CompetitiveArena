@@ -96,6 +96,7 @@ body {
 body {
   background: #000000;
   overflow-x: hidden;
+  font-family: "Exo 2", system-ui;
 }
 #root {
   height: 100%;
