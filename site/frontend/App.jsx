@@ -1,5 +1,5 @@
 import HomePage from "./pages/home/HomePage.jsx";
-import AboutPage from "./pages/contactPage/AboutPage.jsx";
+import AboutPage from "./pages/aboutPage/AboutPage.jsx";
 import {
   BrowserRouter as Router,
   Routes,
