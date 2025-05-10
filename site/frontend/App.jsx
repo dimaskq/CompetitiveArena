@@ -25,6 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />}>
+              <Route index element={<Navigate to="arena" replace />} />
               <Route path="arena" element={<Arena />} />
               <Route path="team" element={<Team />} />
               <Route path="help" element={<Help />} />
