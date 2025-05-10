@@ -25,6 +25,7 @@
     "mongoose": "^8.9.5",
     "passport": "^0.7.0",
     "passport-steam": "^1.0.18",
-    "react-loading-skeleton": "^3.5.0"
+    "react-loading-skeleton": "^3.5.0",
+    "site": "file:../.."
   }
 }

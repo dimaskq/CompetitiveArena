@@ -1,0 +1,271 @@
+.about-page {
+  width: 100vw;
+}
+
+.about-page__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  gap: 2%;
+}
+
+.about__title {
+  text-align: center;
+  font-size: 3rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.833), rgba(0, 0, 0, 0.8)),
+    url("../../../assets/aboutPageBg.avif") center/cover;
+  color: white;
+  display: inline-block;
+  padding: 50px 0;
+  font-weight: bold;
+  width: 100%;
+  margin: 130px 0 5% 0;
+  -webkit-box-shadow: -1px -1px 20px 5px rgba(199, 8, 8, 0.62);
+  -moz-box-shadow: -1px -1px 20px 5px rgba(199, 8, 8, 0.62);
+  box-shadow: -1px -1px 20px 5px rgba(199, 8, 8, 0.62);
+  font-family: "Rust";
+  letter-spacing: 2px;
+  box-sizing: border-box;
+}
+
+.about-page__menu {
+  position: sticky;
+  top: 20px;
+  width: 300px !important;
+  height: fit-content;
+  background-color: #0f0f10;
+}
+
+.about-page__menu_list {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+.about-page__menu_list li {
+  padding: 10px 0;
+}
+.about-page__menu_link {
+  color: #fff;
+  transition: 0.1s all ease;
+  padding: 10px 20px;
+}
+
+.about-page__menu_item {
+  width: 100%;
+}
+
+.about-page__menu_item:hover {
+  color: #f39c12;
+  transition: 0.1s all ease;
+}
+
+.active-link {
+  background-color: #df1313;
+}
+
+.arena {
+  background-color: #0f0f10;
+  color: #ddd;
+  padding: 20px;
+  font-family: "Orbitron", sans-serif;
+  margin: 0 0 50px 0;
+}
+
+.arena__section {
+  margin-bottom: 40px;
+}
+
+.arena__title {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.arena__subtitle {
+  font-size: 1.8rem;
+  color: #f39c12;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.arena__text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.arena__list {
+  list-style: disc;
+  margin-left: 20px;
+  color: #ccc;
+}
+
+.arena__list--numbered {
+  list-style: decimal;
+}
+
+.arena__list-item {
+  margin-bottom: 10px;
+}
+
+.arena__sublist {
+  list-style: circle;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.arena__sublist-item {
+  margin-bottom: 6px;
+}
+
+.arena__list {
+  margin-top: 10px;
+}
+
+.team {
+  background-color: #0f0f10;
+  color: #ddd;
+  padding: 20px;
+  font-family: "Orbitron", sans-serif;
+  margin: 0 0 50px 0;
+}
+
+.team__section {
+  margin-bottom: 40px;
+}
+
+.team__title {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.team__subtitle {
+  font-size: 1.8rem;
+  color: #f39c12;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.team__text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #ccc;
+  text-align: center;
+}
+
+.team__photos {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.team__photo {
+  text-align: center;
+  width: 30%;
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.team__photo-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.team__photo-name {
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.terms-page {
+  width: 100vw;
+  padding: 40px 0;
+  background-color: #0f0f10;
+}
+
+.terms-page__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.terms__title {
+  text-align: center;
+  font-size: 3rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.833), rgba(0, 0, 0, 0.8)),
+    url("../../../assets/termsPageBg.avif") center/cover;
+  color: white;
+  padding: 50px 0;
+  font-weight: bold;
+  font-family: "Rust";
+  letter-spacing: 2px;
+  box-sizing: border-box;
+}
+
+.terms-page__content {
+  color: #ddd;
+  font-family: "Orbitron", sans-serif;
+}
+
+.terms__section {
+  margin-bottom: 40px;
+}
+
+.terms__subtitle {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.terms__text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #ccc;
+}
+
+.terms__list {
+  list-style: disc;
+  margin-left: 20px;
+  color: #ccc;
+}
+
+.terms__list-item {
+  margin-bottom: 10px;
+}
+
+.terms__sublist {
+  list-style: circle;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.terms__sublist-item {
+  margin-bottom: 6px;
+}
+
+@media only screen and (max-width: 768px) {
+  .about-page__menu {
+    display: none;
+  }
+
+  .team__photos {
+    flex-direction: column;
+  }
+  .team__photo {
+    width: 100%;
+  }
+}

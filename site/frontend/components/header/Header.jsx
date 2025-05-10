@@ -31,6 +31,7 @@ const Header = () => {
   const [open, setOpen] = React.useState(false);
   const node = React.useRef();
   const navigate = useNavigate();
+  const [aboutSubmenuOpen, setAboutSubmenuOpen] = useState(false);
 
   useOnClickOutside(node, () => setOpen(false));
 

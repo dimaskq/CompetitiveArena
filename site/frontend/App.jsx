@@ -1,5 +1,5 @@
 import HomePage from "./pages/home/HomePage.jsx";
-import AboutPage from "./pages/contactPage/AboutPage.jsx";
+import AboutPage from "./pages/aboutPage/AboutPage.jsx";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,12 +7,14 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
-// import ServersPage from "./pages/servers/Servers.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import RulesPage from "./pages/rules/RulesPage.jsx";
 import "./base-styles/reset.css";
 import BetaTesterForm from "./components/betaTesterForm/BetaTesterForm.jsx";
-// import LeaderboardPage from "./pages/leaderboardPage/LeaderboardPage.jsx";
+import Arena from "./pages/aboutPage/Arena.jsx";
+import Team from "./pages/aboutPage/Team.jsx";
+import Help from "./pages/aboutPage/Help.jsx";
+import Terms from "./pages/aboutPage/Terms.jsx";
 
 function App() {
   return (
@@ -22,7 +24,13 @@ function App() {
         <main className="main">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/contact" element={<AboutPage />} />
+            <Route path="/about" element={<AboutPage />}>
+              <Route index element={<Navigate to="arena" replace />} />
+              <Route path="arena" element={<Arena />} />
+              <Route path="team" element={<Team />} />
+              <Route path="help" element={<Help />} />
+              <Route path="terms" element={<Terms />} />
+            </Route>
             {/* <Route path="/servers" element={<ServersPage />} /> */}
             <Route path="/beta-tester" element={<BetaTesterForm />} />
             <Route path="/rules" element={<RulesPage />} />

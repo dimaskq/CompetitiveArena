@@ -19,7 +19,7 @@ function SloganBlock() {
             <a href="/contact" className="slogan__box_btn">
               About Us
             </a>
-            <a href="https://discord.gg/wtxWjyf6" className="slogan__box_btn">
+            <a href="https://discord.gg/MUZ9RtuA" className="slogan__box_btn">
               Join Discord
             </a>
           </div>
