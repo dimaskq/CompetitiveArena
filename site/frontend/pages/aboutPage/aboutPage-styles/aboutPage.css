@@ -1,3 +1,22 @@
 .about-page__menu_link {
   color: #fff;
 }
+
+.about__title {
+  text-align: center;
+  font-size: 3rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.833), rgba(0, 0, 0, 0.8)),
+    url("../../../assets/aboutPageBg.avif") center/cover;
+  color: white;
+  display: inline-block;
+  padding: 50px 0;
+  font-weight: bold;
+  width: 100%;
+  margin: 130px 0 5% 0;
+  -webkit-box-shadow: -1px -1px 20px 5px rgba(199, 8, 8, 0.62);
+  -moz-box-shadow: -1px -1px 20px 5px rgba(199, 8, 8, 0.62);
+  box-shadow: -1px -1px 20px 5px rgba(199, 8, 8, 0.62);
+  font-family: "Rust";
+  letter-spacing: 2px;
+  box-sizing: border-box;
+}

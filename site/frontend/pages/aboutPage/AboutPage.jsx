@@ -31,7 +31,7 @@ function AboutPage() {
         </aside>
 
         <main className="about-page__content">
-          <h1>About Page</h1>
+          <h1 className="about__title">About Page</h1>
           <Outlet />
         </main>
       </div>
