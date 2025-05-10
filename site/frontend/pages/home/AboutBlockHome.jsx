@@ -14,7 +14,7 @@ function AboutBlockHome() {
             discover our story, mission, and how we work. Find out what drives
             our project and why we can be your trusted choice!
           </p>
-          <a href="/contact" className="slogan__box_btn">
+          <a href="/about" className="slogan__box_btn">
             Learn more
           </a>
         </div>
