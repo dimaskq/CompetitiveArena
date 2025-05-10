@@ -1,5 +1,5 @@
 import "./home-styles/SloganBlock.css";
-import bg from "../../assets/aboutBg.jpg";
+import bg from "../../assets/aboutUsBg.png";
 
 function AboutBlockHome() {
   return (
@@ -22,7 +22,6 @@ function AboutBlockHome() {
           <img
             src={bg}
             alt="Background image for About Us section"
-            className="sloganBg"
             loading="lazy"
           />
         </div>
