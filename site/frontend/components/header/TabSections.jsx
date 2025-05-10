@@ -5,7 +5,7 @@ import "./header-styles/Header.css";
 export default function TabsSection({ active, onChange }) {
   const tabs = [
     { to: "/", label: "Home", value: "home" },
-    { to: "/contact", label: "About", value: "contact" },
+    { to: "/about", label: "About", value: "about" },
     // { to: "/servers", label: "Servers", value: "servers" },
     { to: "/rules", label: "Rules", value: "rules" },
     // { to: "/leaderboard", label: "Leaderboard", value: "leaderboard" },
