@@ -80,3 +80,13 @@
     max-width: 100%;
   }
 }
+
+.rules__kd_formula {
+  margin: 20px 0;
+}
+
+.rules__kd_formula code {
+  padding: 5px;
+  background-color: rgb(44, 44, 44);
+  line-height: 200%;
+}
