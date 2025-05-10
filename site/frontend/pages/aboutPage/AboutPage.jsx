@@ -4,6 +4,7 @@ import "./aboutPage-styles/aboutPage.css";
 function AboutPage() {
   return (
     <div className="about-page">
+      <h1 className="about__title">About Page</h1>
       <div className="about-page__container">
         <aside className="about-page__menu">
           <ul className="about-page__menu_list">
@@ -31,7 +32,6 @@ function AboutPage() {
         </aside>
 
         <main className="about-page__content">
-          <h1 className="about__title">About Page</h1>
           <Outlet />
         </main>
       </div>
