@@ -24,11 +24,11 @@ function App() {
         <main className="main">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="about" element={<AboutPage />}>
-              <Route path="arena" element={<Arena />} />
-              <Route path="team" element={<Team />} />
-              <Route path="help" element={<Help />} />
-              <Route path="terms" element={<Terms />} />
+            <Route path="/about" element={<AboutPage />}>
+              <Route path="/arena" element={<Arena />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/terms" element={<Terms />} />
             </Route>
             {/* <Route path="/servers" element={<ServersPage />} /> */}
             <Route path="/beta-tester" element={<BetaTesterForm />} />
