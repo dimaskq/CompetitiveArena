@@ -1,5 +1,5 @@
 import "./home-styles/SloganBlock.css";
-import bg from "../../assets/aboutBg.jpg";
+import bg from "../../assets/aboutUsBg.png";
 
 function AboutBlockHome() {
   return (
@@ -14,7 +14,7 @@ function AboutBlockHome() {
             discover our story, mission, and how we work. Find out what drives
             our project and why we can be your trusted choice!
           </p>
-          <a href="/contact" className="slogan__box_btn">
+          <a href="/about" className="slogan__box_btn">
             Learn more
           </a>
         </div>
@@ -22,7 +22,6 @@ function AboutBlockHome() {
           <img
             src={bg}
             alt="Background image for About Us section"
-            className="sloganBg"
             loading="lazy"
           />
         </div>

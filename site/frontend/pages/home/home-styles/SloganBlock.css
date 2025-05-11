@@ -35,6 +35,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -157,7 +158,7 @@
   }
 
   .slogan__box_img {
-    display: none;
+    display: none !important;
   }
 
   .slogan__container {
@@ -197,4 +198,28 @@
   .slogan__box_title {
     font-size: 3rem;
   }
+}
+
+.slogan__box_img {
+  position: relative;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.slogan__box_img img {
+  width: 100%;
+  display: block;
+}
+
+.slogan__box_img::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.907), transparent);
+  pointer-events: none;
+  z-index: 2;
 }
