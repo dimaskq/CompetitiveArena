@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://competitive-arena.com/sitemap.xml
